@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\niki\\source\\repos\\StayFit\\StayFit.Data\\StayFit.Data.csproj": {}
+    "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\niki\\source\\repos\\StayFit\\StayFit.Data\\StayFit.Data.csproj": {
+    "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\niki\\source\\repos\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
+        "projectUniqueName": "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
         "projectName": "StayFit.Data",
-        "projectPath": "C:\\Users\\niki\\source\\repos\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
+        "projectPath": "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
         "packagesPath": "C:\\Users\\niki\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\niki\\source\\repos\\StayFit\\StayFit.Data\\obj\\",
+        "outputPath": "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\niki\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -69,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

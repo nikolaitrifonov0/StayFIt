@@ -14,6 +14,7 @@ namespace StayFit.Data.Models
         public DateTime NextWorkout { get; set; }
         [Required]
         public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>();
-        public ICollection<Workout> Workouts { get; init; } = new HashSet<Workout>();
+        [Required]
+        public Workout Workout { get; init; }
     }
 }
