@@ -14,11 +14,16 @@ namespace StayFit.Data.Models
         [Required]
         [MaxLength(50)]
         public string Name { get; init; }
+        [Required]
         public string Description { get; init; }
+        [Required]
+        public string CreatorId { get; init; }
+        public User Creator { get; init; }
         [Required]
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         [Required]
-        public WorkoutCycleType WorkoutCycleType { get; set; }
+        public WorkoutCycleType WorkoutCycleType { get; init; }
         public int? CycleDays { get; set; }
+        public ICollection<User> Users { get; init; } = new HashSet<User>();
     }
 }

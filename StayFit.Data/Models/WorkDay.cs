@@ -11,10 +11,10 @@ namespace StayFit.Data.Models
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
-        public DateTime NextWorkout { get; set; }
+        public DateTime NextWorkout { get; set; }       
+        public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>(); 
         [Required]
-        public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>();
-        [Required]
+        public string WorkoutId { get; init; }    
         public Workout Workout { get; init; }
     }
 }
