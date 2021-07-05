@@ -16,5 +16,7 @@ namespace StayFit.Data.Models
         [Required]
         public string WorkoutId { get; init; }    
         public Workout Workout { get; init; }
+        public ICollection<UserExerciseLog> UserExerciseLogs { get; init; }
+            = new HashSet<UserExerciseLog>();
     }
 }

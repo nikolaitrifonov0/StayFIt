@@ -23,5 +23,7 @@ namespace StayFit.Data.Models
         public string ImageUrl { get; init; }
         public string VideoUrl { get; init; }
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
+        public ICollection<UserExerciseLog> UserExerciseLogs { get; init; }
+            = new HashSet<UserExerciseLog>();
     }
 }
