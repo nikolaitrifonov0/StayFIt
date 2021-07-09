@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ow14rY+f/4T15J+cgXshCQxr+zyGekpFFl54Krz0Yz6mymiC72zA/RuJDporgBLCseamN3InsU+MPHOi/jyY5A==",
+  "dgSpecHash": "GLutiYamNxOPGYuloWYYqqNpEcuqGs6F/CUcguaLU3q5kaRO5aOOzajLqBuGj+PblHHVYU27l/ZZ3UKaNabm3g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
+  "projectFilePath": "C:\\Users\\niki\\Desktop\\StayFit\\StayFit\\StayFit\\StayFit.Data\\StayFit.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\niki\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\niki\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
