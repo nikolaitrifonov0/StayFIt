@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using static StayFit.Data.DataConstants;
 
 namespace StayFit.Data.Models
 {
@@ -11,6 +9,7 @@ namespace StayFit.Data.Models
     {
         public int Id { get; init; }
         [Required]
+        [MaxLength(BodyPartNameMaxLength)]
         public string Name { get; set; }
         public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>();
     }

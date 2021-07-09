@@ -2,9 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using static StayFit.Data.DataConstants;
 
 namespace StayFit.Data.Models
 {
@@ -12,7 +11,7 @@ namespace StayFit.Data.Models
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
-        [MaxLength(50)]
+        [MaxLength(ExerciseNameMaxLength)]
         public string Name { get; init; }
         [Required]
         public string Description { get; init; }
