@@ -10,16 +10,16 @@ namespace StayFit.Data.Models
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
         [MaxLength(50)]
-        public string Name { get; init; }
+        public string Name { get; set; }
         [Required]
-        public string Description { get; init; }
+        public string Description { get; set; }
         [Required]
-        public string CreatorId { get; init; }
-        public User Creator { get; init; }
+        public string CreatorId { get; set; }
+        public User Creator { get; set; }
         [Required]
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         [Required]
-        public WorkoutCycleType WorkoutCycleType { get; init; }
+        public WorkoutCycleType WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }
         public ICollection<User> Users { get; init; } = new HashSet<User>();
     }

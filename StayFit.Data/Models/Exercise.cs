@@ -12,15 +12,15 @@ namespace StayFit.Data.Models
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
         [MaxLength(ExerciseNameMaxLength)]
-        public string Name { get; init; }
+        public string Name { get; set; }
         [Required]
-        public string Description { get; init; }
+        public string Description { get; set; }
         [Required]
-        public Equipment Equipment { get; init; }
+        public Equipment Equipment { get; set; }
         [Required]
         public ICollection<BodyPart> BodyParts { get; init; } = new HashSet<BodyPart>();        
-        public string ImageUrl { get; init; }
-        public string VideoUrl { get; init; }
+        public string ImageUrl { get; set; }
+        public string VideoUrl { get; set; }
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         public ICollection<UserExerciseLog> UserExerciseLogs { get; init; }
             = new HashSet<UserExerciseLog>();

@@ -5,13 +5,13 @@ namespace StayFit.Data.Models
     public class UserExerciseLog
     {
         [Required]
-        public string UserId { get; init; }
-        public User User { get; init; }
+        public string UserId { get; set; }
+        public User User { get; set; }
         [Required]
-        public string ExerciseId { get; init; }
-        public Exercise Exercise { get; init; }
+        public string ExerciseId { get; set; }
+        public Exercise Exercise { get; set; }
         [Required]
-        public string WorkDayId { get; init; }
+        public string WorkDayId { get; set; }
         public WorkDay WorkDay { get; set; }
 
     }
