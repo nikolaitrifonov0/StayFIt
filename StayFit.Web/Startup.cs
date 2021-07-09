@@ -1,35 +1,39 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StayFit.Data;
 using StayFit.Web.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StayFit.Web
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)        
-            => Configuration = configuration;
-        
+            => Configuration = configuration;        
 
         public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<StayFitContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<StayFitContext>();
+                    Configuration.GetConnectionString("DefaultConnection")))
+                .AddDatabaseDeveloperPageExceptionFilter()
+                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<StayFitContext>();
             services.AddControllersWithViews();
         }
-
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -39,7 +43,7 @@ namespace StayFit.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error")                
+                app.UseExceptionHandler("/Home/Error")
                     .UseHsts();
             }
             app.UseHttpsRedirection()

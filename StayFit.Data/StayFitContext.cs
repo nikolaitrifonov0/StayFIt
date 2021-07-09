@@ -5,6 +5,14 @@ namespace StayFit.Data
 {
     public class StayFitContext : DbContext
     {
+        public StayFitContext()
+        {
+        }
+
+        public StayFitContext(DbContextOptions<StayFitContext> options)
+        {            
+        }
+
         public DbSet<BodyPart> BodyParts { get; init; }
         public DbSet<Exercise> Exercises { get; init; }
         public DbSet<User> Users { get; init; }

@@ -1,3 +1,5 @@
+using System;
+
 namespace StayFit.Web.Models
 {
     public class ErrorViewModel
