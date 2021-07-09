@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StayFit.Data;
 using StayFit.Web.Data;
+using StayFit.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +30,20 @@ namespace StayFit.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")))
                 .AddDatabaseDeveloperPageExceptionFilter()
-                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultIdentity<IdentityUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                     .AddEntityFrameworkStores<StayFitContext>();
             services.AddControllersWithViews();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage()
