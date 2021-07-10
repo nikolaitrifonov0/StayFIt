@@ -8,6 +8,8 @@ namespace StayFit.Web.Models.Exercises
         public string Description { get; init; }
         public string Equipment { get; init; }
         public string BodyPart { get; init; }
+        public string ImageUrl { get; init; }
+        public string VideoUrl { get; init; }
 
         public IEnumerable<ExerciseEquipmentViewModel> Equipments { get; set; }
         public IEnumerable<ExerciseBodyPartViewModel> BodyParts { get; set; }

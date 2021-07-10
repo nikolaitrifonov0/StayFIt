@@ -5,6 +5,10 @@
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" placeholder="Deadlift, Bench press... etc.">
     </div>
+    <label asp-for="ImageUrl"></label>
+    <input asp-for="ImageUrl" class="form-control">
+    <label asp-for="VideoUrl"></label>
+    <input asp-for="VideoUrl" class="form-control" placeholder="Show us how it's done.">
     <div class="form-group">
         <label asp-for="Description"></label>
         <textarea asp-for="Description" class="form-control" rows="3"></textarea>
@@ -29,8 +33,9 @@
         <label asp-for="BodyPart">Muscle group:</label>
         <select asp-for="BodyPart" multiple class="form-control">
             @foreach (var bodyPart in Model.BodyParts)
-            {   	            
-                <option value="@bodyPart.Id">@bodyPart.Name</option>	            
+            {
+                <option value="@bodyPart.Id">@bodyPart.Name</option>
+
             }
         </select>
     </div>
