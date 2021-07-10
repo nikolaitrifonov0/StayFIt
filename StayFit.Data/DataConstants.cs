@@ -8,5 +8,7 @@
         public const int ExerciseNameMaxLength = 50;
 
         public const int BodyPartNameMaxLength = 50;
+
+        public const int EquipmentNameMaxLength = 50;
     }
 }

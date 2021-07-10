@@ -14,6 +14,7 @@ namespace StayFit.Data
         }
 
         public DbSet<BodyPart> BodyParts { get; init; }
+        public DbSet<Equipment> Equipments { get; init; }
         public DbSet<Exercise> Exercises { get; init; }
         public DbSet<User> Users { get; init; }
         public DbSet<WorkDay> WorkDays { get; init; }

@@ -1,5 +1,4 @@
-﻿using StayFit.Data.Models.Enums.Exercise;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +15,7 @@ namespace StayFit.Data.Models
         [Required]
         public string Description { get; set; }
         [Required]
+        public int EquipmentId { get; set; }
         public Equipment Equipment { get; set; }
         [Required]
         public ICollection<BodyPart> BodyParts { get; init; } = new HashSet<BodyPart>();        
