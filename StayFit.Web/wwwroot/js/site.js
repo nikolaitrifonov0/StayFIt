@@ -1,15 +1,19 @@
-﻿var workoutTypeSelect = document.getElementsByTagName('select')[0];
-var weeklyWorkdaysDiv = document.getElementsByClassName('weekly-workdays')[0];
-var nthWorkdaysDiv = document.getElementsByClassName('nth-day')[0];
+﻿handleWorkoutType();
 
-workoutTypeSelect.onchange = hideWeeklyWorkdays;
+function handleWorkoutType() {
+    let workoutTypeSelect = document.getElementsByTagName('select')[0];
+    let weeklyWorkdaysDiv = document.getElementsByClassName('weekly-workdays')[0];
+    let nthWorkdaysDiv = document.getElementsByClassName('nth-day')[0];
 
-function hideWeeklyWorkdays() {
-    if (workoutTypeSelect.value != '0') {
-        weeklyWorkdaysDiv.hidden = true;
-        nthWorkdaysDiv.hidden = false;
-    } else {
-        weeklyWorkdaysDiv.hidden = false;
-        nthWorkdaysDiv.hidden = true;
+    workoutTypeSelect.onchange = hideWeeklyWorkdays;
+
+    function hideWeeklyWorkdays() {
+        if (workoutTypeSelect.value != '0') {
+            weeklyWorkdaysDiv.hidden = true;
+            nthWorkdaysDiv.hidden = false;
+        } else {
+            weeklyWorkdaysDiv.hidden = false;
+            nthWorkdaysDiv.hidden = true;
+        }
     }
 }
