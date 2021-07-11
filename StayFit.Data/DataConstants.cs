@@ -12,7 +12,9 @@
 
         public const int EquipmentNameMaxLength = 20;
 
-        public const int DescriptionMaxLength = 2000;
-        public const int DescriptionMinLength = 10;
+        public const int ExerciseDescriptionMaxLength = 2000;
+        public const int ExerciseDescriptionMinLength = 10;
+
+        public const int WorkoutNameMaxLength = 50;
     }
 }

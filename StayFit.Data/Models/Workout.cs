@@ -3,13 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using static StayFit.Data.DataConstants;
+
 namespace StayFit.Data.Models
 {
     public class Workout
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
-        [MaxLength(50)]
+        [MaxLength(WorkoutNameMaxLength)]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }

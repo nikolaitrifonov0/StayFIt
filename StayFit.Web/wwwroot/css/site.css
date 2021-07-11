@@ -69,3 +69,10 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+button.add-exercise {
+    margin-top: 15px;
+}
+button.add-day.alert-success {
+    margin-top: 15px;
+    font-size: large;
+}

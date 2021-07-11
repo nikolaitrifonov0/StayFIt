@@ -1,4 +1,15 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿var workoutTypeSelect = document.getElementsByTagName('select')[0];
+var weeklyWorkdaysDiv = document.getElementsByClassName('weekly-workdays')[0];
+var nthWorkdaysDiv = document.getElementsByClassName('nth-day')[0];
 
-// Write your JavaScript code.
+workoutTypeSelect.onchange = hideWeeklyWorkdays;
+
+function hideWeeklyWorkdays() {
+    if (workoutTypeSelect.value != '0') {
+        weeklyWorkdaysDiv.hidden = true;
+        nthWorkdaysDiv.hidden = false;
+    } else {
+        weeklyWorkdaysDiv.hidden = false;
+        nthWorkdaysDiv.hidden = true;
+    }
+}

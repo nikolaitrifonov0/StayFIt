@@ -39,7 +39,7 @@
         <span asp-validation-for="Equipment" class="small text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="BodyParts">Muscle groups:</label>
+        <label asp-for="BodyParts">Muscle groups: (Select multiple by holding Ctrl)</label>
         <select asp-for="BodyParts" multiple class="form-control">
             @foreach (var bodyPart in Model.BodyPartsDisplay)
             {

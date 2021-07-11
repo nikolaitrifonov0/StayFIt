@@ -13,8 +13,8 @@ namespace StayFit.Web.Models.Exercises
             ErrorMessage = "The name should be between {2} and {1} symbols long.")]
         public string Name { get; init; }
         [Required]
-        [StringLength(DescriptionMaxLength, 
-            MinimumLength = DescriptionMinLength,
+        [StringLength(ExerciseDescriptionMaxLength, 
+            MinimumLength = ExerciseDescriptionMinLength,
             ErrorMessage = "The description should be between {2} and {1} symbols long.")]
         public string Description { get; init; }
         [Required]
