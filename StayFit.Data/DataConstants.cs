@@ -5,10 +5,14 @@
         public const int UsernameMaxLength = 20;
         public const int PasswordMaxLength = 20;
 
-        public const int ExerciseNameMaxLength = 50;
+        public const int ExerciseNameMaxLength = 20;
+        public const int ExerciseNameMinLength = 3;
 
-        public const int BodyPartNameMaxLength = 50;
+        public const int BodyPartNameMaxLength = 20;
 
-        public const int EquipmentNameMaxLength = 50;
+        public const int EquipmentNameMaxLength = 20;
+
+        public const int DescriptionMaxLength = 2000;
+        public const int DescriptionMinLength = 10;
     }
 }
