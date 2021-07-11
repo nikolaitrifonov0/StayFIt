@@ -75,13 +75,13 @@ namespace StayFit.Web.Controllers
         {
             Id = bp.Id,
             Name = bp.Name
-        }).ToList();
+        }).OrderBy(bp => bp.Name).ToList();
 
         private IEnumerable<ExerciseEquipmentViewModel> SelectEquipments()
         => this.data.Equipments.Select(e => new ExerciseEquipmentViewModel
         {
             Id = e.Id,
             Name = e.Name
-        }).ToList();
+        }).OrderBy(e => e.Name).ToList();
     }
 }
