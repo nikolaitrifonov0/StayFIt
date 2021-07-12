@@ -70,6 +70,16 @@ namespace StayFit.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Find(string keyword)
+        {
+            var exercises = data.Exercises
+                .Select(e => new { e.Id, e.Name })
+                .Where(e => e.Name.Contains(keyword))
+                .ToList();
+
+            return Json(exercises);
+        }
+
         private IEnumerable<ExerciseBodyPartViewModel> SelectBodyParts()
         => this.data.BodyParts.Select(bp => new ExerciseBodyPartViewModel
         {
