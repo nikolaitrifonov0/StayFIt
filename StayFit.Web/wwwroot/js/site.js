@@ -14,10 +14,22 @@ for (let input of searchInputs) {
             let response = await request(url + `Exercises/Find?keyword=${inputValue}`);
             for (let r of response) {
                 let li = document.createElement('li');
-                let a = document.createElement('a');
-                a.textContent = r.name;
+                li.textContent = r.name;
+                li.setAttribute('value', r.id);
 
-                li.appendChild(a);
+                li.onclick = e => {
+                    let exercisesUl = li.parentElement.parentElement.querySelector('.exercises');
+                    let exerciseLi = document.createElement('li');
+
+                    exerciseLi.innerHTML = li.innerHTML;
+                    exerciseLi.setAttribute('value', li.getAttribute('value'));
+
+                    if (!containsChild(exercisesUl.children, exerciseLi)) {
+                        exercisesUl.appendChild(exerciseLi);
+                    }
+                }
+
+                
 
                 resultsUl.appendChild(li);
             }
@@ -42,4 +54,14 @@ function handleWorkoutType() {
             nthWorkdaysDiv.hidden = true;
         }
     }
+}
+
+function containsChild(collection, element) {
+    for (var i = 0; i < collection.length; i++) {
+        if (collection[i].value == element.value) {
+            return true;
+        }
+    }
+
+    return false;
 }
