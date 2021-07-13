@@ -5,36 +5,48 @@ handleWorkoutType();
 let searchInputs = document.getElementsByClassName('find-exercise');
 
 for (let input of searchInputs) {
-    input.oninput = async e => {
+    input.oninput = await addExerciseSearching()
+}
+
+function addExerciseSearching() {
+    return async (e) => {
         let input = e.target;
         let inputValue = input.value;
+        let findExerciseUrl = `Exercises/Find?keyword=${inputValue}`;
         let resultsUl = input.parentElement.querySelector('.results');
+
         if (inputValue.length >= 3) {
             resultsUl.innerHTML = '';
-            let response = await request(url + `Exercises/Find?keyword=${inputValue}`);
+
+            let response = await request(url + findExerciseUrl);
+
             for (let r of response) {
                 let li = document.createElement('li');
                 li.textContent = r.name;
                 li.setAttribute('value', r.id);
 
-                li.onclick = e => {
-                    let exercisesUl = li.parentElement.parentElement.querySelector('.exercises');
-                    let exerciseLi = document.createElement('li');
+                li.onclick = addExerciseToList(li);
 
-                    exerciseLi.innerHTML = li.innerHTML;
-                    exerciseLi.setAttribute('value', li.getAttribute('value'));
 
-                    if (!containsChild(exercisesUl.children, exerciseLi)) {
-                        exercisesUl.appendChild(exerciseLi);
-                    }
-                }
-
-                
 
                 resultsUl.appendChild(li);
             }
-            
+
         }
+    };
+
+    function addExerciseToList(li) {
+        return e => {
+            let exercisesUl = li.parentElement.parentElement.querySelector('.exercises');
+            let exerciseLi = document.createElement('li');
+
+            exerciseLi.innerHTML = li.innerHTML;
+            exerciseLi.setAttribute('value', li.getAttribute('value'));
+
+            if (!containsChild(exercisesUl.children, exerciseLi)) {
+                exercisesUl.appendChild(exerciseLi);
+            }
+        };
     }
 }
 
