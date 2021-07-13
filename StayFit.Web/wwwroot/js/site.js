@@ -2,10 +2,22 @@
 
 handleWorkoutType();
 
-let searchInputs = document.getElementsByClassName('find-exercise');
+await addSearchEventToSearchInputs();
 
-for (let input of searchInputs) {
-    input.oninput = await addExerciseSearching()
+let addExerciseBtn = document.querySelector('.add-day');
+addExerciseBtn.onclick = async (e) => {
+    let dayDiv = e.target.parentElement.parentElement.querySelector('.day').cloneNode(true);
+    dayDiv.hidden = false;
+    e.target.parentElement.parentElement.insertBefore(dayDiv, e.target.parentElement);
+    await addSearchEventToSearchInputs();
+}
+
+async function addSearchEventToSearchInputs() {
+    let searchInputs = document.getElementsByClassName('find-exercise');
+
+    for (let input of searchInputs) {
+        input.oninput = await addExerciseSearching();
+    }
 }
 
 function addExerciseSearching() {
@@ -25,9 +37,7 @@ function addExerciseSearching() {
                 li.textContent = r.name;
                 li.setAttribute('value', r.id);
 
-                li.onclick = addExerciseToList(li);
-
-
+                li.onclick = addExerciseToList(li, input);
 
                 resultsUl.appendChild(li);
             }
@@ -35,7 +45,7 @@ function addExerciseSearching() {
         }
     };
 
-    function addExerciseToList(li) {
+    function addExerciseToList(li, input) {
         return e => {
             let exercisesUl = li.parentElement.parentElement.querySelector('.exercises');
             let exerciseLi = document.createElement('li');
@@ -45,6 +55,7 @@ function addExerciseSearching() {
 
             if (!containsChild(exercisesUl.children, exerciseLi)) {
                 exercisesUl.appendChild(exerciseLi);
+                input.value = '';
             }
         };
     }
