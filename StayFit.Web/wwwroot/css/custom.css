@@ -5,3 +5,17 @@
 button.add-day.alert-success {
     font-size: xx-large;
 }
+
+ul {
+    width: 23%;
+    margin: auto;
+    list-style-type: none;
+}
+.results {     
+    border-style: solid;
+    border-color: aquamarine;   
+    color: blue;
+}
+.results li {
+    text-align: left;
+}

@@ -76,3 +76,6 @@ button.add-day.alert-success {
     margin-top: 15px;
     font-size: large;
 }
+ul {
+    list-style-type: none;
+}
