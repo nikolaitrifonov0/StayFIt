@@ -77,16 +77,24 @@ function handleWorkoutType() {
     let workoutTypeSelect = document.getElementsByTagName('select')[0];
     let weeklyWorkdaysDiv = document.getElementsByClassName('weekly-workdays')[0];
     let nthWorkdaysDiv = document.getElementsByClassName('nth-day')[0];
+    let cycleDays = document.getElementsByClassName('cycle-days');
 
     workoutTypeSelect.onchange = hideWeeklyWorkdays;
+    hideWeeklyWorkdays();
 
     function hideWeeklyWorkdays() {
         if (workoutTypeSelect.value != '0') {
             weeklyWorkdaysDiv.hidden = true;
             nthWorkdaysDiv.hidden = false;
+            for (let el of cycleDays) {
+                el.hidden = false;
+            }
         } else {
             weeklyWorkdaysDiv.hidden = false;
             nthWorkdaysDiv.hidden = true;
+            for (let el of cycleDays) {
+                el.hidden = true;
+            }
         }
     }
 }

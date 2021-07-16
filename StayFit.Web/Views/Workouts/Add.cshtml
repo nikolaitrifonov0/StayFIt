@@ -16,56 +16,58 @@
             <option value="1">Every Nth Day</option>
         </select>
     </div>
+    <label asp-for="CycleDays" class="cycle-days"></label>
+    <input asp-for="CycleDays" class="form-control cycle-days" placeholder="How many days between each workout...">
 
     <div class="form-group weekly-workdays text-center">
         <div class="day-of-week">
             <h1>Monday</h1>
-            <ul class="exercises col col-9"></ul>
+            <ul class="exercises col col-9 mb-3"></ul>
             <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
-            <ul class="results"></ul>            
+            <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Tuesday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
-            <ul class="results"></ul>            
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Wednesday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Thursday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Friday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Saturday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
         <div class="day-of-week">
             <h1>Sunday</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add."  />
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
     </div>
 
-    <div class="form-group nth-day text-center" hidden="hidden" >
-        <div class="day" hidden ="hidden">
+    <div class="form-group nth-day text-center" hidden="hidden">
+        <div class="day" hidden="hidden">
             <h1>Work day</h1>
-            <ul class="exercises col col-9"></ul>
+            <ul class="exercises col col-9 mb-3"></ul>
             <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
