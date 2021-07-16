@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using StayFit.Data;
 using StayFit.Data.Models;
-using System;
 using System.Linq;
 
 namespace StayFit.Web.Infrastructure

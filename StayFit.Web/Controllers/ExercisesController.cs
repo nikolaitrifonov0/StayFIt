@@ -2,7 +2,6 @@
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Web.Models.Exercises;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +41,7 @@ namespace StayFit.Web.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 exercise.Equipments = this.SelectEquipments();
                 exercise.BodyPartsDisplay = this.SelectBodyParts();

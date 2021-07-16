@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace StayFit.Web.Models.Exercises
+﻿namespace StayFit.Web.Models.Exercises
 {
     public class ExerciseSearchViewModel
     {

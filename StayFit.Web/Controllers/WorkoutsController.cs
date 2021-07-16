@@ -9,6 +9,16 @@ namespace StayFit.Web.Controllers
         [HttpPost]
         public IActionResult Add(AddWorkoutFormModel workout)
         {
+            if (workout.Exercises == null)
+            {
+                this.ModelState.AddModelError(nameof(workout.Exercises), "You must add some exercises.");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
+
             return RedirectToAction();
         }
     }
