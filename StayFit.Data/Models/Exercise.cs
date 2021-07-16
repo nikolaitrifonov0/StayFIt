@@ -15,7 +15,6 @@ namespace StayFit.Data.Models
         [Required]
         [MaxLength(ExerciseDescriptionMaxLength)]
         public string Description { get; set; }
-        [Required]
         public int EquipmentId { get; set; }
         public Equipment Equipment { get; set; }
         [Required]

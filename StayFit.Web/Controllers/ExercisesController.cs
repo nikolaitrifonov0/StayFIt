@@ -73,7 +73,7 @@ namespace StayFit.Web.Controllers
         public IActionResult Find(string keyword)
         {
             var exercises = data.Exercises
-                .Select(e => new { e.Id, e.Name })
+                .Select(e => new ExerciseSearchViewModel { Id = e.Id, Name = e.Name })
                 .Where(e => e.Name.Contains(keyword))
                 .ToList();
 

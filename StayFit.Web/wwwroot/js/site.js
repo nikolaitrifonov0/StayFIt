@@ -4,10 +4,14 @@ handleWorkoutType();
 
 await addSearchEventToSearchInputs();
 
-let addExerciseBtn = document.querySelector('.add-day');
-addExerciseBtn.onclick = async (e) => {
+let currentDay = 0;
+let addDayBtn = document.querySelector('.add-day');
+addDayBtn.onclick = async (e) => {
     let dayDiv = e.target.parentElement.parentElement.querySelector('.day').cloneNode(true);
-    dayDiv.hidden = false;
+    dayDiv.querySelector('h1').textContent = `Day ${currentDay + 1}`;
+    currentDay++;
+    dayDiv.hidden = false;        
+
     e.target.parentElement.parentElement.insertBefore(dayDiv, e.target.parentElement);
     await addSearchEventToSearchInputs();
 }
@@ -49,9 +53,17 @@ function addExerciseSearching() {
         return e => {
             let exercisesUl = li.parentElement.parentElement.querySelector('.exercises');
             let exerciseLi = document.createElement('li');
+            let exerciseInput = document.createElement('input');
+            let dayHeader = li.parentElement.parentElement.querySelector('h1').textContent;
 
             exerciseLi.innerHTML = li.innerHTML;
-            exerciseLi.setAttribute('value', li.getAttribute('value'));
+            exerciseLi.setAttribute('value', li.getAttribute('value'));            
+
+            exerciseInput.value = `${li.getAttribute('value')} - ${dayHeader}`;
+            exerciseInput.hidden = true;
+            exerciseInput.name = 'exercises';
+
+            exerciseLi.appendChild(exerciseInput);
 
             if (!containsChild(exercisesUl.children, exerciseLi)) {
                 exercisesUl.appendChild(exerciseLi);

@@ -15,6 +15,7 @@ namespace StayFit.Data.Models
         [Required]
         [MaxLength(PasswordMaxLength)]
         public string Password { get; set; }
+        [Required]
         public string CurrentWorkoutId { get; set; }
         public Workout CurrentWorkout { get; set; }
         public ICollection<Workout> UploadedWorkouts { get; init; } = new HashSet<Workout>();

@@ -7,7 +7,6 @@ namespace StayFit.Data.Models
     public class WorkDay
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
-        [Required]
         public DateTime NextWorkout { get; set; }       
         public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>(); 
         [Required]

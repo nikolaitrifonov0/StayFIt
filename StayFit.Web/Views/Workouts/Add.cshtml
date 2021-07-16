@@ -1,6 +1,6 @@
-﻿@model AddWorkoutViewModel
+﻿@model AddWorkoutFormModel
 
-<form>
+<form method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" placeholder="Your workout's name">
@@ -69,14 +69,10 @@
             <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
             <ul class="results"></ul>
         </div>
-        <div class="day">
-            <h1>Work day</h1>
-            <ul class="exercises col col-9"></ul>
-            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
-            <ul class="results"></ul>
-        </div>
         <div class="row justify-content-center">
             <button type="button" class="add-day alert-success">Add Day</button>
         </div>
     </div>
+
+    <input class="btn btn-primary" type="submit" value="Save" />
 </form>
