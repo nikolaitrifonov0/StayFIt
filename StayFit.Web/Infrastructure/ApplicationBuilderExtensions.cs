@@ -15,11 +15,11 @@ namespace StayFit.Web.Infrastructure
 
             var data = scopedServices.ServiceProvider.GetService<StayFitContext>();
 
+            data.Database.Migrate();
+
             PopulateBodyParts(data);
 
-            PopulateEquipments(data);
-
-            data.Database.Migrate();
+            PopulateEquipments(data);            
 
             return app;
         }

@@ -1,4 +1,5 @@
-﻿using StayFit.Data.Models.Enums.Workout;
+﻿using Microsoft.AspNetCore.Identity;
+using StayFit.Data.Models.Enums.Workout;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,12 +18,11 @@ namespace StayFit.Data.Models
         public string Description { get; set; }
         [Required]
         public string CreatorId { get; set; }
-        public User Creator { get; set; }
         [Required]
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         [Required]
         public WorkoutCycleType WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }
-        public ICollection<User> Users { get; init; } = new HashSet<User>();
+        public ICollection<IdentityUser> Users { get; init; } = new HashSet<IdentityUser>();
     }
 }

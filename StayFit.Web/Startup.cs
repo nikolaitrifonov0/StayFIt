@@ -28,6 +28,7 @@ namespace StayFit.Web
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
+                    options.Password.RequireDigit = false;
                 })
                     .AddEntityFrameworkStores<StayFitContext>();
             services.AddControllersWithViews();

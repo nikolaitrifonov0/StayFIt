@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StayFit.Data.Models;
 
 namespace StayFit.Data
 {
-    public class StayFitContext : DbContext
+    public class StayFitContext : IdentityDbContext
     {
         public StayFitContext()
         {
@@ -16,7 +18,6 @@ namespace StayFit.Data
         public DbSet<BodyPart> BodyParts { get; init; }
         public DbSet<Equipment> Equipments { get; init; }
         public DbSet<Exercise> Exercises { get; init; }
-        public DbSet<User> Users { get; init; }
         public DbSet<WorkDay> WorkDays { get; init; }
         public DbSet<Workout> Workouts { get; init; }
         public DbSet<UserExerciseLog> UserExerciseLogs { get; init; }
@@ -34,18 +35,22 @@ namespace StayFit.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.UploadedWorkouts)
-                .WithOne(w => w.Creator)
+            modelBuilder.Entity<Workout>()
+                .HasOne<IdentityUser>()
+                .WithMany()
                 .HasForeignKey(w => w.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.CurrentWorkout)
-                .WithMany(w => w.Users)
-                .HasForeignKey(u => u.CurrentWorkoutId);
+            modelBuilder.Entity<Workout>()
+                .HasMany<IdentityUser>()
+                .WithOne();
 
-           
+
+            modelBuilder.Entity<UserExerciseLog>()
+                .HasOne<IdentityUser>()
+                .WithMany()
+                .HasForeignKey(uel => uel.UserId);
+
             modelBuilder.Entity<UserExerciseLog>()
                 .HasKey(uel => new { uel.UserId, uel.WorkDayId, uel.ExerciseId });
 
