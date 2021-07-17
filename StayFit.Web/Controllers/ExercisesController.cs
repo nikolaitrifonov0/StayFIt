@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Web.Models.Exercises;
@@ -16,6 +17,7 @@ namespace StayFit.Web.Controllers
             this.data = data;
         }
 
+        [Authorize]
         public IActionResult Add() => View(new AddExerciseFormModel
         {
             Equipments = this.SelectEquipments(),
@@ -23,6 +25,7 @@ namespace StayFit.Web.Controllers
         });
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddExerciseFormModel exercise)
         {
             if (!this.data.Equipments.Any(e => e.Id == exercise.Equipment))
