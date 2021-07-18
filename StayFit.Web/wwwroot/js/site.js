@@ -46,6 +46,16 @@ function addExerciseSearching() {
                 resultsUl.appendChild(li);
             }
 
+            let addExerciseLi = document.createElement('li');
+            let addExerciseAnchor = document.createElement('a');
+
+            addExerciseAnchor.href = '/Exercises/Add';
+            addExerciseAnchor.textContent = `Your exercise is missing? You can add it.`;
+            addExerciseAnchor.target = '_blank';
+            addExerciseAnchor.rel = 'noopener noreferrer';
+
+            addExerciseLi.appendChild(addExerciseAnchor);
+            resultsUl.appendChild(addExerciseLi);
         }
     };
 
