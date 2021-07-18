@@ -21,6 +21,7 @@ namespace StayFit.Data
         public DbSet<WorkDay> WorkDays { get; init; }
         public DbSet<Workout> Workouts { get; init; }
         public DbSet<UserExerciseLog> UserExerciseLogs { get; init; }
+        public DbSet<Set> Sets { get; init; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,9 +51,6 @@ namespace StayFit.Data
                 .HasOne<IdentityUser>()
                 .WithMany()
                 .HasForeignKey(uel => uel.UserId);
-
-            modelBuilder.Entity<UserExerciseLog>()
-                .HasKey(uel => new { uel.UserId, uel.WorkDayId, uel.ExerciseId });
 
             base.OnModelCreating(modelBuilder);
         }
