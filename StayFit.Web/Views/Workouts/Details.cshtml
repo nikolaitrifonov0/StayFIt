@@ -1,0 +1,28 @@
+﻿@model DetailsWorkoutViewModel
+@inject SignInManager<IdentityUser> SignInManager
+
+<div class="jumbotron">
+    <h1 class="display-4">@Model.Name</h1>
+    <p class="lead">@Model.Description</p>
+    @if (Model.CycleDays != null)
+    {
+        <p class="lead">You workout every @Model.CycleDays day/s.</p>
+    }
+    <hr class="my-4">
+    <p>
+        @foreach (var day in Model.ExercisesToDays)
+        {
+            <h1 class="text-center">@day.Key</h1>
+            <ul class="list-group mt-3">
+                @foreach (var exercise in day.Value)
+                {
+                    <li class="list-group-item">@exercise</li>
+                }
+            </ul>
+        }
+    </p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a class="btn btn-primary btn-lg" href="/Workouts/Assign/@Model.Id" role="button">Make Active</a>
+    }
+</div>

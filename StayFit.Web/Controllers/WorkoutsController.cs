@@ -97,6 +97,58 @@ namespace StayFit.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Details(string id)
+        {
+            if (!this.data.Workouts.Any(w => w.Id == id))
+            {
+                return NotFound();
+            }
+
+            var workout = this.data.Workouts
+                .Where(w => w.Id == id)
+                .Select(w => new 
+                {
+                    Id = w.Id,
+                    Name = w.Name,
+                    Description = w.Description,
+                    CycleType = w.WorkoutCycleType,
+                    CycleDays = w.CycleDays,
+                    WorkDays = w.WorkDays.Select(wd => new 
+                        { 
+                            Exercises = wd.Exercises.Select(e => e.Name).ToList(),
+                            Day = wd.NextWorkout
+                        }).ToList()
+                }).FirstOrDefault();
+
+            var model = new DetailsWorkoutViewModel
+            {
+                Id = workout.Id,
+                Name = workout.Name,
+                Description = workout.Description,
+                CycleDays = workout.CycleDays
+            };
+
+            if (workout.CycleType == WorkoutCycleType.Weekly)
+            {
+                foreach (var day in workout.WorkDays)
+                {
+                    var dayName = day.Day.DayOfWeek.ToString();
+
+                    model.ExercisesToDays[dayName] = day.Exercises;
+                }
+            }
+            else if (workout.CycleType == WorkoutCycleType.EveryNDays)
+            {
+                for (int i = 0; i < workout.WorkDays.Count; i++)
+                {
+                    var dayName = $"Day {i + 1}";
+                    model.ExercisesToDays[dayName] = workout.WorkDays[i].Exercises;
+                }
+            }
+
+            return View(model);
+        }
+
         private static Dictionary<string, List<string>> ParseExercisesToDays(AddWorkoutFormModel workout)
         {
             var result = new Dictionary<string, List<string>>();
@@ -128,8 +180,8 @@ namespace StayFit.Web.Controllers
             return result;
         }
 
-        private IEnumerable<WorkoutViewModel> SelectWorkouts()=>        
-            this.data.Workouts.Select(w => new WorkoutViewModel
+        private IEnumerable<WorkoutAllViewModel> SelectWorkouts()=>        
+            this.data.Workouts.Select(w => new WorkoutAllViewModel
             {
                 Id = w.Id,
                 Name = w.Name,

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StayFit.Web.Models.Workouts
 {
-    public class WorkoutViewModel
+    public class WorkoutAllViewModel
     {
         public string Id { get; init; }
         public string Name { get; init; }

@@ -7,6 +7,6 @@ namespace StayFit.Web.Models.Workouts
 {
     public class AllWorkoutsViewModel
     {
-        public IEnumerable<WorkoutViewModel> Workouts { get; init; }
+        public IEnumerable<WorkoutAllViewModel> Workouts { get; init; }
     }
 }
