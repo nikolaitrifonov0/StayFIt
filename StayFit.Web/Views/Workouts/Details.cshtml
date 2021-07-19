@@ -1,6 +1,10 @@
 ﻿@model DetailsWorkoutViewModel
 @inject SignInManager<IdentityUser> SignInManager
 
+@{ 
+    ViewData["Title"] = "Workout Details";
+}
+
 <div class="jumbotron">
     <h1 class="display-4">@Model.Name</h1>
     <p class="lead">@Model.Description</p>
@@ -10,11 +14,11 @@
     }
     <hr class="my-4">
     <p>
-        @foreach (var day in Model.ExercisesToDays)
+        @foreach (var day in Model.WorkDays)
         {
-            <h1 class="text-center">@day.Key</h1>
+            <h1 class="text-center">@day.Day</h1>
             <ul class="list-group mt-3">
-                @foreach (var exercise in day.Value)
+                @foreach (var exercise in day.Exercises)
                 {
                     <li class="list-group-item">@exercise</li>
                 }

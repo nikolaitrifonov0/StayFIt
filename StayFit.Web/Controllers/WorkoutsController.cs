@@ -106,48 +106,43 @@ namespace StayFit.Web.Controllers
 
             var workout = this.data.Workouts
                 .Where(w => w.Id == id)
-                .Select(w => new 
+                .Select(w => new DetailsWorkoutViewModel
                 {
                     Id = w.Id,
                     Name = w.Name,
                     Description = w.Description,
                     CycleType = w.WorkoutCycleType,
                     CycleDays = w.CycleDays,
-                    WorkDays = w.WorkDays.Select(wd => new 
+                    WorkDays = w.WorkDays.Select(wd => new DetailsWorkDayViewModel
                         { 
                             Exercises = wd.Exercises.Select(e => e.Name).ToList(),
-                            Day = wd.NextWorkout
+                            NextWorkout = wd.NextWorkout
                         }).ToList()
                 }).FirstOrDefault();
-
-            var model = new DetailsWorkoutViewModel
-            {
-                Id = workout.Id,
-                Name = workout.Name,
-                Description = workout.Description,
-                CycleDays = workout.CycleDays
-            };
 
             if (workout.CycleType == WorkoutCycleType.Weekly)
             {
                 foreach (var day in workout.WorkDays)
                 {
-                    var dayName = day.Day.DayOfWeek.ToString();
+                    var dayName = day.NextWorkout.DayOfWeek.ToString();
 
-                    model.ExercisesToDays[dayName] = day.Exercises;
+                    day.Day = dayName;
                 }
+                workout.WorkDays = workout.WorkDays.OrderBy(d => d.NextWorkout.DayOfWeek).ToList();
             }
             else if (workout.CycleType == WorkoutCycleType.EveryNDays)
             {
                 for (int i = 0; i < workout.WorkDays.Count; i++)
                 {
                     var dayName = $"Day {i + 1}";
-                    model.ExercisesToDays[dayName] = workout.WorkDays[i].Exercises;
+
+                    workout.WorkDays[i].Day = dayName;
                 }
             }
 
-            return View(model);
-        }
+
+            return View(workout);
+        }        
 
         private static Dictionary<string, List<string>> ParseExercisesToDays(AddWorkoutFormModel workout)
         {
