@@ -1,0 +1,14 @@
+﻿@model AllWorkoutsViewModel
+
+@foreach (var workout in Model.Workouts)
+{
+    <div class="card w-75">
+        <div class="card-body">
+            <h5 class="card-title">@workout.Name</h5>
+            <p class="card-text">@workout.Creator</p>
+            <p class="card-text">@workout.Description</p>
+            <p class="card-text">Work days: @workout.TotalWorkDays</p>
+            <a href="/Workouts/Details/@workout.Id" class="btn btn-primary">Details</a>
+        </div>
+    </div>
+}

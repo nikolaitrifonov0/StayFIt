@@ -18,6 +18,7 @@ namespace StayFit.Data.Models
         public string Description { get; set; }
         [Required]
         public string CreatorId { get; set; }
+        public IdentityUser Creator { get; set; }
         [Required]
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         [Required]

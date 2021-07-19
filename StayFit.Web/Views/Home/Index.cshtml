@@ -1,17 +1,9 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-@if (!SignInManager.IsSignedIn(User))
-{
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>With this app you can track your exercises' progress.</p>
-    </div>
-}
-else 
-{
-    
-}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>With this app you can track your exercises' progress.</p>
+</div>
+

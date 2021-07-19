@@ -4,8 +4,8 @@ namespace StayFit.Web.Models.Home
 {
     public class LogWorkoutHomeViewModel
     {
-        public bool HasWorkout { get; init; }
-        public bool IsWorkoutComplete { get; init; }
-        public Dictionary<string, string> Exercises { get; init; }
+        public bool HasWorkout { get; set; } = false;
+        public bool IsWorkdayComplete { get; set; } = false;
+        public Dictionary<string, string> Exercises { get; init; } = new();
     }
 }

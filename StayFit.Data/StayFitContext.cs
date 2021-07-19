@@ -37,7 +37,7 @@ namespace StayFit.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Workout>()
-                .HasOne<IdentityUser>()
+                .HasOne<IdentityUser>(w => w.Creator)
                 .WithMany()
                 .HasForeignKey(w => w.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);

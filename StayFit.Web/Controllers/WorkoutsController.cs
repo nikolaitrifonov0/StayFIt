@@ -21,6 +21,11 @@ namespace StayFit.Web.Controllers
             this.data = data;
         }
 
+        public IActionResult All() => View(new AllWorkoutsViewModel
+        {
+            Workouts = this.SelectWorkouts()
+        });        
+
         [Authorize]
         public IActionResult Add() => View();
 
@@ -64,7 +69,7 @@ namespace StayFit.Web.Controllers
                 {
                     var dayOfWeek = Enum.Parse(typeof(DayOfWeek), ed.Key);
 
-                    var tomorrow = DateTime.Today.AddDays(1);
+                    var tomorrow = DateTime.UtcNow.AddDays(1);
 
                     var daysUntilNextWorkout = ((int)dayOfWeek - (int)tomorrow.DayOfWeek + 7) % 7;
                     nextWorkout = tomorrow.AddDays(daysUntilNextWorkout);
@@ -73,7 +78,7 @@ namespace StayFit.Web.Controllers
                 {
                     if (exercisesToDays.Keys.First() == ed.Key)
                     {
-                        nextWorkout = DateTime.Today.AddDays(1);
+                        nextWorkout = DateTime.UtcNow.AddDays(1);
                     }
                     else
                     {
@@ -122,5 +127,16 @@ namespace StayFit.Web.Controllers
 
             return result;
         }
+
+        private IEnumerable<WorkoutViewModel> SelectWorkouts()=>        
+            this.data.Workouts.Select(w => new WorkoutViewModel
+            {
+                Id = w.Id,
+                Name = w.Name,
+                Description = w.Description,
+                Creator = w.Creator.UserName,
+                TotalWorkDays = w.WorkDays.Count
+            }).ToList();
+        
     }
 }
