@@ -1,6 +1,6 @@
-﻿namespace StayFit.Web.Models.Exercises
+﻿namespace StayFit.Services.Exercises
 {
-    public class ExerciseSearchViewModel
+    public class ExerciseSearchServiceModel
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -28,13 +28,13 @@ function addExerciseSearching() {
     return async (e) => {
         let input = e.target;
         let inputValue = input.value;
-        let findExerciseUrl = `Exercises/Find?keyword=${inputValue}`;
+        let findExerciseUrl = `/Exercises/Find?keyword=${inputValue}`;
         let resultsUl = input.parentElement.querySelector('.results');
 
         if (inputValue.length >= 3) {
             resultsUl.innerHTML = '';
 
-            let response = await request(url + findExerciseUrl);
+            let response = await request(findExerciseUrl);
 
             for (let r of response) {
                 let li = document.createElement('li');

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StayFit.Data;
+using StayFit.Services.Exercises;
 using StayFit.Web.Infrastructure;
 
 namespace StayFit.Web
@@ -31,7 +32,10 @@ namespace StayFit.Web
                     options.Password.RequireDigit = false;
                 })
                     .AddEntityFrameworkStores<StayFitContext>();
+
             services.AddControllersWithViews();
+
+            services.AddTransient<IExerciseService, ExerciseService>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

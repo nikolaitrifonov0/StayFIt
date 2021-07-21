@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StayFit.Data;
 using StayFit.Data.Models;
+using StayFit.Services.Exercises;
 using StayFit.Web.Models.Exercises;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace StayFit.Web.Controllers
 {
     public class ExercisesController : Controller
     {
-        private StayFitContext data;
+        private readonly StayFitContext data;
+        private readonly IExerciseService exercises;
 
-        public ExercisesController(StayFitContext data)
+        public ExercisesController(StayFitContext data, IExerciseService exercises)
         {
             this.data = data;
+            this.exercises = exercises;
         }
 
         [Authorize]
@@ -73,14 +76,8 @@ namespace StayFit.Web.Controllers
         }
 
         public IActionResult Find(string keyword)
-        {
-            var exercises = data.Exercises
-                .Select(e => new ExerciseSearchViewModel { Id = e.Id, Name = e.Name })
-                .Where(e => e.Name.Contains(keyword))
-                .ToList();
-
-            return Json(exercises);
-        }
+            => Ok(this.exercises.Find(keyword));
+        
 
         private IEnumerable<ExerciseBodyPartViewModel> SelectBodyParts()
         => this.data.BodyParts.Select(bp => new ExerciseBodyPartViewModel

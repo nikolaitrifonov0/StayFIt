@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StayFit.Data\StayFit.Data.csproj" />
+    <ProjectReference Include="..\StayFit.Services\StayFit.Services.csproj" />
   </ItemGroup>
 
 </Project>
