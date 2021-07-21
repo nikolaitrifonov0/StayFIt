@@ -1,0 +1,18 @@
+﻿@model LogWorkoutViewModel
+
+@if (!Model.HasWorkout)
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome!</h1>
+        <p class="lead">You don't have selected workout. Consider <a href="/Workouts/All">Selecting one</a> or <a href="/Workouts/Add">Creating one</a></p>
+        <hr class="my-4">
+    </div>
+}
+else
+{
+    <div class="jumbotron">
+        <h1 class="display-4">@Model.Name</h1>
+        <p class="lead">You don't have selected workout. Consider <a href="/Workouts/All">Selecting one</a> or <a href="/Workouts/Add">Creating one</a></p>
+        <hr class="my-4">
+    </div>
+}

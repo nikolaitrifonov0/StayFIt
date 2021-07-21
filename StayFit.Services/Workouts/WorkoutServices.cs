@@ -1,4 +1,5 @@
-﻿using StayFit.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using StayFit.Data;
 using StayFit.Data.Models.Enums.Workout;
 using System.Linq;
 
@@ -24,6 +25,20 @@ namespace StayFit.Services.Workouts
                 TotalWorkDays = w.WorkDays.Count
             }).ToList()
         };
+
+        public void Assign(string userId, string workoutId)
+        {
+            var user = this.data.Users.Where(u => u.Id == userId).FirstOrDefault();
+            var workout = this.data.Workouts.Where(w => w.Id == workoutId).FirstOrDefault();
+
+            if (workout == null || workout.Users.Any(u => u.Id == userId))
+            {
+                return;
+            }
+
+            workout.Users.Add(user);
+            data.SaveChanges();
+        }
 
         public WorkoutDetailsServiceModel Details(string id)
         {

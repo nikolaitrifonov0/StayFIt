@@ -4,5 +4,6 @@
     {
         AllWorkoutsServiceModel All();
         WorkoutDetailsServiceModel Details(string id);
+        void Assign(string userId, string workoutId);
     }
 }

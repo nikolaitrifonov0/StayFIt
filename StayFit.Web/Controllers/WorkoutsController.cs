@@ -122,6 +122,14 @@ namespace StayFit.Web.Controllers
             return View(workout);
         }        
 
+        [Authorize]
+        public IActionResult Assign(string id)
+        {
+            workouts.Assign(this.User.GetId(), id);
+
+            return RedirectToAction("Log", "Users");
+        }
+
         private static Dictionary<string, List<string>> ParseExercisesToDays(AddWorkoutFormModel workout)
         {
             var result = new Dictionary<string, List<string>>();
