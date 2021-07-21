@@ -1,14 +1,15 @@
 ﻿using StayFit.Data.Models.Enums.Workout;
 using System.Collections.Generic;
 
-namespace StayFit.Web.Models.Workouts
+namespace StayFit.Services.Workouts
 {
-    public class DetailsWorkoutViewModel
+    public class WorkoutDetailsServiceModel
     {
         public string Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
-        public List<DetailsWorkDayViewModel> WorkDays { get; set; }
+        public List<DetailsWorkDayServiceModel> WorkDays { get; set; }
         public int? CycleDays { get; init; }
+        public WorkoutCycleType CycleType { get; init; }
     }
 }

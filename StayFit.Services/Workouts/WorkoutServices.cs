@@ -1,4 +1,5 @@
 ﻿using StayFit.Data;
+using StayFit.Data.Models.Enums.Workout;
 using System.Linq;
 
 namespace StayFit.Services.Workouts
@@ -22,8 +23,52 @@ namespace StayFit.Services.Workouts
                 Creator = w.Creator.UserName,
                 TotalWorkDays = w.WorkDays.Count
             }).ToList()
-        }; 
-        
+        };
 
+        public WorkoutDetailsServiceModel Details(string id)
+        {
+            if (!this.data.Workouts.Any(w => w.Id == id))
+            {
+                return null;
+            }
+
+            var workout = this.data.Workouts
+                .Where(w => w.Id == id)
+                .Select(w => new WorkoutDetailsServiceModel
+                {
+                    Id = w.Id,
+                    Name = w.Name,
+                    Description = w.Description,
+                    CycleType = w.WorkoutCycleType,
+                    CycleDays = w.CycleDays,
+                    WorkDays = w.WorkDays.Select(wd => new DetailsWorkDayServiceModel
+                    {
+                        Exercises = wd.Exercises.Select(e => e.Name).ToList(),
+                        NextWorkout = wd.NextWorkout
+                    }).ToList()
+                }).FirstOrDefault();
+
+            if (workout.CycleType == WorkoutCycleType.Weekly)
+            {
+                foreach (var day in workout.WorkDays)
+                {
+                    var dayName = day.NextWorkout.DayOfWeek.ToString();
+
+                    day.Day = dayName;
+                }
+                workout.WorkDays = workout.WorkDays.OrderBy(d => d.NextWorkout.DayOfWeek).ToList();
+            }
+            else if (workout.CycleType == WorkoutCycleType.EveryNDays)
+            {
+                for (int i = 0; i < workout.WorkDays.Count; i++)
+                {
+                    var dayName = $"Day {i + 1}";
+
+                    workout.WorkDays[i].Day = dayName;
+                }
+            }
+
+            return workout;
+        }
     }
 }

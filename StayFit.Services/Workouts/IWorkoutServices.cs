@@ -3,5 +3,6 @@
     public interface IWorkoutServices
     {
         AllWorkoutsServiceModel All();
+        WorkoutDetailsServiceModel Details(string id);
     }
 }

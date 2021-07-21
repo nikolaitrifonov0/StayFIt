@@ -99,47 +99,25 @@ namespace StayFit.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            if (!this.data.Workouts.Any(w => w.Id == id))
+            var workoutService = workouts.Details(id);
+
+            if (workoutService == null)
             {
                 return NotFound();
             }
 
-            var workout = this.data.Workouts
-                .Where(w => w.Id == id)
-                .Select(w => new DetailsWorkoutViewModel
-                {
-                    Id = w.Id,
-                    Name = w.Name,
-                    Description = w.Description,
-                    CycleType = w.WorkoutCycleType,
-                    CycleDays = w.CycleDays,
-                    WorkDays = w.WorkDays.Select(wd => new DetailsWorkDayViewModel
-                        { 
-                            Exercises = wd.Exercises.Select(e => e.Name).ToList(),
-                            NextWorkout = wd.NextWorkout
-                        }).ToList()
-                }).FirstOrDefault();
-
-            if (workout.CycleType == WorkoutCycleType.Weekly)
+            var workout = new DetailsWorkoutViewModel
             {
-                foreach (var day in workout.WorkDays)
+                Id = workoutService.Id,
+                Name = workoutService.Name,
+                CycleDays = workoutService.CycleDays,
+                Description = workoutService.Description,
+                WorkDays = workoutService.WorkDays.Select(wd => new DetailsWorkDayViewModel
                 {
-                    var dayName = day.NextWorkout.DayOfWeek.ToString();
-
-                    day.Day = dayName;
-                }
-                workout.WorkDays = workout.WorkDays.OrderBy(d => d.NextWorkout.DayOfWeek).ToList();
-            }
-            else if (workout.CycleType == WorkoutCycleType.EveryNDays)
-            {
-                for (int i = 0; i < workout.WorkDays.Count; i++)
-                {
-                    var dayName = $"Day {i + 1}";
-
-                    workout.WorkDays[i].Day = dayName;
-                }
-            }
-
+                    Day = wd.Day,
+                    Exercises = wd.Exercises
+                }).ToList()
+            };
 
             return View(workout);
         }        
