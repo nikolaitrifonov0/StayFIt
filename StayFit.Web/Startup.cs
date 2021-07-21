@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StayFit.Data;
 using StayFit.Services.Exercises;
+using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
 
 namespace StayFit.Web
@@ -36,6 +37,7 @@ namespace StayFit.Web
             services.AddControllersWithViews();
 
             services.AddTransient<IExerciseService, ExerciseService>();
+            services.AddTransient<IWorkoutServices, WorkoutServices>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
+using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
 using StayFit.Web.Models.Workouts;
 using System;
@@ -15,16 +16,15 @@ namespace StayFit.Web.Controllers
     public class WorkoutsController : Controller
     {
         private StayFitContext data;
+        private readonly IWorkoutServices workouts;
 
-        public WorkoutsController(StayFitContext data)
+        public WorkoutsController(StayFitContext data, IWorkoutServices workouts)
         {
             this.data = data;
+            this.workouts = workouts;
         }
 
-        public IActionResult All() => View(new AllWorkoutsViewModel
-        {
-            Workouts = this.SelectWorkouts()
-        });        
+        public IActionResult All() => View(this.workouts.All());        
 
         [Authorize]
         public IActionResult Add() => View();
@@ -173,17 +173,6 @@ namespace StayFit.Web.Controllers
             }
 
             return result;
-        }
-
-        private IEnumerable<WorkoutAllViewModel> SelectWorkouts()=>        
-            this.data.Workouts.Select(w => new WorkoutAllViewModel
-            {
-                Id = w.Id,
-                Name = w.Name,
-                Description = w.Description,
-                Creator = w.Creator.UserName,
-                TotalWorkDays = w.WorkDays.Count
-            }).ToList();
-        
+        }               
     }
 }
