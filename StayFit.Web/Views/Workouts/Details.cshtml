@@ -20,7 +20,7 @@
             <ul class="list-group mt-3">
                 @foreach (var exercise in day.Exercises)
                 {
-                    <li class="list-group-item">@exercise</li>
+                    <li class="list-group-item"><a href="/Exercises/Details/@exercise.Key">@exercise.Value</a></li>
                 }
             </ul>
         }

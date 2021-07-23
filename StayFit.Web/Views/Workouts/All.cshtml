@@ -1,5 +1,9 @@
 ﻿@model AllWorkoutsServiceModel
 
+@{
+    ViewData["Title"] = "All Workouts";
+}
+
 @foreach (var workout in Model.Workouts)
 {
     <div class="card w-75">

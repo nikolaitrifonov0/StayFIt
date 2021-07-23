@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models.Enums.Workout;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StayFit.Services.Workouts
@@ -48,6 +50,9 @@ namespace StayFit.Services.Workouts
             }
 
             var workout = this.data.Workouts
+                .Include(w => w.WorkDays)
+                .ThenInclude(w => w.Exercises)
+                .AsEnumerable()
                 .Where(w => w.Id == id)
                 .Select(w => new WorkoutDetailsServiceModel
                 {
@@ -58,7 +63,8 @@ namespace StayFit.Services.Workouts
                     CycleDays = w.CycleDays,
                     WorkDays = w.WorkDays.Select(wd => new DetailsWorkDayServiceModel
                     {
-                        Exercises = wd.Exercises.Select(e => e.Name).ToList(),
+                        Exercises = wd.Exercises
+                        .Select(e => new { e.Id, e.Name }).ToDictionary(e => e.Id, e => e.Name),
                         NextWorkout = wd.NextWorkout
                     }).ToList()
                 }).FirstOrDefault();

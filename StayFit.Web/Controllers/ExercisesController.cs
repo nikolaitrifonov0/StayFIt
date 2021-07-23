@@ -77,7 +77,17 @@ namespace StayFit.Web.Controllers
 
         public IActionResult Find(string keyword)
             => Ok(this.exercises.Find(keyword));
-        
+
+        public IActionResult Details(string id)
+        {
+            var exercise = this.exercises.Details(id);
+            if (exercise == null)
+            {
+                return NotFound();
+            }
+
+            return View(exercise);
+        }
 
         private IEnumerable<ExerciseBodyPartViewModel> SelectBodyParts()
         => this.data.BodyParts.Select(bp => new ExerciseBodyPartViewModel

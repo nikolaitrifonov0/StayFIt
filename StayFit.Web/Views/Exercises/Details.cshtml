@@ -1,0 +1,41 @@
+﻿@model ExerciseDetailsServiceModel
+
+@{
+    ViewData["Title"] = "Exercise Details";
+}
+
+<div class="row mb-3">
+    <h1>@Model.Name</h1>
+</div>
+<div class="row">
+    <img src="@Model.ImageUrl" alt="" class="img-fluid w-50" />
+</div>
+<div class="row mt-5">
+    <p>@Model.Description</p>
+</div>
+<div class="row mt-5">
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th scope="col">Muscles worked:</th>
+                <th scope="col">Equipment required:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.BodyParts.First()</td>
+                <td>@Model.Equipment</td>
+            </tr>
+
+            @foreach (var bp in Model.BodyParts.Skip(1))
+            {
+                <tr><td>@bp</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row mt-2">
+    <iframe width="560" height="315"
+            src="@Model.VideoUrl">
+    </iframe>
+</div>
