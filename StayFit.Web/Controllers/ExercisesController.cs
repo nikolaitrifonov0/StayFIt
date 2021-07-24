@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StayFit.Data;
 using StayFit.Services.BodyParts;
 using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Web.Models.Exercises;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StayFit.Web.Controllers
 {

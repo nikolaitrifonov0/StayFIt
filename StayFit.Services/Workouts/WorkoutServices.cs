@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
+using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StayFit.Services.Workouts
@@ -12,6 +15,59 @@ namespace StayFit.Services.Workouts
         public WorkoutServices(StayFitContext data)
         {
             this.data = data;
+        }
+
+        public void Add(string name, string description, int? cycleDays, 
+            int workoutCycleType, string creatorId, Dictionary<string, List<string>> exercisesToDays)
+        {
+            var workout = new Workout
+            {
+                Name = name,
+                Description = description,
+                CycleDays = cycleDays,
+                WorkoutCycleType = workoutCycleType == 0 ?
+                WorkoutCycleType.Weekly : WorkoutCycleType.EveryNDays,
+                CreatorId = creatorId
+            };
+
+            foreach (var ed in exercisesToDays)
+            {
+                var workDay = new WorkDay
+                {
+                    Workout = workout,
+                    Exercises = this.data.Exercises.Where(e => ed.Value.Contains(e.Id)).ToHashSet()
+                };
+
+                DateTime nextWorkout;
+
+                if (Enum.IsDefined(typeof(DayOfWeek), ed.Key))
+                {
+                    var dayOfWeek = Enum.Parse(typeof(DayOfWeek), ed.Key);
+
+                    var tomorrow = DateTime.UtcNow.AddDays(1);
+
+                    var daysUntilNextWorkout = ((int)dayOfWeek - (int)tomorrow.DayOfWeek + 7) % 7;
+                    nextWorkout = tomorrow.AddDays(daysUntilNextWorkout);
+                }
+                else
+                {
+                    if (exercisesToDays.Keys.First() == ed.Key)
+                    {
+                        nextWorkout = DateTime.UtcNow.AddDays(1);
+                    }
+                    else
+                    {
+                        nextWorkout = workout.WorkDays.Last().NextWorkout.AddDays((double)workout.CycleDays);
+                    }
+                }
+
+                workDay.NextWorkout = nextWorkout;
+
+                workout.WorkDays.Add(workDay);
+            }
+
+            this.data.Workouts.Add(workout);
+            this.data.SaveChanges();
         }
 
         public AllWorkoutsServiceModel All() => new AllWorkoutsServiceModel

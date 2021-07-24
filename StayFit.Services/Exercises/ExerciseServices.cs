@@ -40,24 +40,23 @@ namespace StayFit.Services.Exercises
             var youtubeLinkSeparator = "v=";
 
             return this.data
-                        .Exercises
-                        .Where(e => e.Id == id)
-                        .Select(e => new ExerciseDetailsServiceModel
-                        {
-                            Name = e.Name,
-                            Description = e.Description,
-                            ImageUrl = e.ImageUrl,
-                            VideoUrl = youtubeEmbedLink + e.VideoUrl.Split(youtubeLinkSeparator, StringSplitOptions.RemoveEmptyEntries)[1],
-                            Equipment = e.Equipment.Name,
-                            BodyParts = e.BodyParts.Select(bp => bp.Name).ToList()
-                        }).FirstOrDefault();
+                    .Exercises
+                    .Where(e => e.Id == id)
+                    .Select(e => new ExerciseDetailsServiceModel
+                    {
+                        Name = e.Name,
+                        Description = e.Description,
+                        ImageUrl = e.ImageUrl,
+                        VideoUrl = youtubeEmbedLink + e.VideoUrl.Split(youtubeLinkSeparator, StringSplitOptions.RemoveEmptyEntries)[1],
+                        Equipment = e.Equipment.Name,
+                        BodyParts = e.BodyParts.Select(bp => bp.Name).ToList()
+                    }).FirstOrDefault();
         }
 
         public IEnumerable<ExerciseSearchServiceModel> Find(string keyword)
             => data.Exercises
             .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
             .Where(e => e.Name.Contains(keyword))
-            .ToList();            
-        
+            .ToList();
     }
 }

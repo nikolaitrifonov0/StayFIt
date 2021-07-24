@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StayFit.Data;
-using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
 using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
@@ -15,12 +13,10 @@ namespace StayFit.Web.Controllers
 {
     public class WorkoutsController : Controller
     {
-        private StayFitContext data;
         private readonly IWorkoutServices workouts;
 
-        public WorkoutsController(StayFitContext data, IWorkoutServices workouts)
+        public WorkoutsController(IWorkoutServices workouts)
         {
-            this.data = data;
             this.workouts = workouts;
         }
 
@@ -43,56 +39,10 @@ namespace StayFit.Web.Controllers
             if (!this.ModelState.IsValid)
             {
                 return View();
-            }            
-
-            var toAdd = new Workout
-            {
-                Name = workout.Name,
-                Description = workout.Description,
-                CycleDays = workout.CycleDays,
-                WorkoutCycleType = workout.WorkoutCycleType == 0 ?
-                WorkoutCycleType.Weekly : WorkoutCycleType.EveryNDays,
-                CreatorId = this.User.GetId()
-            };
-
-            foreach (var ed in exercisesToDays)
-            {
-                var workDay = new WorkDay
-                {
-                    Workout = toAdd,
-                    Exercises = this.data.Exercises.Where(e => ed.Value.Contains(e.Id)).ToHashSet()
-                };
-
-                DateTime nextWorkout;
-
-                if (Enum.IsDefined(typeof(DayOfWeek), ed.Key))
-                {
-                    var dayOfWeek = Enum.Parse(typeof(DayOfWeek), ed.Key);
-
-                    var tomorrow = DateTime.UtcNow.AddDays(1);
-
-                    var daysUntilNextWorkout = ((int)dayOfWeek - (int)tomorrow.DayOfWeek + 7) % 7;
-                    nextWorkout = tomorrow.AddDays(daysUntilNextWorkout);
-                }
-                else
-                {
-                    if (exercisesToDays.Keys.First() == ed.Key)
-                    {
-                        nextWorkout = DateTime.UtcNow.AddDays(1);
-                    }
-                    else
-                    {
-                        nextWorkout = toAdd.WorkDays.Last().NextWorkout.AddDays((double)toAdd.CycleDays);
-                    }
-                }
-
-                workDay.NextWorkout = nextWorkout;
-
-                toAdd.WorkDays.Add(workDay);
             }
 
-            this.data.Workouts.Add(toAdd);
-            this.data.SaveChanges();
+            this.workouts.Add(workout.Name, workout.Description,
+                workout.CycleDays, workout.WorkoutCycleType, this.User.GetId(), exercisesToDays);
 
             return RedirectToAction("Index", "Home");
         }
