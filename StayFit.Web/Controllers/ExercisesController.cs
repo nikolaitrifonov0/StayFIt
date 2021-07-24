@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StayFit.Data;
-using StayFit.Data.Models;
+using StayFit.Services.BodyParts;
+using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Web.Models.Exercises;
 using System.Collections.Generic;
@@ -11,27 +12,30 @@ namespace StayFit.Web.Controllers
 {
     public class ExercisesController : Controller
     {
-        private readonly StayFitContext data;
-        private readonly IExerciseService exercises;
+        private readonly IExerciseServices exercises;
+        private readonly IEquipmentServices equipments;
+        private readonly IBodyPartServices bodyParts;
 
-        public ExercisesController(StayFitContext data, IExerciseService exercises)
+        public ExercisesController(IExerciseServices exercises, 
+            IEquipmentServices equipments, IBodyPartServices bodyParts)
         {
-            this.data = data;
             this.exercises = exercises;
+            this.equipments = equipments;
+            this.bodyParts = bodyParts;
         }
 
         [Authorize]
         public IActionResult Add() => View(new AddExerciseFormModel
         {
-            Equipments = this.SelectEquipments(),
-            BodyPartsDisplay = this.SelectBodyParts()
+            Equipments = this.equipments.All(),
+            BodyPartsDisplay = this.bodyParts.All()
         });
 
         [HttpPost]
         [Authorize]
         public IActionResult Add(AddExerciseFormModel exercise)
         {
-            if (!this.data.Equipments.Any(e => e.Id == exercise.Equipment))
+            if (!this.equipments.DoesEquipmentExist(exercise.Equipment))
             {
                 this.ModelState.AddModelError(nameof(exercise.Equipment), "Equipment does not exist.");
             }
@@ -40,7 +44,7 @@ namespace StayFit.Web.Controllers
             {
                 foreach (var bodyPart in exercise.BodyParts)
                 {
-                    if (!this.data.BodyParts.Any(bp => bp.Id == bodyPart))
+                    if (!this.bodyParts.DoesBodyPartExist(bodyPart))
                     {
                         this.ModelState.AddModelError(nameof(exercise.BodyParts), "Muscle group does not exist.");
                     }
@@ -49,28 +53,14 @@ namespace StayFit.Web.Controllers
 
             if (!this.ModelState.IsValid)
             {
-                exercise.Equipments = this.SelectEquipments();
-                exercise.BodyPartsDisplay = this.SelectBodyParts();
+                exercise.Equipments = this.equipments.All();
+                exercise.BodyPartsDisplay = this.bodyParts.All();
 
                 return View(exercise);
             }
 
-            var toAdd = new Exercise
-            {
-                Name = exercise.Name,
-                Description = exercise.Description,
-                ImageUrl = exercise.ImageUrl,
-                VideoUrl = exercise.VideoUrl,
-                EquipmentId = exercise.Equipment
-            };
-
-            foreach (var bodyPart in exercise.BodyParts)
-            {
-                toAdd.BodyParts.Add(data.BodyParts.Find(bodyPart));
-            }
-
-            data.Exercises.Add(toAdd);
-            data.SaveChanges();
+            exercises.Add(exercise.Name, exercise.Description, exercise.ImageUrl, exercise.VideoUrl,
+                exercise.Equipment, exercise.BodyParts);
 
             return RedirectToAction("Index", "Home");
         }
@@ -87,20 +77,6 @@ namespace StayFit.Web.Controllers
             }
 
             return View(exercise);
-        }
-
-        private IEnumerable<ExerciseBodyPartViewModel> SelectBodyParts()
-        => this.data.BodyParts.Select(bp => new ExerciseBodyPartViewModel
-        {
-            Id = bp.Id,
-            Name = bp.Name
-        }).OrderBy(bp => bp.Name).ToList();
-
-        private IEnumerable<ExerciseEquipmentViewModel> SelectEquipments()
-        => this.data.Equipments.Select(e => new ExerciseEquipmentViewModel
-        {
-            Id = e.Id,
-            Name = e.Name
-        }).OrderBy(e => e.Name).ToList();
+        }            
     }
 }

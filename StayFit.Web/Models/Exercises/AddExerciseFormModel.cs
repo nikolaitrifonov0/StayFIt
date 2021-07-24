@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using StayFit.Services.BodyParts;
+using StayFit.Services.Equipments;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using static StayFit.Data.DataConstants;
@@ -28,7 +30,7 @@ namespace StayFit.Web.Models.Exercises
         [Display(Name = "Video URL")]
         public string VideoUrl { get; init; }
 
-        public IEnumerable<ExerciseEquipmentViewModel> Equipments { get; set; }
-        public IEnumerable<ExerciseBodyPartViewModel> BodyPartsDisplay { get; set; }
+        public IEnumerable<EquipmentServiceModel> Equipments { get; set; }
+        public IEnumerable<BodyPartServiceModel> BodyPartsDisplay { get; set; }
     }
 }

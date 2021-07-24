@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models.Enums.Workout;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace StayFit.Services.Workouts

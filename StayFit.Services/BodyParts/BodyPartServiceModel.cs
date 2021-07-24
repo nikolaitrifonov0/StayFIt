@@ -1,6 +1,6 @@
-﻿namespace StayFit.Web.Models.Exercises
+﻿namespace StayFit.Services.BodyParts
 {
-    public class ExerciseBodyPartViewModel
+    public class BodyPartServiceModel
     {
         public int Id { get; init; }
         public string Name { get; init; }

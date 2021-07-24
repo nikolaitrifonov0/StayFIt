@@ -1,16 +1,38 @@
 ﻿using StayFit.Data;
+using StayFit.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace StayFit.Services.Exercises
 {
-    public class ExerciseService : IExerciseService
+    public class ExerciseServices : IExerciseServices
     {
         private readonly StayFitContext data;
 
-        public ExerciseService(StayFitContext data) 
+        public ExerciseServices(StayFitContext data) 
             => this.data = data;
+
+        public void Add(string name, string description, string imageUrl, 
+            string videoUrl, int equipment, IEnumerable<int> bodyParts)
+        {
+            var exercise = new Exercise
+            {
+                Name = name,
+                Description = description,
+                ImageUrl = imageUrl,
+                VideoUrl = videoUrl,
+                EquipmentId = equipment
+            };
+
+            foreach (var bodyPart in bodyParts)
+            {
+                exercise.BodyParts.Add(data.BodyParts.Find(bodyPart));
+            }
+
+            this.data.Exercises.Add(exercise);
+            this.data.SaveChanges();
+        }
 
         public ExerciseDetailsServiceModel Details(string id)
         {
