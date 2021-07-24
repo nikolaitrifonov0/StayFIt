@@ -19,7 +19,7 @@ namespace StayFit.Web.Controllers
         {
             //UpdateWorkDays();            
 
-            var model = new LogWorkoutViewModel();
+            var model = new LogWorkoutFormModel();
 
             if (this.data.Workouts.Any(w => w.Users.Any(u => u.Id == this.User.GetId())))
             {
@@ -37,13 +37,16 @@ namespace StayFit.Web.Controllers
                         wd.NextWorkout,
                         Exercises = wd.Exercises.Select(e => new { e.Id, e.Name }).ToList()
                     })
-                    .Where(wd => wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+                    //.Where(wd => wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
                     .FirstOrDefault())
                     .FirstOrDefault();
 
-                foreach (var exercise in exercises.Exercises)
+                if (exercises != null)
                 {
-                    model.Exercises[exercise.Id] = exercise.Name;
+                    foreach (var exercise in exercises.Exercises)
+                    {
+                        model.Exercises[exercise.Id] = exercise.Name;
+                    }
                 }
             }
 
