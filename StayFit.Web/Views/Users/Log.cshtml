@@ -19,10 +19,10 @@ else
         <hr class="my-4">
     </div>
 
-    if (Model.Exercises.Count != 0)
+    if (Model.DisplayExercises.Count != 0)
     {
         <form method="post">
-            @foreach (var exercise in Model.Exercises)
+            @foreach (var exercise in Model.DisplayExercises)
             {
                 <div class="row">
                     <label class="mb-2 mr-sm-2">@exercise.Value: </label>
@@ -30,8 +30,8 @@ else
                 <div class="form-inline">
                     <div class="row set">
                         <input type="hidden" asp-for="Exercises" value="@exercise.Key" />
-                        <input type="text" asp-for="Set" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
-                        <input type="text" asp-for="Reps" class="form-control mb-2 mr-sm-2" placeholder="Reps">
+                        <input type="text" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
+                        <input type="text" asp-for="Repetitions" class="form-control mb-2 mr-sm-2" placeholder="Reps">
                         <input type="text" asp-for="Weight" class="form-control mb-2 mr-sm-2" placeholder="Weight">
                     </div>
                     <button type="button" class="add-set alert-success form-control mb-2 mr-sm-2">Add set</button>

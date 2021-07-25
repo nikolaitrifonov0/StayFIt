@@ -19,6 +19,10 @@
         public const int WorkoutDescriptionMaxLength = 2000;
         public const int WorkoutDescriptionMinLength = 10;
 
+        public const int SetMaxLength = 10;
+
+        public const int WeightMaxLenght = 3000;
+
         public static readonly string[] DaysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
     }
 }

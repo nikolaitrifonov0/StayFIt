@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
+using static StayFit.Data.DataConstants;
 
 namespace StayFit.Data.Models
 {
@@ -8,14 +9,23 @@ namespace StayFit.Data.Models
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
+        [MaxLength(SetMaxLength)]
+        public int SetNumber { get; set; }
+        [Required]
+        public int Repetitions { get; set; }
+        [Required]
+        [MaxLength(WeightMaxLenght)]
+        public int Weight { get; set; }
+        [Required]
         public string UserId { get; set; }
         [Required]
         public string ExerciseId { get; set; }
-        public Exercise Exercise { get; set; }
-        public ICollection<Set> Sets { get; set; }
+        public Exercise Exercise { get; set; }        
         [Required]
         public string WorkDayId { get; set; }
         public WorkDay WorkDay { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
 
     }
 }

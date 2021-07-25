@@ -7,9 +7,9 @@ namespace StayFit.Web.Models.Users
         public string Name { get; set; }
         public bool HasWorkout { get; set; } = false;
         public bool IsWorkdayComplete { get; set; } = false;
-        public Dictionary<string, string> Exercises { get; init; } = new();
-        public IEnumerable<int> Set { get; init; }
-        public IEnumerable<int> Reps { get; init; }
-        public IEnumerable<int> Weight { get; init; }
+        public Dictionary<string, string> DisplayExercises { get; init; } = new();
+        public List<string> Exercises { get; init; }
+        public List<int> Repetitions { get; init; }
+        public List<int> Weight { get; init; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StayFit.Data;
 
 namespace StayFit.Data.Migrations
 {
     [DbContext(typeof(StayFitContext))]
-    partial class StayFitContextModelSnapshot : ModelSnapshot
+    [Migration("20210725122337_DateToLogs")]
+    partial class DateToLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,6 +322,33 @@ namespace StayFit.Data.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("StayFit.Data.Models.Set", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Repetitions")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserExerciseLogId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserExerciseLogId");
+
+                    b.ToTable("Sets");
+                });
+
             modelBuilder.Entity("StayFit.Data.Models.UserExerciseLog", b =>
                 {
                     b.Property<string>("Id")
@@ -332,20 +361,9 @@ namespace StayFit.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Repetitions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SetNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Weight")
-                        .HasMaxLength(3000)
-                        .HasColumnType("int");
 
                     b.Property<string>("WorkDayId")
                         .IsRequired()
@@ -515,6 +533,17 @@ namespace StayFit.Data.Migrations
                     b.Navigation("Equipment");
                 });
 
+            modelBuilder.Entity("StayFit.Data.Models.Set", b =>
+                {
+                    b.HasOne("StayFit.Data.Models.UserExerciseLog", "UserExerciseLog")
+                        .WithMany("Sets")
+                        .HasForeignKey("UserExerciseLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserExerciseLog");
+                });
+
             modelBuilder.Entity("StayFit.Data.Models.UserExerciseLog", b =>
                 {
                     b.HasOne("StayFit.Data.Models.Exercise", "Exercise")
@@ -570,6 +599,11 @@ namespace StayFit.Data.Migrations
             modelBuilder.Entity("StayFit.Data.Models.Exercise", b =>
                 {
                     b.Navigation("UserExerciseLogs");
+                });
+
+            modelBuilder.Entity("StayFit.Data.Models.UserExerciseLog", b =>
+                {
+                    b.Navigation("Sets");
                 });
 
             modelBuilder.Entity("StayFit.Data.Models.WorkDay", b =>
