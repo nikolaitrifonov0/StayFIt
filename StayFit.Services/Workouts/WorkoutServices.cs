@@ -12,10 +12,7 @@ namespace StayFit.Services.Workouts
     {
         private readonly StayFitContext data;
 
-        public WorkoutServices(StayFitContext data)
-        {
-            this.data = data;
-        }
+        public WorkoutServices(StayFitContext data) => this.data = data;
 
         public void Add(string name, string description, int? cycleDays, 
             int workoutCycleType, string creatorId, Dictionary<string, List<string>> exercisesToDays)

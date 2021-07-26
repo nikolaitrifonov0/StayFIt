@@ -10,8 +10,7 @@ namespace StayFit.Services.Exercises
     {
         private readonly StayFitContext data;
 
-        public ExerciseServices(StayFitContext data) 
-            => this.data = data;
+        public ExerciseServices(StayFitContext data) => this.data = data;
 
         public void Add(string name, string description, string imageUrl, 
             string videoUrl, int equipment, IEnumerable<int> bodyParts)

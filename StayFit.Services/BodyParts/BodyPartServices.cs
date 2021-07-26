@@ -8,10 +8,7 @@ namespace StayFit.Services.BodyParts
     {
         private readonly StayFitContext data;
 
-        public BodyPartServices(StayFitContext data)
-        {
-            this.data = data;
-        }
+        public BodyPartServices(StayFitContext data) => this.data = data;
 
         public IEnumerable<BodyPartServiceModel> All()
             => this.data.BodyParts.Select(bp => new BodyPartServiceModel

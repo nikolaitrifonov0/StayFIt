@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StayFit.Web.Models.Users
 {
@@ -8,8 +9,10 @@ namespace StayFit.Web.Models.Users
         public bool HasWorkout { get; set; } = false;
         public bool IsWorkdayComplete { get; set; } = false;
         public Dictionary<string, string> DisplayExercises { get; init; } = new();
+        [Required]
         public List<string> Exercises { get; init; }
         public List<int> Repetitions { get; init; }
-        public List<int> Weight { get; init; }
+        [Required]
+        public List<int?> Weight { get; init; }
     }
 }

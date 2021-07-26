@@ -8,10 +8,7 @@ namespace StayFit.Services.Equipments
     {
         private readonly StayFitContext data;
 
-        public EquipmentServices(StayFitContext data)
-        {
-            this.data = data;
-        }
+        public EquipmentServices(StayFitContext data) => this.data = data;
 
         public IEnumerable<EquipmentServiceModel> All()
             => this.data.Equipments.Select(e => new EquipmentServiceModel

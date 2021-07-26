@@ -10,12 +10,10 @@ namespace StayFit.Data.Models
         public string Id { get; init; } = Guid.NewGuid().ToString();
         [Required]
         [MaxLength(SetMaxLength)]
-        public int SetNumber { get; set; }
-        [Required]
-        public int Repetitions { get; set; }
-        [Required]
+        public int SetNumber { get; set; }        
+        public int Repetitions { get; set; }       
         [MaxLength(WeightMaxLenght)]
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
         [Required]
         public string UserId { get; set; }
         [Required]
@@ -24,7 +22,6 @@ namespace StayFit.Data.Models
         [Required]
         public string WorkDayId { get; set; }
         public WorkDay WorkDay { get; set; }
-        [Required]
         public DateTime Date { get; set; }
 
     }
