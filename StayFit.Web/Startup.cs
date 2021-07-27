@@ -9,6 +9,7 @@ using StayFit.Data;
 using StayFit.Services.BodyParts;
 using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
+using StayFit.Services.Users;
 using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
 
@@ -42,6 +43,7 @@ namespace StayFit.Web
             services.AddTransient<IWorkoutServices, WorkoutServices>();
             services.AddTransient<IBodyPartServices, BodyPartServices>();
             services.AddTransient<IEquipmentServices, EquipmentServices>();
+            services.AddTransient<IUserServices, UserServices>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

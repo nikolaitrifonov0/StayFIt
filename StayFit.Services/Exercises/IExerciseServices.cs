@@ -12,5 +12,6 @@ namespace StayFit.Services.Exercises
         string videoUrl,
         int equipment,
         IEnumerable<int> bodyParts);
+        bool IsInWorkout(string exerciseId, string userId);
     }
 }

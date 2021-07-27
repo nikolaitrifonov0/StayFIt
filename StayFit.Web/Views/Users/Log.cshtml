@@ -1,4 +1,4 @@
-﻿@model LogWorkoutFormModel
+﻿@model LogWorkoutUserServiceModel
 
 @{
     ViewData["Title"] = "Log Workout";
@@ -23,7 +23,7 @@ else
 
     if (Model.DisplayExercises.Count != 0)
     {
-        if (Model.IsWorkdayComplete)
+        if (!Model.IsWorkdayComplete) //REMEMBER
         {
             <p>You are done for today!</p>
         }

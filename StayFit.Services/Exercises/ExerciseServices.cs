@@ -57,5 +57,13 @@ namespace StayFit.Services.Exercises
             .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
             .Where(e => e.Name.Contains(keyword))
             .ToList();
+
+        public bool IsInWorkout(string exerciseId, string userId) =>
+            this.data.WorkDays
+            .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
+                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+            .Select(wd => new { wd.Exercises })
+            .First()
+            .Exercises.Any(e => e.Id == exerciseId);
     }
 }

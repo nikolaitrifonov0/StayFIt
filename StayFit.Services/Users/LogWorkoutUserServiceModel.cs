@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace StayFit.Web.Models.Users
+namespace StayFit.Services.Users
 {
-    public class LogWorkoutFormModel
+    public class LogWorkoutUserServiceModel
     {
         public string Name { get; set; }
         public bool HasWorkout { get; set; } = false;
