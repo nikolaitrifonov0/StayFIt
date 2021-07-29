@@ -62,6 +62,7 @@ namespace StayFit.Web.Controllers
                 Name = workoutService.Name,
                 CycleDays = workoutService.CycleDays,
                 Description = workoutService.Description,
+                IsCreator = this.User.Identity.IsAuthenticated && workouts.IsCreator(workoutService.Id, this.User.GetId()),
                 WorkDays = workoutService.WorkDays.Select(wd => new DetailsWorkDayViewModel
                 {
                     Day = wd.Day,
@@ -78,6 +79,17 @@ namespace StayFit.Web.Controllers
             workouts.Assign(this.User.GetId(), id);
 
             return RedirectToAction("Log", "Users");
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            if (!workouts.IsCreator(id, this.User.GetId()))
+            {
+                return RedirectToAction("Add");
+            }
+
+            return View(workouts.EditDetails(id));
         }
 
         private static Dictionary<string, List<string>> ParseExercisesToDays(AddWorkoutFormModel workout)

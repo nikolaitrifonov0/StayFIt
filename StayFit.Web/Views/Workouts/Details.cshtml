@@ -29,4 +29,8 @@
     {
         <a class="btn btn-primary btn-lg" href="/Workouts/Assign/@Model.Id" role="button">Make Active</a>
     }
+    @if (Model.IsCreator)
+    {
+        <a class="btn btn-success btn-lg" href="/Workouts/Edit/@Model.Id" role="button">Edit</a>
+    }
 </div>

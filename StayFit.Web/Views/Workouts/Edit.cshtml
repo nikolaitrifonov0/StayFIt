@@ -1,0 +1,97 @@
+﻿@model EditWorkoutsServiceModel
+@{
+    ViewData["Title"] = "Add Workout";
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" placeholder="Your workout's name" value="@Model.Name">
+        <span asp-validation-for="Name" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" rows="3">@Model.Description</textarea>
+        <span asp-validation-for="Description" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="WorkoutCycleType"></label>
+        <select asp-for="WorkoutCycleType" class="form-control">
+            @if (Model.WorkoutCycleType == 0)
+            {
+                <option value="0" selected>By Week</option>
+                <option value="1">Every Nth Day</option>
+            }
+            else
+            {
+            <option value="0">By Week</option>
+            <option value="1" selected>Every Nth Day</option>
+            }
+        </select>
+        <span asp-validation-for="WorkoutCycleType" class="small text-danger"></span>
+    </div>
+    <label asp-for="CycleDays" class="cycle-days"></label>
+    <input asp-for="CycleDays" class="form-control cycle-days" placeholder="How many days between each workout..." value="@Model.CycleDays">
+
+    <div class="form-group weekly-workdays text-center">
+        <div class="day-of-week">
+            <h1>Monday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Tuesday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Wednesday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Thursday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Friday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Saturday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="day-of-week">
+            <h1>Sunday</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+    </div>
+
+    <div class="form-group nth-day text-center" hidden="hidden">
+        <div class="day" hidden="hidden">
+            <h1>Work day</h1>
+            <ul class="exercises col col-9 mb-3"></ul>
+            <input class="find-exercise" type="search" placeholder="Exercises you want ot add." />
+            <ul class="results"></ul>
+        </div>
+        <div class="row justify-content-center">
+            <button type="button" class="add-day alert-success">Add Day</button>
+        </div>
+    </div>
+    <div class="row text-center">
+        <span asp-validation-for="Exercises" class="small text-danger col col-12 mb-3"></span>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Save" />
+</form>

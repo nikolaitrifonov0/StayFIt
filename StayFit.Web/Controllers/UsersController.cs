@@ -1,14 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StayFit.Data;
-using StayFit.Data.Models;
-using StayFit.Data.Models.Enums.Workout;
 using StayFit.Services.Exercises;
 using StayFit.Services.Users;
 using StayFit.Web.Infrastructure;
-using StayFit.Web.Models.Users;
-using System;
-using System.Linq;
 
 using static StayFit.Data.DataConstants;
 

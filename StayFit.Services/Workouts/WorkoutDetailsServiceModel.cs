@@ -8,6 +8,7 @@ namespace StayFit.Services.Workouts
         public string Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
+        public string CreatorId { get; init; }
         public List<DetailsWorkDayServiceModel> WorkDays { get; set; }
         public int? CycleDays { get; init; }
         public WorkoutCycleType CycleType { get; init; }

@@ -112,6 +112,7 @@ namespace StayFit.Services.Workouts
                     Description = w.Description,
                     CycleType = w.WorkoutCycleType,
                     CycleDays = w.CycleDays,
+                    CreatorId = w.CreatorId,
                     WorkDays = w.WorkDays.Select(wd => new DetailsWorkDayServiceModel
                     {
                         Exercises = wd.Exercises
@@ -142,5 +143,18 @@ namespace StayFit.Services.Workouts
 
             return workout;
         }
+
+        public EditWorkoutsServiceModel EditDetails(string id) 
+            => this.data.Workouts.Where(w => w.Id == id)
+                .Select(w => new EditWorkoutsServiceModel
+                {
+                    Name = w.Name,
+                    Description = w.Description,
+                    CycleDays = w.CycleDays,
+                    WorkoutCycleType = (int)w.WorkoutCycleType
+                }).FirstOrDefault();
+
+        public bool IsCreator(string workoutId, string userId)
+            => this.data.Workouts.Find(workoutId).CreatorId == userId;
     }
 }
