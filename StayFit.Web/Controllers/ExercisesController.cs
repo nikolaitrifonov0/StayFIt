@@ -74,6 +74,8 @@ namespace StayFit.Web.Controllers
             }
 
             return View(exercise);
-        }            
+        }
+
+        public IActionResult All() => View(this.exercises.All());
     }
 }

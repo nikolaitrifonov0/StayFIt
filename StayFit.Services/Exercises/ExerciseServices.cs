@@ -33,6 +33,12 @@ namespace StayFit.Services.Exercises
             this.data.SaveChanges();
         }
 
+        public IEnumerable<ExerciseSearchServiceModel> All() 
+            => this.data
+            .Exercises
+            .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
+            .ToList();
+
         public ExerciseDetailsServiceModel Details(string id)
         {
             var youtubeEmbedLink = "https://www.youtube.com/embed/";

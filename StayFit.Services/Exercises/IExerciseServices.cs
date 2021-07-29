@@ -4,14 +4,16 @@ namespace StayFit.Services.Exercises
 {
     public interface IExerciseServices
     {
-        IEnumerable<ExerciseSearchServiceModel> Find(string keyword);
-        ExerciseDetailsServiceModel Details(string id);
+        public IEnumerable<ExerciseSearchServiceModel> Find(string keyword);
+        public ExerciseDetailsServiceModel Details(string id);
         void Add(string name,
         string description,
         string imageUrl,
         string videoUrl,
         int equipment,
         IEnumerable<int> bodyParts);
-        bool IsInWorkout(string exerciseId, string userId);
+        public bool IsInWorkout(string exerciseId, string userId);
+        public IEnumerable<ExerciseSearchServiceModel> All();
+
     }
 }
