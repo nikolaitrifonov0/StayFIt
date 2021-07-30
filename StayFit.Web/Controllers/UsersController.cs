@@ -55,7 +55,7 @@ namespace StayFit.Web.Controllers
                 return View(users.PrepareForView(this.User.GetId()));
             }
 
-            users.Add(workout, userId);
+            users.Log(workout, userId);
 
             return RedirectToAction();
         }

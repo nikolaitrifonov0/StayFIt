@@ -20,7 +20,7 @@ namespace StayFit.Data.Models
         public string CreatorId { get; set; }
         public IdentityUser Creator { get; set; }
         [Required]
-        public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
+        public ICollection<WorkDay> WorkDays { get; set; } = new HashSet<WorkDay>();
         [Required]
         public WorkoutCycleType WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }

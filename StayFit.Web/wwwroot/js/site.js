@@ -75,7 +75,13 @@ function addExerciseSearching() {
 
             exerciseLi.appendChild(exerciseInput);
 
-            if (!containsChild(exercisesUl.children, exerciseLi)) {
+            let isInList = false;
+            for (var l of exercisesUl.children) {
+                if (l.getAttribute('value') == exerciseLi.getAttribute('value')) {
+                    isInList = true;
+                }
+            }
+            if (isInList == false) {
                 exercisesUl.appendChild(exerciseLi);
                 input.value = '';
             }

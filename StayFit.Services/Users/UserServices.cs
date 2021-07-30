@@ -15,7 +15,7 @@ namespace StayFit.Services.Users
             this.data = data;
         }
 
-        public void Add(LogWorkoutUserServiceModel workout, string userId)
+        public void Log(LogWorkoutUserServiceModel workout, string userId)
         {
             for (int i = 0; i < workout.Exercises.Count(); i++)
             {

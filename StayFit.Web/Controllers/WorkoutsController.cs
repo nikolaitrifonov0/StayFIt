@@ -92,6 +92,22 @@ namespace StayFit.Web.Controllers
             return View(workouts.EditDetails(id));
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(string id, EditWorkoutsServiceModel workout)
+        {
+            var exercisesToDays = workout.Exercises != null ? ParseExercisesToDays(workout) : null;
+
+            this.workouts.Edit(id,
+                workout.Name,
+                workout.Description,
+                workout.CycleDays,
+                workout.WorkoutCycleType,
+                exercisesToDays);
+
+            return Redirect($"/Workouts/{nameof(this.Details)}/{id}");
+        }
+
         private static Dictionary<string, List<string>> ParseExercisesToDays(AddWorkoutFormModel workout)
         {
             var result = new Dictionary<string, List<string>>();
@@ -121,6 +137,36 @@ namespace StayFit.Web.Controllers
             }
 
             return result;
-        }               
+        }
+        private static Dictionary<string, List<string>> ParseExercisesToDays(EditWorkoutsServiceModel workout)
+        {
+            var result = new Dictionary<string, List<string>>();
+
+            foreach (var exercise in workout.Exercises)
+            {
+                var splittedString = exercise.Split(" - ", StringSplitOptions.RemoveEmptyEntries);
+                (string exercise, string day) ed = (splittedString[0], splittedString[1]);
+
+                if (workout.WorkoutCycleType == (int)WorkoutCycleType.Weekly && DaysOfWeek.Any(d => d == ed.day))
+                {
+                    if (!result.ContainsKey(ed.day))
+                    {
+                        result[ed.day] = new List<string>();
+                    }
+
+                    result[ed.day].Add(ed.exercise);
+                }
+                else if (workout.WorkoutCycleType == (int)WorkoutCycleType.EveryNDays && !DaysOfWeek.Any(d => d == ed.day))
+                {
+                    if (!result.ContainsKey(ed.day))
+                    {
+                        result[ed.day] = new List<string>();
+                    }
+                    result[ed.day].Add(ed.exercise);
+                }
+            }
+
+            return result;
+        }
     }
 }

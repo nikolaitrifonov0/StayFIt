@@ -93,7 +93,7 @@ namespace StayFit.Services.Workouts
             data.SaveChanges();
         }
 
-        public WorkoutDetailsServiceModel Details(string id)
+        public WorkoutEditServiceModel Details(string id)
         {
             if (!this.data.Workouts.Any(w => w.Id == id))
             {
@@ -105,7 +105,7 @@ namespace StayFit.Services.Workouts
                 .ThenInclude(w => w.Exercises)
                 .AsEnumerable()
                 .Where(w => w.Id == id)
-                .Select(w => new WorkoutDetailsServiceModel
+                .Select(w => new WorkoutEditServiceModel
                 {
                     Id = w.Id,
                     Name = w.Name,
@@ -142,6 +142,66 @@ namespace StayFit.Services.Workouts
             }
 
             return workout;
+        }
+
+        public void Edit(string id, string name, string description, int? cycleDays, 
+            int workoutCycleType, Dictionary<string, List<string>> exercisesToDays)
+        {
+            var workout = this.data.Workouts.Find(id);
+            workout.Name = name;
+            workout.Description = description;
+            workout.CycleDays = cycleDays;
+            workout.WorkoutCycleType = workoutCycleType == 0 ?
+                WorkoutCycleType.Weekly : WorkoutCycleType.EveryNDays;
+
+
+            if (exercisesToDays != null)
+            {
+                var workDays = this.data.WorkDays
+                    .Where(wd => wd.WorkoutId == workout.Id).ToList();
+
+                this.data.WorkDays.RemoveRange(workDays);
+               
+
+                foreach (var ed in exercisesToDays)
+                {
+                    var workDay = new WorkDay
+                    {
+                        Workout = workout,
+                        Exercises = this.data.Exercises.Where(e => ed.Value.Contains(e.Id)).ToHashSet()
+                    };
+
+                    DateTime nextWorkout;
+
+                    if (Enum.IsDefined(typeof(DayOfWeek), ed.Key))
+                    {
+                        var dayOfWeek = Enum.Parse(typeof(DayOfWeek), ed.Key);
+
+                        var tomorrow = DateTime.UtcNow.AddDays(1);
+
+                        var daysUntilNextWorkout = ((int)dayOfWeek - (int)tomorrow.DayOfWeek + 7) % 7;
+                        
+                        nextWorkout = tomorrow.AddDays(daysUntilNextWorkout);
+                    }
+                    else
+                    {
+                        if (exercisesToDays.Keys.First() == ed.Key)
+                        {
+                            nextWorkout = DateTime.UtcNow.AddDays(1);
+                        }
+                        else
+                        {
+                            nextWorkout = workout.WorkDays.Last().NextWorkout.AddDays((double)workout.CycleDays);
+                        }
+                    }
+
+                    workDay.NextWorkout = nextWorkout;
+
+                    workout.WorkDays.Add(workDay);
+                }                
+            }
+
+            this.data.SaveChanges();
         }
 
         public EditWorkoutsServiceModel EditDetails(string id) 

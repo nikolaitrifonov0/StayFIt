@@ -2,7 +2,7 @@
 {
     public interface IUserServices
     {
-        void Add(LogWorkoutUserServiceModel workout, string userId);
+        void Log(LogWorkoutUserServiceModel workout, string userId);
         LogWorkoutUserServiceModel PrepareForView(string userId);
     }
 }
