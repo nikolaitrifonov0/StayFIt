@@ -23,33 +23,49 @@ else
 
     if (Model.DisplayExercises.Count != 0)
     {
-        if (!Model.IsWorkdayComplete) //REMEMBER
+        if (Model.IsWorkdayComplete)
         {
             <p>You are done for today!</p>
         }
         else
         {
-            <form method="post">
-                @foreach (var exercise in Model.DisplayExercises)
-                {
-                    <div class="row">
-                        <label class="mb-2 mr-sm-2">@exercise.Value: </label>
-                    </div>
-                    <div class="form-inline">
-                        <div class="row set">
-                            <input type="hidden" asp-for="Exercises" value="@exercise.Key" />
-                            <input type="text" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
-                            <input type="text" asp-for="Repetitions" class="form-control mb-2 mr-sm-2" placeholder="Reps">
-                            <input type="text" asp-for="Weight" class="form-control mb-2 mr-sm-2" placeholder="Weight">
+            <div class="row">
+                <form method="post" class="col-6">   
+                    <button type="button" class="add-set alert-success form-control mb-2 ">Add set</button>
+                    @foreach (var exercise in Model.DisplayExercises)
+                    {
+                        <div class="row">
+                            <label class="mb-2 mr-sm-2">@exercise.Value: </label>
                         </div>
-                        <button type="button" class="add-set alert-success form-control mb-2 mr-sm-2">Add set</button>
-                    </div>
-                }
+                        <div class="form-inline">                            
+                            <div class="row set">
+                                <input type="hidden" asp-for="Exercises" value="@exercise.Key" />
+                                <input type="text" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
+                                <input type="text" asp-for="Repetitions" class="form-control mb-2 mr-sm-2" placeholder="Reps">
+                                <input type="text" asp-for="Weight" class="form-control mb-2" placeholder="Weight">
+                            </div>
+                        </div>
+                    }
 
-                <div class="row">
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </div>
+                </form>
+
+                <div class="col-6 text-center">
+                    @foreach (var exercise in Model.LastWorkoutLogs)
+                    {
+                        <h2>@exercise.Key</h2>
+                        <ul class="list-group col-5 text-center">
+                            @foreach (var log in exercise.Value.OrderBy(l => l.Set))
+                            {
+                                <li class="list-group-item">@(log.Set). @log.Repetitions reps. @(log.Weight.HasValue ? $"{log.Weight} kg" : "")</li>
+                            }
+                        </ul>
+                    }
                 </div>
-            </form>
+            </div>
+            
         }
     }
     else
@@ -72,7 +88,7 @@ else
 
             newSetNumber.value = Number(oldSetNumber.value) + 1;
 
-            e.target.parentElement.appendChild(newDivSet);
+            e.target.parentElement.querySelector('.form-inline').appendChild(newDivSet);
         }
     }
 </script>

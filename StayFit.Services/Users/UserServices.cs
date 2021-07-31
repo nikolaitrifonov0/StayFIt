@@ -2,6 +2,7 @@
 using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StayFit.Services.Users
@@ -40,38 +41,74 @@ namespace StayFit.Services.Users
         }
 
         public LogWorkoutUserServiceModel PrepareForView(string userId)
-        {
-            UpdateWorkDays(userId);
+        {       
+            if (!this.data.Workouts.Any(w => w.Users.Any(u => u.Id == userId)))
+            {
+                return null;
+            }
 
             var model = new LogWorkoutUserServiceModel();
 
-            if (this.data.Workouts.Any(w => w.Users.Any(u => u.Id == userId)))
-            {
-                model.HasWorkout = true;
-                model.IsWorkdayComplete = this.data.UserExerciseLogs
-                    .Any(uel => uel.UserId == userId && uel.Date == DateTime.Today);
-                model.Name = this.GetUserWorkout(userId)
-                    .Select(w => w.Name)
-                    .FirstOrDefault();
+            UpdateWorkDays(userId);
+            model.HasWorkout = true;
+            model.IsWorkdayComplete = this.data.UserExerciseLogs
+                .Any(uel => uel.UserId == userId && uel.Date == DateTime.Today);
+            model.Name = this.GetUserWorkout(userId)
+                .Select(w => w.Name)
+                .FirstOrDefault();
 
-                var exercises = this.GetUserWorkout(userId)
-                    .Select(w =>
-                    w.WorkDays.Select(wd => new
-                    {
-                        wd.Id,
-                        wd.NextWorkout,
-                        Exercises = wd.Exercises.Select(e => new { e.Id, e.Name }).ToList()
-                    })
-                    .Where(wd => wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
-                    .FirstOrDefault())
-                    .FirstOrDefault();
-
-                if (exercises != null)
+            var exercises = this.GetUserWorkout(userId)
+                .Select(w =>
+                w.WorkDays.Select(wd => new
                 {
-                    foreach (var exercise in exercises.Exercises)
+                    wd.Id,
+                    wd.NextWorkout,
+                    Exercises = wd.Exercises.Select(e => new { e.Id, e.Name }).ToList()
+                })
+                .Where(wd => wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+                .FirstOrDefault())
+                .FirstOrDefault();
+
+            if (exercises != null)
+            {
+                foreach (var exercise in exercises.Exercises)
+                {
+                    model.DisplayExercises[exercise.Id] = exercise.Name;
+                }
+            }
+
+            var workoutId = this.GetUserWorkout(userId).FirstOrDefault().Id;
+            var logs = this.data.UserExerciseLogs
+                .Select(l => new {
+                    l.UserId,
+                    l.Date,
+                    ExerciseName = l.Exercise.Name,
+                    l.SetNumber,
+                    l.Repetitions,
+                    l.Weight,
+                    WorkoutId = l.WorkDay.Workout.Id
+                })
+                .Where(l => l.UserId == userId && workoutId == l.WorkoutId)
+                .OrderByDescending(l => l.Date)
+                .ToList();
+
+            if (logs.Count != 0)
+            {
+                var lastLogsDate = logs.First().Date;
+                logs = logs.Where(l => l.Date == lastLogsDate).ToList();
+
+                foreach (var log in logs)
+                {
+                    if (!model.LastWorkoutLogs.ContainsKey(log.ExerciseName))
                     {
-                        model.DisplayExercises[exercise.Id] = exercise.Name;
+                        model.LastWorkoutLogs[log.ExerciseName] = new List<LastWorkoutLogServiceModel>();
                     }
+                    model.LastWorkoutLogs[log.ExerciseName].Add(new LastWorkoutLogServiceModel
+                    {
+                        Set = log.SetNumber,
+                        Repetitions = log.Repetitions,
+                        Weight = log.Weight
+                    });
                 }
             }
 
@@ -103,7 +140,7 @@ namespace StayFit.Services.Users
                             .First().CycleDays;
                         foreach (var workday in workdays)
                         {
-                            workday.NextWorkout = workday.NextWorkout.AddDays(workoutCycleDays.Value);
+                            workday.NextWorkout = workday.NextWorkout.AddDays(workoutCycleDays.Value + 1);
                         }
                     }
 

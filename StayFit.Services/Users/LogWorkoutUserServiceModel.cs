@@ -11,5 +11,6 @@ namespace StayFit.Services.Users
         public List<string> Exercises { get; init; }
         public List<int> Repetitions { get; init; }
         public List<int?> Weight { get; init; }
+        public Dictionary<string, List<LastWorkoutLogServiceModel>> LastWorkoutLogs { get; init; } = new();
     }
 }

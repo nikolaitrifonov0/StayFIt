@@ -96,6 +96,11 @@ namespace StayFit.Web.Controllers
         [Authorize]
         public IActionResult Edit(string id, EditWorkoutsServiceModel workout)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
+
             var exercisesToDays = workout.Exercises != null ? ParseExercisesToDays(workout) : null;
 
             this.workouts.Edit(id,
