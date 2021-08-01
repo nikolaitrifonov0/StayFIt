@@ -1,0 +1,39 @@
+﻿@model StatisticsServiceModel
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<div class="text-center">
+    <h1 class="mb-3">By maximum weight per day</h1>
+
+    @foreach (var exercise in Model.UserMaxWeights)
+    {
+        <h4>@exercise.Key</h4>
+        <ul class="list-group list-group-flush">
+            @foreach (var weight in exercise.Value.OrderBy(w => w.Date))
+            {
+            <li class="list-group-item">@weight.Date.ToString("d"): @weight.Weight kg</li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="text-center">
+    <h1 class="mb-3">By maximum score per day (weight * reps)</h1>
+
+    @foreach (var exercise in Model.UserMaxScores)
+    {
+        <h4>@exercise.Key</h4>
+        <ul class="list-group list-group-flush">
+            @foreach (var score in exercise.Value.OrderBy(s => s.Date))
+            {
+                <li class="list-group-item">@score.Date.ToString("d"): @score.Score pts.</li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="text-center">
+    <h1>By workout score per day (weight * reps)</h1>
+</div>

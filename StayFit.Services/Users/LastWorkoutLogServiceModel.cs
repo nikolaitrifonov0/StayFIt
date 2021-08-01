@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace StayFit.Services.Users
+﻿namespace StayFit.Services.Users
 {
     public class LastWorkoutLogServiceModel
     {
