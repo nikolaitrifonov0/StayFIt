@@ -54,7 +54,7 @@ namespace StayFit.Services.Workouts
                     }
                     else
                     {
-                        nextWorkout = workout.WorkDays.Last().NextWorkout.AddDays((double)workout.CycleDays);
+                        nextWorkout = workout.WorkDays.Last().NextWorkout.AddDays((int)workout.CycleDays + 1);
                     }
                 }
 

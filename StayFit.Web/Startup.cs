@@ -36,7 +36,8 @@ namespace StayFit.Web
                     options.Password.RequireUppercase = false;
                     options.Password.RequireDigit = false;
                 })
-                    .AddEntityFrameworkStores<StayFitContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StayFitContext>();
 
             services.AddControllersWithViews();
 

@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using StayFit.Data;
 using StayFit.Data.Models;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
+
+using static StayFit.Web.Areas.Admin.AdminConstants;
 
 namespace StayFit.Web.Infrastructure
 {
@@ -12,14 +17,17 @@ namespace StayFit.Web.Infrastructure
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
         {
             using var scopedServices = app.ApplicationServices.CreateScope();
+            var services = scopedServices.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<StayFitContext>();
+            var data = services.GetRequiredService<StayFitContext>();
 
             data.Database.Migrate();
 
             PopulateBodyParts(data);
 
-            PopulateEquipments(data);            
+            PopulateEquipments(data);
+
+            SeedAdministrator(services);
 
             return app;
         }
@@ -78,6 +86,42 @@ namespace StayFit.Web.Infrastructure
             });
 
             data.SaveChanges();
+        }
+
+        private static void SeedAdministrator(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task
+                .Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                    {
+                        //return;
+                    }
+
+                    var role = new IdentityRole { Name = AdministratorRoleName };
+
+                    await roleManager.CreateAsync(role);
+
+                    const string adminEmail = "admin@stayfit.com";
+                    const string adminPassword = "admin123";
+
+                    var user = new IdentityUser
+                    {
+                        Email = adminEmail,
+                        UserName = adminEmail
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, role.Name);
+
+                    await userManager.UpdateSecurityStampAsync(user);                      
+                })
+                .GetAwaiter()
+                .GetResult();            
         }
     }
 }
