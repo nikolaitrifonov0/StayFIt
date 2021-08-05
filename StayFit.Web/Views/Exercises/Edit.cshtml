@@ -1,0 +1,60 @@
+﻿@model ExerciseEditServiceModel
+
+@{
+    ViewData["Title"] = "Add Exercise";
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" value="@Model.Name" placeholder="Deadlift, Bench press... etc.">
+        <span asp-validation-for="Name" class="small text-danger"></span>
+    </div>
+    <label asp-for="ImageUrl"></label>
+    <input asp-for="ImageUrl" class="form-control" value="@Model.ImageUrl">
+    <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+    <label asp-for="VideoUrl"></label>
+    <input asp-for="VideoUrl" class="form-control" value="@Model.VideoUrl" placeholder="Show us how it's done.">
+    <span asp-validation-for="VideoUrl" class="small text-danger"></span>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" value="@Model.Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Equipment"></label>
+        <select asp-for="Equipment" class="form-control">
+            @foreach (var equipment in Model.Equipments)
+            {
+                @if (equipment.Id == Model.Equipment)
+                {
+                    <option value="@equipment.Id" selected="selected">@equipment.Name</option>
+                }
+                else
+                {
+                    <option value="@equipment.Id">@equipment.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Equipment" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BodyParts">Muscle groups: (Select multiple by holding Ctrl)</label>
+        <select asp-for="BodyParts" multiple class="form-control">
+            @foreach (var bodyPart in Model.BodyPartsDisplay)
+            {
+                @if (Model.BodyParts.Contains(bodyPart.Id))
+                {
+                    <option value="@bodyPart.Id" selected>@bodyPart.Name</option>
+                }
+                else
+                {
+                    <option value="@bodyPart.Id">@bodyPart.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="BodyParts" class="small text-danger"></span>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Save" />
+</form>

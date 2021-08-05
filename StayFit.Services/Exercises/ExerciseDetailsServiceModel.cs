@@ -4,6 +4,7 @@ namespace StayFit.Services.Exercises
 {
     public class ExerciseDetailsServiceModel
     {
+        public string Id { get; init; }
         public string Name { get; init; }        
         public string Description { get; init; }
         public string Equipment { get; init; }

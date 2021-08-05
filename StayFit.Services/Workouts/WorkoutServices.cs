@@ -93,7 +93,7 @@ namespace StayFit.Services.Workouts
             data.SaveChanges();
         }
 
-        public WorkoutEditServiceModel Details(string id)
+        public WorkoutDetailsServiceModel Details(string id)
         {
             if (!this.data.Workouts.Any(w => w.Id == id))
             {
@@ -105,7 +105,7 @@ namespace StayFit.Services.Workouts
                 .ThenInclude(w => w.Exercises)
                 .AsEnumerable()
                 .Where(w => w.Id == id)
-                .Select(w => new WorkoutEditServiceModel
+                .Select(w => new WorkoutDetailsServiceModel
                 {
                     Id = w.Id,
                     Name = w.Name,

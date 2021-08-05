@@ -17,7 +17,7 @@ namespace StayFit.Services.Workouts
                 int? cycleDays,
                 int workoutCycleType,
                 Dictionary<string, List<string>> exercisesToDays);
-        public WorkoutEditServiceModel Details(string id);
+        public WorkoutDetailsServiceModel Details(string id);
         public EditWorkoutsServiceModel EditDetails(string id);
         public void Assign(string userId, string workoutId);
         public bool IsCreator(string workoutId, string userId);

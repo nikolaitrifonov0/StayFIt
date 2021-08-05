@@ -98,7 +98,7 @@ namespace StayFit.Web.Infrastructure
                 {
                     if (await roleManager.RoleExistsAsync(AdministratorRoleName))
                     {
-                        //return;
+                        return;
                     }
 
                     var role = new IdentityRole { Name = AdministratorRoleName };

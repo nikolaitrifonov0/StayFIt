@@ -5,6 +5,8 @@ using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Web.Models.Exercises;
 
+using static StayFit.Web.Areas.Admin.AdminConstants;
+
 namespace StayFit.Web.Controllers
 {
     public class ExercisesController : Controller
@@ -13,7 +15,7 @@ namespace StayFit.Web.Controllers
         private readonly IEquipmentServices equipments;
         private readonly IBodyPartServices bodyParts;
 
-        public ExercisesController(IExerciseServices exercises, 
+        public ExercisesController(IExerciseServices exercises,
             IEquipmentServices equipments, IBodyPartServices bodyParts)
         {
             this.exercises = exercises;
@@ -77,5 +79,31 @@ namespace StayFit.Web.Controllers
         }
 
         public IActionResult All() => View(this.exercises.All());
+
+        [Authorize(Roles = AdministratorRoleName)]
+        public IActionResult Edit(string id) 
+        {
+            var exercise = this.exercises.EditDetails(id);
+
+            exercise.BodyPartsDisplay = this.bodyParts.All();
+            exercise.Equipments = this.equipments.All();
+
+            return View(exercise); 
+        }
+
+        [Authorize(Roles = AdministratorRoleName)]
+        [HttpPost]
+        public IActionResult Edit(string id, ExerciseEditServiceModel exercise)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
+
+            exercises.Edit(id, exercise.Name, exercise.Description,
+                exercise.ImageUrl, exercise.VideoUrl, exercise.Equipment, exercise.BodyParts);
+
+            return Redirect($"/Exercises/{nameof(this.Details)}/{id}");
+        }
     }
 }

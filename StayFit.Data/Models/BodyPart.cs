@@ -11,6 +11,6 @@ namespace StayFit.Data.Models
         [Required]
         [MaxLength(EquipmentNameMaxLength)]
         public string Name { get; set; }
-        public ICollection<Exercise> Exercises { get; init; } = new HashSet<Exercise>();
+        public ICollection<Exercise> Exercises { get; set; } = new HashSet<Exercise>();
     }
 }

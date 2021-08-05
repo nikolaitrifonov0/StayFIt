@@ -1,5 +1,8 @@
-﻿using StayFit.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StayFit.Data;
 using StayFit.Data.Models;
+using StayFit.Services.BodyParts;
+using StayFit.Services.Equipments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +12,15 @@ namespace StayFit.Services.Exercises
     public class ExerciseServices : IExerciseServices
     {
         private readonly StayFitContext data;
+        private readonly IEquipmentServices equipments;
+        private readonly IBodyPartServices bodyParts;
 
-        public ExerciseServices(StayFitContext data) => this.data = data;
+        public ExerciseServices(StayFitContext data, IEquipmentServices equipments, IBodyPartServices bodyParts)
+        {
+            this.data = data;
+            this.equipments = equipments;
+            this.bodyParts = bodyParts;
+        }
 
         public void Add(string name, string description, string imageUrl, 
             string videoUrl, int equipment, IEnumerable<int> bodyParts)
@@ -49,6 +59,7 @@ namespace StayFit.Services.Exercises
                     .Where(e => e.Id == id)
                     .Select(e => new ExerciseDetailsServiceModel
                     {
+                        Id = e.Id,
                         Name = e.Name,
                         Description = e.Description,
                         ImageUrl = e.ImageUrl,
@@ -56,6 +67,56 @@ namespace StayFit.Services.Exercises
                         Equipment = e.Equipment.Name,
                         BodyParts = e.BodyParts.Select(bp => bp.Name).ToList()
                     }).FirstOrDefault();
+        }
+
+        public void Edit(string id,string name, string description, 
+            string imageUrl, string videoUrl, int equipment, IEnumerable<int> bodyParts)
+        {
+            var exercise = this.data.Exercises.Find(id);
+            var exerciseBodyParts = this.data.Exercises
+                .Where(e => e.Id == id)
+                .Select(e => e.BodyParts.Select(b => b.Id).ToList())
+                .FirstOrDefault();
+
+            exercise.Name = name;
+            exercise.Description = description;
+            exercise.ImageUrl = imageUrl;
+            exercise.VideoUrl = videoUrl;
+            exercise.EquipmentId = equipment;
+
+            foreach (var bodyPart in bodyParts)
+            {
+                if (!exerciseBodyParts.Any(x => x == bodyPart))
+                {
+                    exercise.BodyParts.Add(this.data.BodyParts.Find(bodyPart));
+                }
+            }            
+            
+            foreach (var bodyPart in exerciseBodyParts)
+            {
+                if (!bodyParts.Any(b => b == bodyPart))
+                {
+                    var toDelete = this.data.BodyParts.Find(bodyPart);
+                    this.data.Exercises.Include(e => e.BodyParts).FirstOrDefault(e => e.Id == id).BodyParts.Remove(toDelete);      
+                }
+            }
+
+            this.data.SaveChanges();            
+        }
+
+        public ExerciseEditServiceModel EditDetails(string exerciseId)
+        {
+           return this.data.Exercises.Where(e => e.Id == exerciseId)
+                .Select(e => new ExerciseEditServiceModel
+                {
+                    Name = e.Name,
+                    Description = e.Description,
+                    BodyParts = e.BodyParts.Select(b => b.Id).ToList(),
+                    Equipment = e.Equipment.Id,
+                    ImageUrl = e.ImageUrl,
+                    VideoUrl = e.VideoUrl
+                })
+                .FirstOrDefault();
         }
 
         public IEnumerable<ExerciseSearchServiceModel> Find(string keyword)

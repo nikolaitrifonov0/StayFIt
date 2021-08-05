@@ -84,7 +84,7 @@ namespace StayFit.Web.Controllers
         [Authorize]
         public IActionResult Edit(string id)
         {
-            if (!workouts.IsCreator(id, this.User.GetId()))
+            if (!workouts.IsCreator(id, this.User.GetId()) && !this.User.IsAdmin())
             {
                 return RedirectToAction("Add");
             }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StayFit.Services.Workouts
 {
-    public class WorkoutEditServiceModel
+    public class WorkoutDetailsServiceModel
     {
         public string Id { get; init; }
         public string Name { get; init; }
