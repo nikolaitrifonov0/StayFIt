@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ExerciseSearchServiceModel>
+
+@{
+    ViewData["Title"] = "Manage exercises";
+}
+
+<table class="table">    
+    <tbody>
+        @foreach (var exercise in Model)
+        {
+        <tr>
+            <td>@exercise.Name</td>
+            <td>@(exercise.IsPublic ? "Visible" : "Not visible")</td>
+            @if (exercise.IsPublic)
+            {
+                <td><a asp-area="Admin" asp-controller="Exercises" asp-action="Hide" asp-route-id="@exercise.Id" class="btn btn-success">Hide</a></td>
+            }
+            else
+            {
+        <td><a asp-area="Admin" asp-controller="Exercises" asp-action="Show" asp-route-id="@exercise.Id" class="btn btn-success">Approve</a></td>
+            }
+
+            <td><a asp-area="" asp-controller="Exercises" asp-action="Edit" asp-route-id="@exercise.Id" class="btn btn-info">Edit</a></td>
+        </tr>
+        }
+    </tbody>
+</table>

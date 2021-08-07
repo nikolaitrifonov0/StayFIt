@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models;
-using StayFit.Services.BodyParts;
-using StayFit.Services.Equipments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +10,8 @@ namespace StayFit.Services.Exercises
     public class ExerciseServices : IExerciseServices
     {
         private readonly StayFitContext data;
-        private readonly IEquipmentServices equipments;
-        private readonly IBodyPartServices bodyParts;
 
-        public ExerciseServices(StayFitContext data, IEquipmentServices equipments, IBodyPartServices bodyParts)
-        {
-            this.data = data;
-            this.equipments = equipments;
-            this.bodyParts = bodyParts;
-        }
+        public ExerciseServices(StayFitContext data) => this.data = data;
 
         public void Add(string name, string description, string imageUrl, 
             string videoUrl, int equipment, IEnumerable<int> bodyParts)
@@ -31,7 +22,8 @@ namespace StayFit.Services.Exercises
                 Description = description,
                 ImageUrl = imageUrl,
                 VideoUrl = videoUrl,
-                EquipmentId = equipment
+                EquipmentId = equipment,
+                IsPublic = false
             };
 
             foreach (var bodyPart in bodyParts)
@@ -43,10 +35,11 @@ namespace StayFit.Services.Exercises
             this.data.SaveChanges();
         }
 
-        public IEnumerable<ExerciseSearchServiceModel> All() 
+        public IEnumerable<ExerciseSearchServiceModel> All(bool publicOnly = true) 
             => this.data
             .Exercises
-            .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
+            .Where(e => !publicOnly || e.IsPublic)
+            .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name, IsPublic = e.IsPublic })
             .ToList();
 
         public ExerciseDetailsServiceModel Details(string id)
@@ -83,6 +76,7 @@ namespace StayFit.Services.Exercises
             exercise.ImageUrl = imageUrl;
             exercise.VideoUrl = videoUrl;
             exercise.EquipmentId = equipment;
+            exercise.IsPublic = false;
 
             foreach (var bodyPart in bodyParts)
             {
@@ -122,15 +116,27 @@ namespace StayFit.Services.Exercises
         public IEnumerable<ExerciseSearchServiceModel> Find(string keyword)
             => data.Exercises
             .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
-            .Where(e => e.Name.Contains(keyword))
+            .Where(e => e.Name.Contains(keyword) && e.IsPublic)
             .ToList();
 
         public bool IsInWorkout(string exerciseId, string userId) =>
-            this.data.WorkDays
-            .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
-                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
-            .Select(wd => new { wd.Exercises })
-            .First()
-            .Exercises.Any(e => e.Id == exerciseId);
+           this.data.WorkDays
+           .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
+               && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+           .Select(wd => new { wd.Exercises })
+           .First()
+           .Exercises.Any(e => e.Id == exerciseId);
+
+        public void Hide(string Id)
+        {
+            this.data.Exercises.Find(Id).IsPublic = false;
+            this.data.SaveChanges();
+        }       
+
+        public void Show(string Id)
+        {
+            this.data.Exercises.Find(Id).IsPublic = true;
+            this.data.SaveChanges();
+        }
     }
 }

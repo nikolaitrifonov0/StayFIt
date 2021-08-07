@@ -21,7 +21,9 @@ namespace StayFit.Services.Exercises
         IEnumerable<int> bodyParts);
         public ExerciseEditServiceModel EditDetails(string exerciseId);
         public bool IsInWorkout(string exerciseId, string userId);
-        public IEnumerable<ExerciseSearchServiceModel> All();
+        public IEnumerable<ExerciseSearchServiceModel> All(bool publicOnly = true);
+        public void Hide(string Id);
+        public void Show(string Id);
 
     }
 }

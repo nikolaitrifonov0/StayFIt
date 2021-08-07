@@ -95,9 +95,28 @@ namespace StayFit.Web.Controllers
         [HttpPost]
         public IActionResult Edit(string id, ExerciseEditServiceModel exercise)
         {
+            if (!this.equipments.DoesEquipmentExist(exercise.Equipment))
+            {
+                this.ModelState.AddModelError(nameof(exercise.Equipment), "Equipment does not exist.");
+            }
+
+            if (exercise.BodyParts != null)
+            {
+                foreach (var bodyPart in exercise.BodyParts)
+                {
+                    if (!this.bodyParts.DoesBodyPartExist(bodyPart))
+                    {
+                        this.ModelState.AddModelError(nameof(exercise.BodyParts), "Muscle group does not exist.");
+                    }
+                }
+            }
+
             if (!this.ModelState.IsValid)
             {
-                return View();
+                exercise.Equipments = this.equipments.All();
+                exercise.BodyPartsDisplay = this.bodyParts.All();
+
+                return View(exercise);
             }
 
             exercises.Edit(id, exercise.Name, exercise.Description,

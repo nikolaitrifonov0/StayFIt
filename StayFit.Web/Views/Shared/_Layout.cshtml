@@ -34,7 +34,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exercises</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Exercises" asp-action="All">All Exercises</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Exercises" asp-action="All">All Exercises</a>
                                 @if (SignInManager.IsSignedIn(User))
                                 {
                                     <a class="dropdown-item" asp-controller="Exercises" asp-action="Add">Add Exercises</a>
