@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
@@ -11,8 +13,13 @@ namespace StayFit.Services.Workouts
     public class WorkoutServices : IWorkoutServices
     {
         private readonly StayFitContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public WorkoutServices(StayFitContext data) => this.data = data;
+        public WorkoutServices(StayFitContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
+        }
 
         public void Add(string name, string description, int? cycleDays, 
             int workoutCycleType, string creatorId, Dictionary<string, List<string>> exercisesToDays)
@@ -67,17 +74,11 @@ namespace StayFit.Services.Workouts
             this.data.SaveChanges();
         }
 
-        public AllWorkoutsServiceModel All() => new AllWorkoutsServiceModel
-        {
-            Workouts = this.data.Workouts.Select(w => new WorkoutAllServiceModel
-            {
-                Id = w.Id,
-                Name = w.Name,
-                Description = w.Description,
-                Creator = w.Creator.UserName,
-                TotalWorkDays = w.WorkDays.Count
-            }).ToList()
-        };
+        public IEnumerable<AllWorkoutsServiceModel> All()
+            => this.data.Workouts
+            .ProjectTo<AllWorkoutsServiceModel>(this.mapper)
+            .ToList();
+     
 
         public void Assign(string userId, string workoutId)
         {
@@ -206,13 +207,8 @@ namespace StayFit.Services.Workouts
 
         public EditWorkoutsServiceModel EditDetails(string id) 
             => this.data.Workouts.Where(w => w.Id == id)
-                .Select(w => new EditWorkoutsServiceModel
-                {
-                    Name = w.Name,
-                    Description = w.Description,
-                    CycleDays = w.CycleDays,
-                    WorkoutCycleType = (int)w.WorkoutCycleType
-                }).FirstOrDefault();
+                .ProjectTo<EditWorkoutsServiceModel>(this.mapper)
+                .FirstOrDefault();
 
         public bool IsCreator(string workoutId, string userId)
             => this.data.Workouts.Find(workoutId).CreatorId == userId;

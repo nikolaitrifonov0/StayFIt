@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StayFit.Data.Models.Enums.Workout;
 using StayFit.Services.Workouts;
@@ -14,10 +15,12 @@ namespace StayFit.Web.Controllers
     public class WorkoutsController : Controller
     {
         private readonly IWorkoutServices workouts;
+        private readonly IMapper mapper;
 
-        public WorkoutsController(IWorkoutServices workouts)
+        public WorkoutsController(IWorkoutServices workouts, IMapper mapper)
         {
             this.workouts = workouts;
+            this.mapper = mapper;
         }
 
         public IActionResult All() => View(this.workouts.All());        
@@ -56,19 +59,11 @@ namespace StayFit.Web.Controllers
                 return NotFound();
             }
 
-            var workout = new DetailsWorkoutViewModel
-            {
-                Id = workoutService.Id,
-                Name = workoutService.Name,
-                CycleDays = workoutService.CycleDays,
-                Description = workoutService.Description,
-                IsCreator = this.User.Identity.IsAuthenticated && workouts.IsCreator(workoutService.Id, this.User.GetId()),
-                WorkDays = workoutService.WorkDays.Select(wd => new DetailsWorkDayViewModel
-                {
-                    Day = wd.Day,
-                    Exercises = wd.Exercises
-                }).ToList()
-            };
+            var workout = this.mapper.Map<DetailsWorkoutViewModel>(workoutService);
+            workout.IsCreator = this.User.Identity.IsAuthenticated && workouts.IsCreator(workoutService.Id, this.User.GetId());
+            workout.WorkDays = workoutService.WorkDays
+                .Select(wd => this.mapper.Map<DetailsWorkDayViewModel>(wd))
+                .ToList();
 
             return View(workout);
         }        

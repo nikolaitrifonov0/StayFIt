@@ -9,6 +9,6 @@ namespace StayFit.Web.Models.Workouts
         public string Description { get; init; }
         public List<DetailsWorkDayViewModel> WorkDays { get; set; }
         public int? CycleDays { get; init; }
-        public bool IsCreator { get; init; }
+        public bool IsCreator { get; set; }
     }
 }

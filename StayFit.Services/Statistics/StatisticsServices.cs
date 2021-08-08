@@ -8,10 +8,7 @@ namespace StayFit.Services.Statistics
     {
         private readonly StayFitContext data;
 
-        public StatisticsServices(StayFitContext data)
-        {
-            this.data = data;
-        }
+        public StatisticsServices(StayFitContext data) => this.data = data;
 
         public StatisticsServiceModel GetAll(string userId)
             => new StatisticsServiceModel

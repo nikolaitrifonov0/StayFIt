@@ -11,6 +11,6 @@ namespace StayFit.Services.Workouts
         public string CreatorId { get; init; }
         public List<DetailsWorkDayServiceModel> WorkDays { get; set; }
         public int? CycleDays { get; init; }
-        public WorkoutCycleType CycleType { get; init; }
+        public WorkoutCycleType CycleType { get; set; }
     }
 }

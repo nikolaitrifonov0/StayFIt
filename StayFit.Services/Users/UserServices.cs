@@ -47,9 +47,10 @@ namespace StayFit.Services.Users
                 return null;
             }
 
+            UpdateWorkDays(userId);
+            
             var model = new LogWorkoutUserServiceModel();
 
-            UpdateWorkDays(userId);
             model.HasWorkout = true;
             model.IsWorkdayComplete = this.data.UserExerciseLogs
                 .Any(uel => uel.UserId == userId && uel.Date == DateTime.Today);

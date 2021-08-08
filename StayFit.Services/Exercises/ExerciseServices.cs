@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models;
 using System;
@@ -10,8 +12,13 @@ namespace StayFit.Services.Exercises
     public class ExerciseServices : IExerciseServices
     {
         private readonly StayFitContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public ExerciseServices(StayFitContext data) => this.data = data;
+        public ExerciseServices(StayFitContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
+        }
 
         public void Add(string name, string description, string imageUrl, 
             string videoUrl, int equipment, IEnumerable<int> bodyParts)
@@ -39,28 +46,15 @@ namespace StayFit.Services.Exercises
             => this.data
             .Exercises
             .Where(e => !publicOnly || e.IsPublic)
-            .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name, IsPublic = e.IsPublic })
+            .ProjectTo<ExerciseSearchServiceModel>(this.mapper)
             .ToList();
 
-        public ExerciseDetailsServiceModel Details(string id)
-        {
-            var youtubeEmbedLink = "https://www.youtube.com/embed/";
-            var youtubeLinkSeparator = "v=";
-
-            return this.data
-                    .Exercises
-                    .Where(e => e.Id == id)
-                    .Select(e => new ExerciseDetailsServiceModel
-                    {
-                        Id = e.Id,
-                        Name = e.Name,
-                        Description = e.Description,
-                        ImageUrl = e.ImageUrl,
-                        VideoUrl = youtubeEmbedLink + e.VideoUrl.Split(youtubeLinkSeparator, StringSplitOptions.RemoveEmptyEntries)[1],
-                        Equipment = e.Equipment.Name,
-                        BodyParts = e.BodyParts.Select(bp => bp.Name).ToList()
-                    }).FirstOrDefault();
-        }
+        public ExerciseDetailsServiceModel Details(string id) 
+            => this.data
+                .Exercises
+                .Where(e => e.Id == id)
+                .ProjectTo<ExerciseDetailsServiceModel>(this.mapper)
+                .FirstOrDefault();
 
         public void Edit(string id,string name, string description, 
             string imageUrl, string videoUrl, int equipment, IEnumerable<int> bodyParts)
@@ -98,24 +92,15 @@ namespace StayFit.Services.Exercises
             this.data.SaveChanges();            
         }
 
-        public ExerciseEditServiceModel EditDetails(string exerciseId)
-        {
-           return this.data.Exercises.Where(e => e.Id == exerciseId)
-                .Select(e => new ExerciseEditServiceModel
-                {
-                    Name = e.Name,
-                    Description = e.Description,
-                    BodyParts = e.BodyParts.Select(b => b.Id).ToList(),
-                    Equipment = e.Equipment.Id,
-                    ImageUrl = e.ImageUrl,
-                    VideoUrl = e.VideoUrl
-                })
+        public ExerciseEditServiceModel EditDetails(string exerciseId) 
+            => this.data.Exercises
+                .Where(e => e.Id == exerciseId)
+                .ProjectTo<ExerciseEditServiceModel>(this.mapper)
                 .FirstOrDefault();
-        }
 
         public IEnumerable<ExerciseSearchServiceModel> Find(string keyword)
             => data.Exercises
-            .Select(e => new ExerciseSearchServiceModel { Id = e.Id, Name = e.Name })
+            .ProjectTo<ExerciseSearchServiceModel>(this.mapper)
             .Where(e => e.Name.Contains(keyword) && e.IsPublic)
             .ToList();
 

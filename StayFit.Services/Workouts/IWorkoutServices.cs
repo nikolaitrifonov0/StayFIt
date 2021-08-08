@@ -4,7 +4,7 @@ namespace StayFit.Services.Workouts
 {
     public interface IWorkoutServices
     {
-        public AllWorkoutsServiceModel All();
+        public IEnumerable<AllWorkoutsServiceModel> All();
         public void Add(string name,
                 string description,
                 int? cycleDays,

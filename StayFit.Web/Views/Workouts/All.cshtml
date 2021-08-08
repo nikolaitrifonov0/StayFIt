@@ -1,10 +1,10 @@
-﻿@model AllWorkoutsServiceModel
+﻿@model IEnumerable<AllWorkoutsServiceModel>
 
 @{
     ViewData["Title"] = "All Workouts";
 }
 
-@foreach (var workout in Model.Workouts)
+@foreach (var workout in Model)
 {
     <div class="card w-75">
         <div class="card-body">

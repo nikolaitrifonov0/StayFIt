@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace StayFit.Services.Workouts
+﻿namespace StayFit.Services.Workouts
 {
     public class AllWorkoutsServiceModel
     {
-        public IEnumerable<WorkoutAllServiceModel> Workouts { get; init; }
+        public string Id { get; init; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public string Creator { get; init; }
+        public int TotalWorkDays { get; init; }
     }
 }

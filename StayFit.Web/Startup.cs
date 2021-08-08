@@ -39,6 +39,8 @@ namespace StayFit.Web
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StayFitContext>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews();
 
             services.AddTransient<IExerciseServices, ExerciseServices>();
