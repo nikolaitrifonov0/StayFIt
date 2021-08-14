@@ -11,7 +11,7 @@ namespace StayFit.Data
         {
         }
 
-        public StayFitContext(DbContextOptions<StayFitContext> options)
+        public StayFitContext(DbContextOptions<StayFitContext> options) : base(options)
         {            
         }
 

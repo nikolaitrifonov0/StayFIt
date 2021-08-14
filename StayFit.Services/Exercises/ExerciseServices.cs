@@ -59,7 +59,13 @@ namespace StayFit.Services.Exercises
         public void Edit(string id,string name, string description, 
             string imageUrl, string videoUrl, int equipment, IEnumerable<int> bodyParts)
         {
-            var exercise = this.data.Exercises.Find(id);
+            var exercise = this.data.Exercises.Where(e => e.Id == id).FirstOrDefault();
+
+            if (exercise == null)
+            {
+                return;
+            }
+
             var exerciseBodyParts = this.data.Exercises
                 .Where(e => e.Id == id)
                 .Select(e => e.BodyParts.Select(b => b.Id).ToList())
@@ -99,18 +105,35 @@ namespace StayFit.Services.Exercises
                 .FirstOrDefault();
 
         public IEnumerable<ExerciseSearchServiceModel> Find(string keyword)
-            => data.Exercises
-            .ProjectTo<ExerciseSearchServiceModel>(this.mapper)
-            .Where(e => e.Name.Contains(keyword) && e.IsPublic)
-            .ToList();
+        {
+            int keywordLenght = 3;
 
-        public bool IsInWorkout(string exerciseId, string userId) =>
-           this.data.WorkDays
-           .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
-               && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
-           .Select(wd => new { wd.Exercises })
-           .First()
-           .Exercises.Any(e => e.Id == exerciseId);
+            if (keyword.Length < keywordLenght)
+            {
+                return new List<ExerciseSearchServiceModel>();
+            }
+            
+            return data.Exercises
+                       .ProjectTo<ExerciseSearchServiceModel>(this.mapper)
+                       .Where(e => e.Name.Contains(keyword) && e.IsPublic)
+                       .ToList();
+        }
+
+        public bool IsInWorkout(string exerciseId, string userId)
+        {
+            if (!this.data.Exercises.Any(e => e.Id == exerciseId) 
+                || !this.data.Users.Any(u => u.Id == userId))
+            {
+                return false;
+            }
+
+            return this.data.WorkDays
+                .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
+                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+                .Select(wd => new { wd.Exercises })
+                .First()
+                .Exercises.Any(e => e.Id == exerciseId);
+        }
 
         public void Hide(string Id)
         {
