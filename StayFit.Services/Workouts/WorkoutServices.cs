@@ -44,7 +44,7 @@ namespace StayFit.Services.Workouts
 
                 DateTime nextWorkout;
 
-                if (Enum.IsDefined(typeof(DayOfWeek), ed.Key))
+                if (Enum.IsDefined(typeof(DayOfWeek), ed.Key) && workoutCycleType == (int)WorkoutCycleType.Weekly)
                 {
                     var dayOfWeek = Enum.Parse(typeof(DayOfWeek), ed.Key);
 
@@ -53,7 +53,7 @@ namespace StayFit.Services.Workouts
                     var daysUntilNextWorkout = ((int)dayOfWeek - (int)tomorrow.DayOfWeek + 7) % 7;
                     nextWorkout = tomorrow.AddDays(daysUntilNextWorkout);
                 }
-                else
+                else if (workoutCycleType == (int)WorkoutCycleType.EveryNDays)
                 {
                     if (exercisesToDays.Keys.First() == ed.Key)
                     {
@@ -63,6 +63,10 @@ namespace StayFit.Services.Workouts
                     {
                         nextWorkout = workout.WorkDays.Last().NextWorkout.AddDays((int)workout.CycleDays + 1);
                     }
+                }
+                else
+                {
+                    continue;
                 }
 
                 workDay.NextWorkout = nextWorkout;
@@ -85,7 +89,7 @@ namespace StayFit.Services.Workouts
             var user = this.data.Users.Where(u => u.Id == userId).FirstOrDefault();
             var workout = this.data.Workouts.Where(w => w.Id == workoutId).FirstOrDefault();
 
-            if (workout == null || workout.Users.Any(u => u.Id == userId))
+            if (workout == null || user == null || workout.Users.Any(u => u.Id == userId))
             {
                 return;
             }
@@ -149,12 +153,28 @@ namespace StayFit.Services.Workouts
             int workoutCycleType, Dictionary<string, List<string>> exercisesToDays)
         {
             var workout = this.data.Workouts.Find(id);
+
+            if (workout == null)
+            {
+                return;
+            }
+
             workout.Name = name;
             workout.Description = description;
             workout.CycleDays = cycleDays;
-            workout.WorkoutCycleType = workoutCycleType == 0 ?
-                WorkoutCycleType.Weekly : WorkoutCycleType.EveryNDays;
 
+            if (workoutCycleType == 0)
+            {
+                workout.WorkoutCycleType = WorkoutCycleType.Weekly;
+            }
+            else if (workoutCycleType == 1)
+            {
+                workout.WorkoutCycleType = WorkoutCycleType.EveryNDays;
+            }
+            else
+            {
+                return;
+            }
 
             if (exercisesToDays != null)
             {
@@ -211,6 +231,6 @@ namespace StayFit.Services.Workouts
                 .FirstOrDefault();
 
         public bool IsCreator(string workoutId, string userId)
-            => this.data.Workouts.Find(workoutId).CreatorId == userId;
+            => this.data.Workouts.Find(workoutId)?.CreatorId == userId;
     }
 }

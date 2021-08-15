@@ -14,7 +14,7 @@ namespace StayFit.Test
 
         public void ConfigureTestServices(IServiceCollection services)
         {
-            base.ConfigureServices(services);
+            ConfigureServices(services);
         }
     }
 }

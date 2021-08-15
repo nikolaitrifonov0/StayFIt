@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
 using StayFit.Services.Exercises;
-using StayFit.Web.Controllers;
 using StayFit.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
 using Xunit;
+
+using static StayFit.Test.Data.ExerciseProvider;
 
 namespace StayFit.Test.ServiceTests
 {
@@ -96,7 +93,7 @@ namespace StayFit.Test.ServiceTests
         }
 
         [Fact]
-        public void AllWithEmptyDatabaseShouldReturnNull()
+        public void AllWithEmptyDatabaseShouldReturnEmptyCollection()
         {
             var optionsBuilder = new DbContextOptionsBuilder<StayFitContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
@@ -106,6 +103,7 @@ namespace StayFit.Test.ServiceTests
             var result = exercises.All();
 
             Assert.NotNull(result);
+            Assert.Empty(result);
         }
 
         [Fact]
@@ -428,56 +426,6 @@ namespace StayFit.Test.ServiceTests
             exercises.Hide(exercise.Id);
 
             Assert.False(exercise.IsPublic);
-        }
-
-        private static IEnumerable<Exercise> FourExercises()
-        {
-            var exercises = new List<Exercise>()
-        {
-            new Exercise
-            {
-                Name = "press",
-                Description = "asdasd",
-                EquipmentId = 1,
-                ImageUrl = "aaaa",
-                VideoUrl = "https://www.youtube.com/watch?v=qEwKCR5JCog",
-                IsPublic = true,
-                Equipment = new Equipment { Name = "barbel" },
-                BodyParts = new List<BodyPart>()
-                {
-                    new BodyPart { Name = "shoulder" }
-                }
-            },
-            new Exercise
-            {
-                Name = "benchpress",
-                Description = "asdasd",
-                EquipmentId = 1,
-                ImageUrl = "aaaa",
-                VideoUrl = "aaaa",
-                IsPublic = true
-            },
-            new Exercise
-            {
-                Name = "deadlift",
-                Description = "asdasd",
-                EquipmentId = 1,
-                ImageUrl = "aaaa",
-                VideoUrl = "aaaa",
-                IsPublic = false
-            },
-            new Exercise
-            {
-                Name = "deadlift",
-                Description = "asdasd",
-                EquipmentId = 1,
-                ImageUrl = "aaaa",
-                VideoUrl = "aaaa",
-                IsPublic = false
-            }
-        };
-
-            return exercises;
-        }
+        }        
     }    
 }
