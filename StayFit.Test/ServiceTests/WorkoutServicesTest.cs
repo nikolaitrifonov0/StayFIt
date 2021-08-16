@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Services.Workouts;
-using StayFit.Test.Data;
 using StayFit.Web.Infrastructure;
 using System;
 using System.Collections.Generic;

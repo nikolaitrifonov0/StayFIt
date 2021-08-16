@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyTested.AspNetCore.Mvc;
 using StayFit.Web;
 
 namespace StayFit.Test
