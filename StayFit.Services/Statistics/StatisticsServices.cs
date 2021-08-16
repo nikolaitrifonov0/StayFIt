@@ -18,7 +18,7 @@ namespace StayFit.Services.Statistics
                 UserWorkoutProgress = this.GetUserWorkoutProgress(userId)
             };
 
-        public Dictionary<string, List<ScoreProgressServiceModel>> GetUserMaxScores(string userId)
+        private Dictionary<string, List<ScoreProgressServiceModel>> GetUserMaxScores(string userId)
         {
             var logs = this.data.UserExerciseLogs
                 .Where(uel => uel.UserId == userId)
@@ -50,7 +50,7 @@ namespace StayFit.Services.Statistics
             return result;
         }
 
-        public Dictionary<string, List<WeightProgressServiceModel>> GetUserMaxWeights(string userId)
+        private Dictionary<string, List<WeightProgressServiceModel>> GetUserMaxWeights(string userId)
         {
             var logs = this.data.UserExerciseLogs
                 .Where(uel => uel.UserId == userId)
@@ -82,7 +82,7 @@ namespace StayFit.Services.Statistics
             return result;
         }
 
-        public IEnumerable<WorkoutProgressScore> GetUserWorkoutProgress(string userId)
+        private IEnumerable<WorkoutProgressScore> GetUserWorkoutProgress(string userId)
         {
             var logs = this.data.UserExerciseLogs
                 .Select(uel => new 
