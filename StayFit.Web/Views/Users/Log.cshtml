@@ -1,4 +1,4 @@
-﻿@model LogWorkoutUserServiceModel
+﻿@model LogWorkoutForUserServiceModel
 
 @{
     ViewData["Title"] = "Log Workout";
@@ -39,7 +39,7 @@ else
                         </div>
                         <div class="form-inline">                            
                             <div class="row set">
-                                <input type="hidden" asp-for="Exercises" value="@exercise.Key" />
+                                <input type="hidden" asp-for="ExerciseIds" value="@exercise.Key" />
                                 <input type="text" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
                                 <input type="text" asp-for="Repetitions" class="form-control mb-2 mr-sm-2" placeholder="Reps">
                                 <input type="text" asp-for="Weight" class="form-control mb-2" placeholder="Weight">

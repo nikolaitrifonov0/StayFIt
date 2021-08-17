@@ -20,16 +20,16 @@ namespace StayFit.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Log() => View(users.PrepareForView(this.User.GetId()));
+        public IActionResult Log() => View(this.users.PrepareForView(this.User.GetId()));
 
         [HttpPost]
         [Authorize]
-        public IActionResult Log(LogWorkoutUserServiceModel workout)
+        public IActionResult Log(LogWorkoutForUserServiceModel workout)
         {
             string userId = this.User.GetId();
 
             this.ModelState.Remove(nameof(workout.Repetitions));
-            if (workout.Exercises == null || workout.Exercises.Count > workout.Repetitions.Count)
+            if (workout.ExerciseIds == null || workout.ExerciseIds.Count > workout.Repetitions.Count)
             {
                 this.ModelState.AddModelError(nameof(workout.Repetitions), "You must not leave empty reps fields.");
             }
@@ -42,17 +42,17 @@ namespace StayFit.Web.Controllers
                 }
             }
 
-            foreach (var exercise in workout.Exercises)
+            foreach (var exercise in workout.ExerciseIds)
             {
-                if (!exercises.IsInWorkout(exercise, userId))
+                if (!this.exercises.IsInWorkout(exercise, userId))
                 {
-                    this.ModelState.AddModelError(nameof(workout.Exercises), "This exercise is not in your workout.");
+                    this.ModelState.AddModelError(nameof(workout.ExerciseIds), "This exercise is not in your workout.");
                 }
             }
 
             if (!this.ModelState.IsValid)
             {               
-                return View(users.PrepareForView(this.User.GetId()));
+                return View(this.users.PrepareForView(this.User.GetId()));
             }
 
             users.Log(workout, userId);

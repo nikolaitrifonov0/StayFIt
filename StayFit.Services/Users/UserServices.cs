@@ -16,13 +16,20 @@ namespace StayFit.Services.Users
             this.data = data;
         }
 
-        public void Log(LogWorkoutUserServiceModel workout, string userId)
+        public void Log(LogWorkoutForUserServiceModel workout, string userId)
         {
-            for (int i = 0; i < workout.Exercises.Count(); i++)
+            if (!this.data.WorkDays
+                .Any(wd => wd.Workout.Users.Any(u => u.Id == userId)
+                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear))
+            {
+                return;
+            }
+            
+            for (int i = 0; i < workout.ExerciseIds.Count(); i++)
             {
                 var log = new UserExerciseLog
                 {
-                    ExerciseId = workout.Exercises[i],
+                    ExerciseId = workout.ExerciseIds[i],
                     SetNumber = i + 1,
                     Weight = workout.Weight.Count > 0 ? workout.Weight[i] : null,
                     Repetitions = workout.Repetitions[i],
@@ -40,7 +47,7 @@ namespace StayFit.Services.Users
             }
         }
 
-        public LogWorkoutUserServiceModel PrepareForView(string userId)
+        public LogWorkoutForUserServiceModel PrepareForView(string userId)
         {       
             if (!this.data.Workouts.Any(w => w.Users.Any(u => u.Id == userId)))
             {
@@ -49,7 +56,7 @@ namespace StayFit.Services.Users
 
             UpdateWorkDays(userId);
             
-            var model = new LogWorkoutUserServiceModel();
+            var model = new LogWorkoutForUserServiceModel();
 
             model.HasWorkout = true;
             model.IsWorkdayComplete = this.data.UserExerciseLogs
