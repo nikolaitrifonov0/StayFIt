@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace StayFit.Services.Statistics
+﻿namespace StayFit.Services.Statistics
 {
     public interface IStatisticsServices
     {

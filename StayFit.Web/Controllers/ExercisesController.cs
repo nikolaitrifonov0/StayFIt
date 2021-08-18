@@ -123,6 +123,6 @@ namespace StayFit.Web.Controllers
                 exercise.ImageUrl, exercise.VideoUrl, exercise.Equipment, exercise.BodyParts);
 
             return Redirect($"/Exercises/{nameof(this.Details)}/{id}");
-        }
+        }        
     }
 }

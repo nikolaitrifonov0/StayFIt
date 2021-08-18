@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Services.Statistics;
 using StayFit.Test.Data;
-using StayFit.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
