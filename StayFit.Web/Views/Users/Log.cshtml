@@ -74,21 +74,23 @@ else
     }
 }
 
-<script type="text/javascript">
-    let addSetBtns = document.querySelectorAll('.add-set');
-    for (var btn of addSetBtns) {
-        btn.onclick = (e) => {
-            let divSets = e.target.parentElement.querySelectorAll('.set');
+@section Scripts {
+    <script type="text/javascript">
+        let addSetBtns = document.querySelectorAll('.add-set');
+        for (var btn of addSetBtns) {
+            btn.onclick = (e) => {
+                let divSets = e.target.parentElement.querySelectorAll('.set');
 
-            let oldDivSet = divSets[divSets.length - 1];
-            let newDivSet = oldDivSet.cloneNode(true);
+                let oldDivSet = divSets[divSets.length - 1];
+                let newDivSet = oldDivSet.cloneNode(true);
 
-            let oldSetNumber = oldDivSet.querySelector('.set-num');
-            let newSetNumber = newDivSet.querySelector('.set-num');
+                let oldSetNumber = oldDivSet.querySelector('.set-num');
+                let newSetNumber = newDivSet.querySelector('.set-num');
 
-            newSetNumber.value = Number(oldSetNumber.value) + 1;
+                newSetNumber.value = Number(oldSetNumber.value) + 1;
 
-            e.target.parentElement.querySelector('.form-inline').appendChild(newDivSet);
+                e.target.parentElement.querySelector('.form-inline').appendChild(newDivSet);
+            }
         }
-    }
-</script>
+    </script>
+}
