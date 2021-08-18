@@ -11,7 +11,7 @@ using Xunit;
 
 namespace StayFit.Test.ControllerTests
 {
-    public class ExercisesTest
+    public class ExercisesControllerTest
     {
         [Fact]
         public void GetAddShouldBeForAuthorizedUsersAndReturnView()
