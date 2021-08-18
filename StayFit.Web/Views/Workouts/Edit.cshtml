@@ -24,8 +24,8 @@
             }
             else
             {
-            <option value="0">By Week</option>
-            <option value="1" selected>Every Nth Day</option>
+                <option value="0">By Week</option>
+                <option value="1" selected>Every Nth Day</option>
             }
         </select>
         <span asp-validation-for="WorkoutCycleType" class="small text-danger"></span>
@@ -43,3 +43,7 @@
 
     <input class="btn btn-primary" type="submit" value="Save" />
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

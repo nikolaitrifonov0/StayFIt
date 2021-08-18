@@ -23,11 +23,11 @@
         <span asp-validation-for="WorkoutCycleType" class="small text-danger"></span>
     </div>
     <label asp-for="CycleDays" class="cycle-days"></label>
-    <input asp-for="CycleDays" class="form-control cycle-days" placeholder="How many days between each workout...">    
+    <input asp-for="CycleDays" class="form-control cycle-days" placeholder="How many days between each workout...">
 
     <partial name="_WeeklyExercises" />
-    
-    <partial name="_NthDayExercises"/>
+
+    <partial name="_NthDayExercises" />
 
     <div class="row text-center">
         <span asp-validation-for="Exercises" class="small text-danger col col-12 mb-3"></span>
@@ -35,3 +35,7 @@
 
     <input class="btn btn-primary" type="submit" value="Save" />
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

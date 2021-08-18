@@ -30,14 +30,14 @@ else
         else
         {
             <div class="row">
-                <form method="post" class="col-6">   
+                <form method="post" class="col-6">
                     <button type="button" class="add-set alert-success form-control mb-2 ">Add set</button>
                     @foreach (var exercise in Model.DisplayExercises)
                     {
                         <div class="row">
                             <label class="mb-2 mr-sm-2">@exercise.Value: </label>
                         </div>
-                        <div class="form-inline">                            
+                        <div class="form-inline">
                             <div class="row set">
                                 <input type="hidden" asp-for="ExerciseIds" value="@exercise.Key" />
                                 <input type="text" value="1" disabled="disabled" class="form-control mb-2 mr-sm-2 col-1 set-num" />
@@ -65,7 +65,7 @@ else
                     }
                 </div>
             </div>
-            
+
         }
     }
     else
@@ -93,4 +93,6 @@ else
             }
         }
     </script>
+    
+    <partial name="_ValidationScriptsPartial" />    
 }

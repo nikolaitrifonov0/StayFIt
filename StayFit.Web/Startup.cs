@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,9 @@ namespace StayFit.Web
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews();
+
+            services.AddMvc(options =>
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services.AddTransient<IExerciseServices, ExerciseServices>();
             services.AddTransient<IWorkoutServices, WorkoutServices>();
