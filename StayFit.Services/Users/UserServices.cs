@@ -48,15 +48,15 @@ namespace StayFit.Services.Users
         }
 
         public LogWorkoutForUserServiceModel PrepareForView(string userId)
-        {       
+        {
+            var model = new LogWorkoutForUserServiceModel();
+
             if (!this.data.Workouts.Any(w => w.Users.Any(u => u.Id == userId)))
             {
-                return null;
+                return model;
             }
 
-            UpdateWorkDays(userId);
-            
-            var model = new LogWorkoutForUserServiceModel();
+            UpdateWorkDays(userId);                      
 
             model.HasWorkout = true;
             model.IsWorkdayComplete = this.data.UserExerciseLogs

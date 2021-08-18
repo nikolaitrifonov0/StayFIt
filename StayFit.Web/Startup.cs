@@ -54,6 +54,7 @@ namespace StayFit.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.PrepareDatabase();
+            app.UseStatusCodePages();
 
             if (env.IsDevelopment())
             {
