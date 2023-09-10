@@ -2,7 +2,10 @@
 
 handleWorkoutType();
 
+hideUls();
+
 await addSearchEventToSearchInputs();
+
 
 let currentDay = 0;
 let addDayBtn = document.querySelector('.add-day');
@@ -24,6 +27,14 @@ async function addSearchEventToSearchInputs() {
     }
 }
 
+function hideUls() {
+    let hiddenUrls = document.getElementsByClassName("results");
+
+    for (var i = 0; i < hiddenUrls.length; i++) {
+        hiddenUrls[i].style.display = "none";
+    }
+}
+
 function addExerciseSearching() {
     return async (e) => {
         let input = e.target;
@@ -33,6 +44,7 @@ function addExerciseSearching() {
 
         if (inputValue.length >= 3) {
             resultsUl.innerHTML = '';
+            resultsUl.style.display = 'block';
 
             let response = await request(findExerciseUrl);
 
@@ -56,6 +68,8 @@ function addExerciseSearching() {
 
             addExerciseLi.appendChild(addExerciseAnchor);
             resultsUl.appendChild(addExerciseLi);
+        } else {
+            resultsUl.style.display = 'none';
         }
     };
 
@@ -85,6 +99,8 @@ function addExerciseSearching() {
                 exercisesUl.appendChild(exerciseLi);
                 input.value = '';
             }
+
+            hideUls();
         };
     }
 }
@@ -115,12 +131,3 @@ function handleWorkoutType() {
     }
 }
 
-function containsChild(collection, element) {
-    for (var i = 0; i < collection.length; i++) {
-        if (collection[i].value == element.value) {
-            return true;
-        }
-    }
-
-    return false;
-}

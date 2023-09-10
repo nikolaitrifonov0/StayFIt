@@ -1,5 +1,5 @@
 ﻿@model DetailsWorkoutViewModel
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{ 
     ViewData["Title"] = "Workout Details";
@@ -27,7 +27,7 @@
     </p>
     @if (SignInManager.IsSignedIn(User))
     {
-        <a class="btn btn-primary btn-lg" href="/Workouts/Assign/@Model.Id" role="button">Make Active</a>
+        <a class="btn btn-gray btn-lg" href="/Workouts/Assign/@Model.Id" role="button">Make Active</a>
     }
     @if (Model.IsCreator || User.IsInRole(AdminConstants.AdministratorRoleName))
     {

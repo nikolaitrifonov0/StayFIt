@@ -5,7 +5,7 @@ using StayFit.Data.Models;
 
 namespace StayFit.Data
 {
-    public class StayFitContext : IdentityDbContext
+    public class StayFitContext : IdentityDbContext<ApplicationUser>
     {
         public StayFitContext()
         {
@@ -36,20 +36,27 @@ namespace StayFit.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Workout>()
-                .HasOne<IdentityUser>(w => w.Creator)
+                .HasOne<ApplicationUser>(w => w.Creator)
                 .WithMany()
                 .HasForeignKey(w => w.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Workout>()
-                .HasMany<IdentityUser>()
-                .WithOne();
+                .HasMany<ApplicationUser>()
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict); 
 
 
             modelBuilder.Entity<UserExerciseLog>()
-                .HasOne<IdentityUser>()
+                .HasOne<ApplicationUser>()
                 .WithMany()
                 .HasForeignKey(uel => uel.UserId);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne<WorkDay>(wd => wd.NextWorkDay)
+                .WithMany()
+                .HasForeignKey(wd => wd.NextWorkDayId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

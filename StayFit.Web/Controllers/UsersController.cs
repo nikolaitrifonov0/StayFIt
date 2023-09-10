@@ -11,16 +11,21 @@ namespace StayFit.Web.Controllers
     public class UsersController : Controller
     {
         private readonly IUserServices users;
-        private readonly IExerciseServices exercises;
 
-        public UsersController(IUserServices users, IExerciseServices exercises)
+        public UsersController(IUserServices users)
         {
             this.users = users;
-            this.exercises = exercises;
         }
 
         [Authorize]
         public IActionResult Log() => View(this.users.PrepareForView(this.User.GetId()));
+
+        [Authorize]
+        public IActionResult MoveWorkoutToToday()
+        {
+            users.MoveWorkoutToToday(this.User.GetId());
+            return View("Log" ,this.users.PrepareForView(this.User.GetId()));
+        }
 
         [HttpPost]
         [Authorize]
@@ -39,14 +44,6 @@ namespace StayFit.Web.Controllers
                 if (weight != null && (weight > WeightMaxLenght || weight < WeightMinLenght))
                 {
                     this.ModelState.AddModelError(nameof(workout.Weight), $"The weight should be between {WeightMinLenght} and {WeightMaxLenght}.");
-                }
-            }
-
-            foreach (var exercise in workout.ExerciseIds)
-            {
-                if (!this.exercises.IsInWorkout(exercise, userId))
-                {
-                    this.ModelState.AddModelError(nameof(workout.ExerciseIds), "This exercise is not in your workout.");
                 }
             }
 

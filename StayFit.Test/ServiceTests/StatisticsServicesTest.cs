@@ -21,7 +21,7 @@ namespace StayFit.Test.ServiceTests
             var data = new StayFitContext(optionsBuilder.Options);
             var statistics = new StatisticsServices(data);
 
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
             data.Users.Add(user);
 
             var workout = WorkoutProvider.TwoWorkouts().First();

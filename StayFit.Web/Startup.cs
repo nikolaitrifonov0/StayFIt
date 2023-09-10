@@ -5,15 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using StayFit.Data;
+using StayFit.Data.Models;
 using StayFit.Services.BodyParts;
+using StayFit.Services.Calendar;
 using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Services.Statistics;
 using StayFit.Services.Users;
 using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
+using System.IO;
 
 namespace StayFit.Web
 {
@@ -30,7 +34,7 @@ namespace StayFit.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")))
                 .AddDatabaseDeveloperPageExceptionFilter()
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
@@ -53,6 +57,8 @@ namespace StayFit.Web
             services.AddTransient<IEquipmentServices, EquipmentServices>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IStatisticsServices, StatisticsServices>();
+            services.AddTransient<ICalendarDataProvider, CalendarDataProvider>();
+            services.AddTransient<ICalendarUpdater, CalendarUpdater>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

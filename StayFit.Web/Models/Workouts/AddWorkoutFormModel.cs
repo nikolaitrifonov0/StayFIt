@@ -24,6 +24,8 @@ namespace StayFit.Web.Models.Workouts
             ErrorMessage = "Workout Type should be one of the given values.")]
         public int WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }
+        [Display(Name = "Thumbnail")]
+        public string ImageUrl { get; set; }
         public IEnumerable<string> Exercises { get; init; }
     }
 }

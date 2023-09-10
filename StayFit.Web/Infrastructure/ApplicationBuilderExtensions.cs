@@ -90,7 +90,7 @@ namespace StayFit.Web.Infrastructure
 
         private static void SeedAdministrator(IServiceProvider services)
         {
-            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
             Task
@@ -108,7 +108,7 @@ namespace StayFit.Web.Infrastructure
                     const string adminEmail = "admin@stayfit.com";
                     const string adminPassword = "admin123";
 
-                    var user = new IdentityUser
+                    var user = new ApplicationUser
                     {
                         Email = adminEmail,
                         UserName = adminEmail

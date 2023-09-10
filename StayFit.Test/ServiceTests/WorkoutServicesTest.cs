@@ -11,6 +11,7 @@ using Xunit;
 using static StayFit.Test.Data.WorkoutProvider;
 using static StayFit.Test.Data.ExerciseProvider;
 using Microsoft.AspNetCore.Identity;
+using StayFit.Data.Models;
 
 namespace StayFit.Test.ServiceTests
 {
@@ -151,7 +152,7 @@ namespace StayFit.Test.ServiceTests
             var workout = TwoWorkouts().First();
             data.Workouts.AddRange(workout);
             
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 Id = "user",
             };
@@ -175,7 +176,7 @@ namespace StayFit.Test.ServiceTests
             var workout = TwoWorkouts().First();
             data.Workouts.AddRange(workout);
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 Id = "user",
             };

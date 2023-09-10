@@ -18,12 +18,13 @@ namespace StayFit.Data.Models
         public string Description { get; set; }
         [Required]
         public string CreatorId { get; set; }
-        public IdentityUser Creator { get; set; }
+        public ApplicationUser Creator { get; set; }
         [Required]
         public ICollection<WorkDay> WorkDays { get; set; } = new HashSet<WorkDay>();
         [Required]
         public WorkoutCycleType WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }
-        public ICollection<IdentityUser> Users { get; init; } = new HashSet<IdentityUser>();
+        public ICollection<ApplicationUser> Users { get; init; } = new HashSet<ApplicationUser>();
+        public string ImageUrl { get; set; }
     }
 }

@@ -128,8 +128,7 @@ namespace StayFit.Services.Exercises
             }
 
             return this.data.WorkDays
-                .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
-                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
+                .Where(wd => wd.Workout.Users.Any(u => u.Id == userId && u.NextWorkout.HasValue && u.NextWorkout.Value.DayOfYear == DateTime.Today.DayOfYear))
                 .Select(wd => new { wd.Exercises })
                 .First()
                 .Exercises.Any(e => e.Id == exerciseId);

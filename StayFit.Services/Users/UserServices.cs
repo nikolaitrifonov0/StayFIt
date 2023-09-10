@@ -1,4 +1,5 @@
-﻿using StayFit.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Data.Models.Enums.Workout;
 using System;
@@ -19,12 +20,12 @@ namespace StayFit.Services.Users
         public void Log(LogWorkoutForUserServiceModel workout, string userId)
         {
             if (!this.data.WorkDays
-                .Any(wd => wd.Workout.Users.Any(u => u.Id == userId)
-                && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear))
+                .Any(wd => wd.Workout.Users.Any(u => u.Id == userId && u.NextWorkout.HasValue && u.NextWorkout.Value.DayOfYear == DateTime.Today.DayOfYear)))
             {
                 return;
             }
-            
+
+            Workout workoutEntity = null;
             for (int i = 0; i < workout.ExerciseIds.Count(); i++)
             {
                 var log = new UserExerciseLog
@@ -34,29 +35,40 @@ namespace StayFit.Services.Users
                     Weight = workout.Weight.Count > 0 ? workout.Weight[i] : null,
                     Repetitions = workout.Repetitions[i],
                     UserId = userId,
-                    WorkDayId = this.data.WorkDays
-                    .Where(wd => wd.Workout.Users.Any(u => u.Id == userId)
-                        && wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
-                    .Select(wd => wd.Id)
-                    .First(),
+                    WorkDayId = this.data.Users.Where(u => userId == u.Id).First().NextWorkDayId,
                     Date = DateTime.Today,
                 };
 
                 this.data.UserExerciseLogs.Add(log);
                 this.data.SaveChanges();
+                workoutEntity = this.data.Workouts.Where(w => w.WorkDays.Any(wd => wd.Id == log.WorkDayId)).First();
             }
+
+            var user = this.data.Users.Find(userId);
+            this.AssignNextWorkDay(user, workoutEntity);
+        }
+
+        public void MoveWorkoutToToday(string userId)
+        {
+            var user = this.data.Users.Find(userId);
+            user.NextWorkout = DateTime.Today;
+            this.data.SaveChanges();
         }
 
         public LogWorkoutForUserServiceModel PrepareForView(string userId)
         {
             var model = new LogWorkoutForUserServiceModel();
+            var user = this.data.Users.Find(userId);
 
             if (!this.data.Workouts.Any(w => w.Users.Any(u => u.Id == userId)))
             {
                 return model;
             }
 
-            UpdateWorkDays(userId);                      
+            if (user.NextWorkout.HasValue && user.NextWorkout.Value.DayOfYear < DateTime.Now.DayOfYear)
+            {
+                this.AssignNextWorkDay(user, this.GetUserWorkout(userId).First());
+            }
 
             model.HasWorkout = true;
             model.IsWorkdayComplete = this.data.UserExerciseLogs
@@ -67,13 +79,12 @@ namespace StayFit.Services.Users
 
             var exercises = this.GetUserWorkout(userId)
                 .Select(w =>
-                w.WorkDays.Select(wd => new
+                w.WorkDays.Where(wd => user.NextWorkDayId == wd.Id && user.NextWorkout.HasValue && user.NextWorkout.Value.DayOfYear == DateTime.Today.DayOfYear)
+                .Select(wd => new
                 {
                     wd.Id,
-                    wd.NextWorkout,
                     Exercises = wd.Exercises.Select(e => new { e.Id, e.Name }).ToList()
                 })
-                .Where(wd => wd.NextWorkout.DayOfYear == DateTime.Today.DayOfYear)
                 .FirstOrDefault())
                 .FirstOrDefault();
 
@@ -111,50 +122,66 @@ namespace StayFit.Services.Users
                     {
                         model.LastWorkoutLogs[log.ExerciseName] = new List<LastWorkoutLogServiceModel>();
                     }
-                    model.LastWorkoutLogs[log.ExerciseName].Add(new LastWorkoutLogServiceModel
+                    if (model.LastWorkoutLogs[log.ExerciseName].Count < 3)
                     {
-                        Set = log.SetNumber,
-                        Repetitions = log.Repetitions,
-                        Weight = log.Weight
-                    });
+                        model.LastWorkoutLogs[log.ExerciseName].Add(new LastWorkoutLogServiceModel
+                        {
+                            Set = log.SetNumber,
+                            Repetitions = log.Repetitions,
+                            Weight = log.Weight
+                        });
+                    }
                 }
             }
+
+            model.NextWorkout = user.NextWorkout;
 
             return model;
         }
 
-        private void UpdateWorkDays(string userId)
+        public void AssignNextWorkDay(ApplicationUser user, Workout workout, bool isNewWorkout = false)
         {
-            var workdays = this.data.WorkDays
-                .Where(wd => wd.Workout.Users.Any(u => u.Id == userId));
-
-            if (!workdays.Any(wd => wd.NextWorkout.DayOfYear >= DateTime.Today.DayOfYear))
+            var workDays = data.WorkDays.Where(wd => wd.WorkoutId == workout.Id).ToList();
+            var lastWorkday = data.UserExerciseLogs.Include(uel => uel.WorkDay).Where(uel => uel.UserId == user.Id).OrderByDescending(uel => uel.Date).FirstOrDefault()?.WorkDay;
+            if (workout.WorkoutCycleType == WorkoutCycleType.Weekly)
             {
-                var workoutCycleType = this.GetUserWorkout(userId)
-                .First().WorkoutCycleType;
-
-                while (!workdays.Any(wd => wd.NextWorkout.DayOfYear >= DateTime.Today.DayOfYear))
+                bool isWorkdayAssigned = false;
+                DateTime date = DateTime.Today.AddDays(1);
+                while (isWorkdayAssigned == false)
                 {
-                    if (workoutCycleType == WorkoutCycleType.Weekly)
+                    if (workDays.Any(w => w.DayOfWeek == date.DayOfWeek && (lastWorkday == null || lastWorkday.Id != w.Id)))
                     {
-                        foreach (var workday in workdays)
-                        {
-                            workday.NextWorkout = workday.NextWorkout.AddDays(7);
-                        }
+                        user.NextWorkDayId = workDays.First(w => w.DayOfWeek == date.DayOfWeek).Id;
+                        user.NextWorkout = date;
+                        isWorkdayAssigned = true;
                     }
-                    else if (workoutCycleType == WorkoutCycleType.EveryNDays)
+                    else
                     {
-                        var workoutCycleDays = this.GetUserWorkout(userId)
-                            .First().CycleDays;
-                        foreach (var workday in workdays)
-                        {
-                            workday.NextWorkout = workday.NextWorkout.AddDays(workoutCycleDays.Value + 1);
-                        }
+                        date = date.AddDays(1);
                     }
-
-                    this.data.SaveChanges();
                 }
             }
+            else
+            {
+                if (user.NextWorkout == null || isNewWorkout)
+                {
+                    user.NextWorkDayId = workDays[0].Id;
+                    user.NextWorkout = DateTime.Today.AddDays(1);
+                }
+                else
+                {
+                    var nextWorkday = workDays.FirstOrDefault(w => w.Id == user.NextWorkDayId + 1);
+
+                    if (nextWorkday == null)
+                    {
+                        nextWorkday = workDays[0];
+                    }
+                    user.NextWorkDayId = workDays[0].Id;
+                    user.NextWorkout = user.NextWorkout.Value.AddDays(workout.CycleDays.Value);
+                }
+            }
+
+            this.data.SaveChanges();
         }
 
         private IQueryable<Workout> GetUserWorkout(string userId)

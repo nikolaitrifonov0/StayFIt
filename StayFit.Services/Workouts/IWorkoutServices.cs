@@ -16,6 +16,7 @@ namespace StayFit.Services.Workouts
                 string description,
                 int? cycleDays,
                 int workoutCycleType,
+                string imageUrl,
                 Dictionary<string, List<string>> exercisesToDays);
         public WorkoutDetailsServiceModel Details(string id);
         public EditWorkoutsServiceModel EditDetails(string id);

@@ -103,6 +103,7 @@ namespace StayFit.Web.Controllers
                 workout.Description,
                 workout.CycleDays,
                 workout.WorkoutCycleType,
+                workout.ImageUrl,
                 exercisesToDays);
 
             return Redirect($"/Workouts/{nameof(this.Details)}/{id}");

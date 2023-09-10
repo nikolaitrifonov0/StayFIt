@@ -288,7 +288,7 @@ namespace StayFit.Test.ServiceTests
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var data = new StayFitContext(optionsBuilder.Options);
             var exercises = new ExerciseServices(data, mapper);
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
 
             data.Exercises.AddRange(FourExercises());
 
@@ -366,7 +366,7 @@ namespace StayFit.Test.ServiceTests
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var data = new StayFitContext(optionsBuilder.Options);
             var exercises = new ExerciseServices(data, mapper);
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
 
             var workout = new Workout
             {

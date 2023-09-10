@@ -25,5 +25,7 @@ namespace StayFit.Services.Workouts
         public int WorkoutCycleType { get; set; }
         public int? CycleDays { get; set; }
         public IEnumerable<string> Exercises { get; init; }
+        [Display(Name = "Thumbnail")]
+        public string ImageUrl { get; set; }
     }
 }

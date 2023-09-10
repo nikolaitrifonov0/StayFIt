@@ -1,10 +1,39 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+html, body {
+    background-color: #242424;
+    color: white;
+    margin: 0;
+    height: 100%;
+}
+
+header {
+    background-color: #0E0201;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: white !important;
+}
+
+.jumbotron {
+    background-color: #000;
+}
+
+.btn-dark, .fc .fc-button-primary {
+    background-color: #000;
+    border: none;
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: #0f0f0f;
 }
 
 /* Provide sufficient contrast against white background */
@@ -12,10 +41,14 @@ a {
   color: #0366d6;
 }
 
+h1, .navbar-brand {
+    font-family: 'Oswald', sans-serif;
+}
+
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  background-color: black;
+  border-color: black;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -24,10 +57,14 @@ a {
   border-color: #1861ac;
 }
 
+.nav-link {
+    color: white !important;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 768px) {
   html {
@@ -58,17 +95,22 @@ html {
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
+.custom-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.dropdown-menu {
+    background-color: #2f2f2f;
+}
+
+.dropdown-item {
+    color: white;
+}
+
 button.add-exercise {
     margin-top: 15px;
 }
@@ -78,4 +120,92 @@ button.add-day.alert-success {
 }
 ul {
     list-style-type: none;
+}
+.small-button {
+    width: 160px;
+    font-size: 12px;
+}
+
+#exercisesDropdown {
+    width: 100%;
+}
+
+#exercisesCombobox {
+    margin-bottom: 110px;
+}
+
+#exercisesDropdown a {
+    padding-left: 8px;
+    width: 100%;
+    display: block;
+}
+
+#exercisesDropdown a:hover {
+    cursor: pointer;
+    background-color: #282828;
+    color: white;
+    text-decoration: none;
+}
+
+.list-group-item {
+    background-color: #2f2f2f;
+}
+
+.max-weights-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fc-event-main {
+    cursor: pointer;
+}
+
+.custom-container, .custom-container main {
+    height: 100%;
+}
+
+/*Home Page*/
+.home-page {
+    display: flex;
+    height: 100%;
+}
+.home-page div {
+    width: 50%;
+}
+.home-image {
+    background-image: url(https://tptspersonaltraining.co.uk/wp-content/uploads/2018/04/barbell-black-and-white-black-and-white-791763.jpg);
+}
+
+.home-text {
+    text-align: center;
+    margin: auto;
+    font-size: 17px;
+}
+
+.home-text h1 {
+    font-size: 95px;
+}
+
+div.login-btns {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.login-btns a {
+    color: white;
+    border: solid 1px white;
+    width: 120px;
+    margin: 5px;
+    border-radius: 25px;
+    height: 35px;
+    padding: 2px;
+}
+
+.login-btns a:hover {
+    background-color: white;
+    color: black;
+    text-decoration: none;
 }

@@ -21,7 +21,7 @@ namespace StayFit.Test.ServiceTests
             var data = new StayFitContext(optionsBuilder.Options);
             var users = new UserServices(data);
 
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
             var workout = WorkoutProvider.TwoWorkouts().First();
 
             data.Users.Add(user);
@@ -99,7 +99,7 @@ namespace StayFit.Test.ServiceTests
             var data = new StayFitContext(optionsBuilder.Options);
             var users = new UserServices(data);
 
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
             var workout = WorkoutProvider.TwoWorkouts().First();
             var exercises = new List<Exercise>()
             {
@@ -165,7 +165,7 @@ namespace StayFit.Test.ServiceTests
             var data = new StayFitContext(optionsBuilder.Options);
             var users = new UserServices(data);
 
-            var user = new IdentityUser();
+            var user = new ApplicationUser();
             var workout = WorkoutProvider.TwoWorkouts().First();
             var exercises = new List<Exercise>()
             {

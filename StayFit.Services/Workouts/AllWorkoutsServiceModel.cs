@@ -7,5 +7,6 @@
         public string Description { get; init; }
         public string Creator { get; init; }
         public int TotalWorkDays { get; init; }
+        public string ImageUrl { get; set; }
     }
 }

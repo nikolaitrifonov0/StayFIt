@@ -1,9 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_CustomLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>With this app you can track your workout's progress.</p>
+<div class="home-page">
+    <div class="home-image">        
+    </div>
+    <div class="home-text">
+        <h1>Welcome</h1>
+        <p>With this app you can track your workout's progress.</p>
+        <div class="login-btns">
+            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+    </div>
 </div>
 

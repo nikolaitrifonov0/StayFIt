@@ -42,7 +42,7 @@ namespace StayFit.Services.Statistics
 
                 result[log.Exercise].Add(new ScoreProgressServiceModel
                 {
-                    Date = log.Date,
+                    Date = log.Date.ToString("dd/MM/yyyy"),
                     Score = log.Score.Value
                 });
             }
@@ -74,7 +74,7 @@ namespace StayFit.Services.Statistics
 
                 result[log.Exercise].Add(new WeightProgressServiceModel
                 {
-                    Date = log.Date,
+                    Date = log.Date.ToString("dd/MM/yyyy"),
                     Weight = log.Weight
                 });
             }
@@ -97,7 +97,7 @@ namespace StayFit.Services.Statistics
                 .GroupBy(uel => uel.Date)
                 .Select(uel => new WorkoutProgressScore
                 {
-                    Date = uel.Key,
+                    Date = uel.Key.ToString("dd/MM/yyyy"),
                     Score = uel.Sum(uel => uel.Weight != null ? uel.Weight.Value * uel.Repetitions : uel.Repetitions)
                 }).ToList();
 

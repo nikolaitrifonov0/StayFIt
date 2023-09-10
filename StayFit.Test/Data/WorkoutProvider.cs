@@ -14,7 +14,7 @@ namespace StayFit.Test.Data
                 {
                     Name = "aaa",
                     Description = "aaaaaaaaa",
-                    Creator = new IdentityUser
+                    Creator = new ApplicationUser
                     {
                         UserName = "user"
                     },
@@ -35,7 +35,7 @@ namespace StayFit.Test.Data
                 {
                     Name = "bbb",
                     Description = "bbbbbbb",
-                    Creator = new IdentityUser
+                    Creator = new ApplicationUser
                     {
                         UserName = "user1"
                     },

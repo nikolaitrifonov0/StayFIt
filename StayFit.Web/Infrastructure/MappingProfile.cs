@@ -39,6 +39,11 @@ namespace StayFit.Web.Infrastructure
 
         private static string ExtractVideoUrl(string url)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return null;
+            }
+
             var youtubeEmbedLink = "https://www.youtube.com/embed/";
             var youtubeLinkSeparator = "v=";
 

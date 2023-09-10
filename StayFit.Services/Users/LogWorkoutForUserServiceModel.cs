@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace StayFit.Services.Users
 {
     public class LogWorkoutForUserServiceModel
     {
         public string Name { get; set; }
+        public DateTime? NextWorkout { get; set; }
         public bool HasWorkout { get; set; } = false;
         public bool IsWorkdayComplete { get; set; } = false;
         public Dictionary<string, string> DisplayExercises { get; init; } = new();

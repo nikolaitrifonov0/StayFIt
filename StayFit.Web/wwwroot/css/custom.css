@@ -11,11 +11,78 @@ ul {
     margin: auto;
     list-style-type: none;
 }
-.results {     
+.results {
     border-style: solid;
-    border-color: aquamarine;   
+    border-color: #757575;
     color: blue;
+    border-width: thin;
+    width: 210px;
+    padding: 0;
 }
 .results li {
     text-align: left;
+    padding: 0 10px;
+}
+
+.results li:hover,
+.results li:hover a {
+    cursor: pointer;
+    background-color: white;
+    color: #605d5d;
+}
+
+.find-exercise {
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+}
+
+.row {
+    align-items: center;
+}
+
+.add-set.btn {
+    margin-bottom: 5px;
+    padding: 4px 10px;
+}
+
+.btn-gray {
+    background-color: #595959;
+    color: white;
+}
+
+.btn-gray:hover {
+    background-color: white;
+    color: black;
+}
+
+.cards {
+    display: flex;
+}
+
+.card {
+    background-color: #510000;
+    margin: 15px auto;
+}
+
+.card-img-top {
+    min-height: 240px;
+}
+
+#exerciseDataTable input {
+    width: 140px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#calendar {
+    margin-top: 15px;
 }
