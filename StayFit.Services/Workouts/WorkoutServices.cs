@@ -57,7 +57,11 @@ namespace StayFit.Services.Workouts
             => this.data.Workouts
             .ProjectTo<AllWorkoutsServiceModel>(this.mapper)
             .ToList();
-     
+
+        public IEnumerable<AllWorkoutsServiceModel> MyWorkouts(string userId)
+            => this.data.Workouts.Where(w => w.CreatorId == userId)
+            .ProjectTo<AllWorkoutsServiceModel>(this.mapper)
+            .ToList();
 
         public void Assign(string userId, string workoutId)
         {

@@ -1,6 +1,13 @@
-﻿import CalendarDetailPopup from './popup.js';
+﻿import CalendarDetailPopup from './CalendarDetailPopup.js';
+import SelectExercisePopup from './SelectExercisePopup.js';
 
-const popup = new CalendarDetailPopup();
+const detailPopup = new CalendarDetailPopup({
+    onCreated: () => calendar.refetchEvents(),
+    onDeleted: () => calendar.refetchEvents()
+});
+const exercisePopup = new SelectExercisePopup({
+    onExerciseSelected: (exercise, date) => onExerciseSelected(exercise, date)
+});
 
 let addSetBtns = document.querySelectorAll('.add-set');
 for (var btn of addSetBtns) {
@@ -20,6 +27,7 @@ for (var btn of addSetBtns) {
 const calendarEl = document.getElementById('calendar');
 const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
+    timeZone: 'UTC',
     events: {
         url: '/Calendar/GetData',
         method: 'GET',
@@ -34,7 +42,14 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
                 date: info.event.startStr
             }
         });
-        popup.open(result);
+        detailPopup.openUpdate(result);
+    },
+    dateClick: (info) => {
+        exercisePopup.open(info.date);
     }
 });
 calendar.render();
+
+function onExerciseSelected(exercise, date) {
+    detailPopup.openCreate(exercise, date);
+}

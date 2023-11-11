@@ -177,7 +177,12 @@ namespace StayFit.Services.Users
                         nextWorkday = workDays[0];
                     }
                     user.NextWorkDayId = workDays[0].Id;
-                    user.NextWorkout = user.NextWorkout.Value.AddDays(workout.CycleDays.Value);
+
+
+                    while (user.NextWorkout.Value < DateTime.Today)
+                    {
+                        user.NextWorkout = user.NextWorkout.Value.AddDays(workout.CycleDays.Value);
+                    }
                 }
             }
 

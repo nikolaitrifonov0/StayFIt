@@ -19,7 +19,6 @@ namespace StayFit.Data.Models
         [Required]
         public string ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
-        [Required]
         public string WorkDayId { get; set; }
         public WorkDay WorkDay { get; set; }
         public DateTime Date { get; set; }

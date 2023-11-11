@@ -11,10 +11,14 @@ namespace StayFit.Web.Controllers
     {
         private readonly ICalendarDataProvider calendarDataProvider;
         private readonly ICalendarUpdater calendarUpdater;
-        public CalendarController(ICalendarDataProvider calendarDataProvider, ICalendarUpdater calendarUpdater)
+        private readonly ICalendarCreator calendarCreator;
+        private readonly ICalendarDeleter calendarDeleter;
+        public CalendarController(ICalendarDataProvider calendarDataProvider, ICalendarUpdater calendarUpdater, ICalendarCreator calendarCreator, ICalendarDeleter calendarDeleter)
         {
             this.calendarDataProvider = calendarDataProvider;
             this.calendarUpdater = calendarUpdater;
+            this.calendarCreator = calendarCreator;
+            this.calendarDeleter = calendarDeleter;
         }
 
         [HttpGet]
@@ -47,6 +51,24 @@ namespace StayFit.Web.Controllers
             calendarUpdater.UpdateLogs(logs);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public IActionResult CreateLog([FromBody] CalendarCreateModel createModel)
+        {
+            calendarCreator.Create(createModel, this.User.GetId());
+
+            return Ok(createModel);
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public IActionResult Delete([FromBody] IEnumerable<string> logs)
+        {
+            calendarDeleter.Delete(logs);
+
+            return Ok(new { Deleted = logs });
         }
     }
 }

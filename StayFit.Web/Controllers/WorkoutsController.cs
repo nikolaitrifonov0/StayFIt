@@ -23,7 +23,9 @@ namespace StayFit.Web.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult All() => View(this.workouts.All());        
+        public IActionResult All() => View(this.workouts.All());
+
+        public IActionResult MyWorkouts() => View("All", this.workouts.MyWorkouts(this.User.GetId()));
 
         [Authorize]
         public IActionResult Add() => View();

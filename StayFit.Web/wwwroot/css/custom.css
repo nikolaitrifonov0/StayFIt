@@ -86,3 +86,12 @@ input[type=number] {
 #calendar {
     margin-top: 15px;
 }
+
+#exercisesPopup .modal-body {
+    height: 145px;
+    color: black;
+}
+
+#modalLabel {
+    color: black;
+}

@@ -59,6 +59,8 @@ namespace StayFit.Web
             services.AddTransient<IStatisticsServices, StatisticsServices>();
             services.AddTransient<ICalendarDataProvider, CalendarDataProvider>();
             services.AddTransient<ICalendarUpdater, CalendarUpdater>();
+            services.AddTransient<ICalendarCreator, CalendarCreator>();
+            services.AddTransient<ICalendarDeleter, CalendarDeleter>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

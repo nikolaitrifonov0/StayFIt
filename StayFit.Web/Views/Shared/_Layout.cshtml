@@ -31,6 +31,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Workouts</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Workouts" asp-action="All">All Workouts</a>
+                                <a class="dropdown-item" asp-controller="Workouts" asp-action="MyWorkouts">My Workouts</a>
                                 @if (SignInManager.IsSignedIn(User))
                                 {
                                     <a class="dropdown-item" asp-controller="Workouts" asp-action="Add">Add Workout</a>
@@ -68,7 +69,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" type="module"></script>
-    <script src="~/js/popup.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/CalendarDetailPopup.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/SelectExercisePopup.js" asp-append-version="true" type="module"></script>
     <script src=" https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js "></script>
 
     @await RenderSectionAsync("Scripts", required: false)
