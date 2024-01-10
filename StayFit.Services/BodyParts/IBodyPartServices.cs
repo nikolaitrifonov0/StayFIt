@@ -6,5 +6,6 @@ namespace StayFit.Services.BodyParts
     {
         bool DoesBodyPartExist(int id);
         IEnumerable<BodyPartServiceModel> All();
+        void Create(BodyPartServiceModel model);
     }
 }

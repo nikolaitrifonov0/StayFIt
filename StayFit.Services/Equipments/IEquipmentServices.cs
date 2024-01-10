@@ -6,5 +6,6 @@ namespace StayFit.Services.Equipments
     {
         bool DoesEquipmentExist(int id);
         IEnumerable<EquipmentServiceModel> All();
+        void Create(EquipmentServiceModel model);
     }
 }

@@ -9,6 +9,13 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Exercises" asp-action="All">Administrator</a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-controller="Equipments" asp-action="All">Equipment</a>
+                    <a class="dropdown-item" asp-controller="BodyParts" asp-action="All">Body Part</a>
+                </div>
+            </li>
         }
         else
         {

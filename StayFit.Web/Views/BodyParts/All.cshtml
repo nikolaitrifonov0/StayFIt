@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BodyPartServiceModel>
+
+@{
+    ViewData["Title"] = "All BodyParts";
+}
+
+<partial name="_AddModelPopup" />
+<script src="~/js/bodyparts.js" asp-append-version="true" type="module"></script>
+
+<h1 class="mb-5">All Body Parts</h1>
+
+<button id="addNew" type="submit" class="btn btn-primary mb-2">Add New</button>
+
+<ul class="list-group w-100">
+    @foreach (var bodyPart in Model)
+    {
+        <li class="list-group-item w-100">@bodyPart.Name</li>
+    }
+</ul>

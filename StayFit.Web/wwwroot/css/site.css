@@ -7,9 +7,12 @@ for details on configuring this project to bundle and minify static web assets. 
 
 html, body {
     background-color: #242424;
-    color: white;
     margin: 0;
     height: 100%;
+}
+
+html, body, td {
+    color: white;
 }
 
 header {

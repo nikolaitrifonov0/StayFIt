@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="StayFit.Data.Models.ApplicationUser">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NextWorkDay" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StayFit.Data.Models.BodyPart">
+    <Position X="1.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BodyPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StayFit.Data.Models.Equipment">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Equipment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StayFit.Data.Models.Exercise">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACQAAAAgAgAAIAAAAAAAQAIGAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Exercise.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Equipment" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="BodyParts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="StayFit.Data.Models.UserExerciseLog">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAFAAAgAECAAAAABQAAEAAAAACA=</HashCode>
+      <FileName>Models\UserExerciseLog.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Exercise" />
+      <Property Name="WorkDay" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StayFit.Data.Models.WorkDay">
+    <Position X="7.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICBAAAAAAAAAAAAAEAAAAAAEAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Models\WorkDay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StayFit.Data.Models.Workout">
+    <Position X="10.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgCQCAAAAAkAAICAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Workout.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WorkoutCycleType" />
+      <Property Name="Creator" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Users" />
+      <Property Name="WorkDays" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="StayFit.Data.Models.Enums.Workout.WorkoutCycleType">
+    <Position X="13.25" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\Enums\Workout\WorkoutCycleType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

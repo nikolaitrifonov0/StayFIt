@@ -1,0 +1,19 @@
+﻿@model IEnumerable<EquipmentServiceModel>
+
+@{
+    ViewData["Title"] = "All Equipments";
+}
+
+<partial name="_AddModelPopup" />
+<script src="~/js/equipments.js" asp-append-version="true" type="module"></script>
+
+<h1 class="mb-5">All Equipments</h1>
+
+<button id="addNew" type="submit" class="btn btn-primary mb-2">Add New</button>
+
+<ul class="list-group w-100">
+    @foreach (var equipment in Model)
+    {
+        <li class="list-group-item w-100">@equipment.Name</li>
+    }
+</ul>
