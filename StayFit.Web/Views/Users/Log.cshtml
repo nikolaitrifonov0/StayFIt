@@ -83,8 +83,22 @@ else
     <div id='calendar'></div>
 }
 
+<div id="chat">
+    <div id="chatLog"></div>
+
+    <input id="chatInput" class="form-control" />
+    <button id="chatButton" class="btn btn-dark small-button">Send</button>
+</div>
+
 @section Scripts {
     <script type="module" src="~/js/userLog.js"></script>
+    <script type="module" src="~/js/chatHandler.js"></script>
+
+    <script>
+        const chatHandler = new ChatHandler({
+            userName: 'user'
+        });
+    </script>
 
     <partial name="_ValidationScriptsPartial" />
 }

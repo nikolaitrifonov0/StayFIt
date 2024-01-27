@@ -95,3 +95,19 @@ input[type=number] {
 #modalLabel {
     color: black;
 }
+
+#chat {
+    width: 350px;
+    display: flex;
+    position: absolute;
+    top: 500px;
+    right: 15px;
+}
+
+#chatInput, #chatButton {
+    height: 30px;
+}
+
+#chatInput {
+    margin-right: 5px;
+}

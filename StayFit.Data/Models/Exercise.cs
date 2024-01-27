@@ -22,6 +22,7 @@ namespace StayFit.Data.Models
         public string ImageUrl { get; set; }
         public string VideoUrl { get; set; }
         public bool IsPublic { get; set; }
+        public string Color { get; set; }
         public ICollection<WorkDay> WorkDays { get; init; } = new HashSet<WorkDay>();
         public ICollection<UserExerciseLog> UserExerciseLogs { get; init; }
             = new HashSet<UserExerciseLog>();

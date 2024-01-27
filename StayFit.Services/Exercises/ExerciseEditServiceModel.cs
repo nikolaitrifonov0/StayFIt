@@ -29,6 +29,7 @@ namespace StayFit.Services.Exercises
         [Url]
         [Display(Name = "Video URL")]
         public string VideoUrl { get; init; }
+        public string Color { get; set; }
         public IEnumerable<EquipmentServiceModel> Equipments { get; set; }
         public IEnumerable<BodyPartServiceModel> BodyPartsDisplay { get; set; }
     }

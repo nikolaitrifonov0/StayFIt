@@ -11,6 +11,7 @@ namespace StayFit.Services.Exercises
         string imageUrl,
         string videoUrl,
         int equipment,
+        string color,
         IEnumerable<int> bodyParts);
         public void Edit(string id,
         string name,
@@ -18,6 +19,7 @@ namespace StayFit.Services.Exercises
         string imageUrl,
         string videoUrl,
         int equipment,
+        string color,
         IEnumerable<int> bodyParts);
         public ExerciseEditServiceModel EditDetails(string exerciseId);
         public bool IsInWorkout(string exerciseId, string userId);

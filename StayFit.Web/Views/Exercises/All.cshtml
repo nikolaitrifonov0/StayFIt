@@ -9,6 +9,6 @@
 <ul class="list-group w-100">
     @foreach (var exercise in Model)
     {
-        <li class="list-group-item w-100"><a href="/Exercises/Details/@exercise.Id">@exercise.Name</a></li>
+        <li class="list-group-item w-100" style="background-color: @exercise.Color"><a href="/Exercises/Details/@exercise.Id">@exercise.Name</a></li>
     }
 </ul>

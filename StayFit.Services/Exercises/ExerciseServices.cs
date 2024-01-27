@@ -21,7 +21,7 @@ namespace StayFit.Services.Exercises
         }
 
         public void Add(string name, string description, string imageUrl, 
-            string videoUrl, int equipment, IEnumerable<int> bodyParts)
+            string videoUrl, int equipment, string color, IEnumerable<int> bodyParts)
         {
             var exercise = new Exercise
             {
@@ -30,7 +30,8 @@ namespace StayFit.Services.Exercises
                 ImageUrl = imageUrl,
                 VideoUrl = videoUrl,
                 EquipmentId = equipment,
-                IsPublic = false
+                IsPublic = false,
+                Color = color
             };
 
             foreach (var bodyPart in bodyParts)
@@ -57,7 +58,7 @@ namespace StayFit.Services.Exercises
                 .FirstOrDefault();
 
         public void Edit(string id,string name, string description, 
-            string imageUrl, string videoUrl, int equipment, IEnumerable<int> bodyParts)
+            string imageUrl, string videoUrl, int equipment, string color, IEnumerable<int> bodyParts)
         {
             var exercise = this.data.Exercises.Where(e => e.Id == id).FirstOrDefault();
 
@@ -76,6 +77,7 @@ namespace StayFit.Services.Exercises
             exercise.ImageUrl = imageUrl;
             exercise.VideoUrl = videoUrl;
             exercise.EquipmentId = equipment;
+            exercise.Color = color;
             exercise.IsPublic = false;
 
             foreach (var bodyPart in bodyParts)

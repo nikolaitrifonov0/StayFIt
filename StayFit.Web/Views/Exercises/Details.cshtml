@@ -34,12 +34,17 @@
         </tbody>
     </table>
 </div>
-<div class="row mt-2">
-    <iframe width="560" height="315"
-            src="@Model.VideoUrl">
-    </iframe>
-</div>
+
+@if (!string.IsNullOrEmpty(Model.VideoUrl))
+{
+    <div class="row mt-2">
+        <iframe width="560" height="315"
+                src="@Model.VideoUrl">
+        </iframe>
+    </div>
+}
+
 @if (User.IsInRole(AdminConstants.AdministratorRoleName))
 {
-<a class="btn btn-success btn-lg mt-3" href="/Exercises/Edit/@Model.Id" role="button">Edit</a>
+    <a class="btn btn-success btn-lg mt-3" href="/Exercises/Edit/@Model.Id" role="button">Edit</a>
 }

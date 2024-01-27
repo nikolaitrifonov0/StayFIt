@@ -59,7 +59,7 @@ namespace StayFit.Web.Controllers
             }
 
             exercises.Add(exercise.Name, exercise.Description, exercise.ImageUrl, exercise.VideoUrl,
-                exercise.Equipment, exercise.BodyParts);
+                exercise.Equipment, exercise.Color, exercise.BodyParts);
 
             return RedirectToAction("Index", "Home");
         }
@@ -123,7 +123,7 @@ namespace StayFit.Web.Controllers
             }
 
             exercises.Edit(id, exercise.Name, exercise.Description,
-                exercise.ImageUrl, exercise.VideoUrl, exercise.Equipment, exercise.BodyParts);
+                exercise.ImageUrl, exercise.VideoUrl, exercise.Equipment, exercise.Color, exercise.BodyParts);
 
             return Redirect($"/Exercises/{nameof(this.Details)}/{id}");
         }        

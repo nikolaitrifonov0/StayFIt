@@ -22,7 +22,8 @@ namespace StayFit.Services.Calendar
                 {
                     Id = u.Id,
                     Start = u.Date.ToString("yyyy-MM-dd"),
-                    Title = u.Exercise.Name
+                    Title = u.Exercise.Name,
+                    BackgroundColor = u.Exercise.Color
                 }).ToList();
 
             var filteredResult = FilterOutRepeatingElements(result);
