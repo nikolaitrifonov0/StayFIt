@@ -1,5 +1,11 @@
 ﻿import CalendarDetailPopup from './CalendarDetailPopup.js';
 import SelectExercisePopup from './SelectExercisePopup.js';
+import ChatHandler from './chatHandler.js';
+
+const chatHandler = new ChatHandler({
+    userName: userName
+});
+chatHandler.read();
 
 const detailPopup = new CalendarDetailPopup({
     onCreated: () => calendar.refetchEvents(),

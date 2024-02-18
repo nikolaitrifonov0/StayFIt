@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StayFit.Data.Models;
 using StayFit.Services.BodyParts;
+using StayFit.Services.ChatLogs;
 using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Services.Workouts;
@@ -35,6 +36,8 @@ namespace StayFit.Web.Infrastructure
                 .ForMember(w => w.Creator, cfg => cfg.MapFrom(w => w.Creator.UserName))
                 .ForMember(w => w.TotalWorkDays, cfg => cfg.MapFrom(w => w.WorkDays.Count));
             this.CreateMap<Workout, EditWorkoutsServiceModel>();
+            
+            this.CreateMap<ChatLog, ChatLogViewModel>();
         }
 
         private static string ExtractVideoUrl(string url)

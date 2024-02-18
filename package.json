@@ -1,0 +1,23 @@
+{
+  "name": "StayFit",
+  "version": "1.0.0",
+  "description": "Stay fit is a web application which you can use to track your workouts' progress.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikolaitrifonov0/StayFit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikolaitrifonov0/StayFit/issues"
+  },
+  "homepage": "https://github.com/nikolaitrifonov0/StayFit#readme",
+  "dependencies": {
+    "@microsoft/signalr": "^8.0.0"
+  }
+}

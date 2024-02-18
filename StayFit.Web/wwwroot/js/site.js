@@ -9,14 +9,17 @@ await addSearchEventToSearchInputs();
 
 let currentDay = 0;
 let addDayBtn = document.querySelector('.add-day');
-addDayBtn.onclick = async (e) => {
-    let dayDiv = e.target.parentElement.parentElement.querySelector('.day').cloneNode(true);
-    dayDiv.querySelector('h1').textContent = `Day ${currentDay + 1}`;
-    currentDay++;
-    dayDiv.hidden = false;        
 
-    e.target.parentElement.parentElement.insertBefore(dayDiv, e.target.parentElement);
-    await addSearchEventToSearchInputs();
+if (addDayBtn) {
+    addDayBtn.onclick = async (e) => {
+        let dayDiv = e.target.parentElement.parentElement.querySelector('.day').cloneNode(true);
+        dayDiv.querySelector('h1').textContent = `Day ${currentDay + 1}`;
+        currentDay++;
+        dayDiv.hidden = false;
+
+        e.target.parentElement.parentElement.insertBefore(dayDiv, e.target.parentElement);
+        await addSearchEventToSearchInputs();
+    }
 }
 
 async function addSearchEventToSearchInputs() {
@@ -111,11 +114,13 @@ function handleWorkoutType() {
     let nthWorkdaysDiv = document.getElementsByClassName('nth-day')[0];
     let cycleDays = document.getElementsByClassName('cycle-days');
 
-    workoutTypeSelect.onchange = hideWeeklyWorkdays;
-    hideWeeklyWorkdays();
+    if (workoutTypeSelect) {
+        workoutTypeSelect.onchange = hideWeeklyWorkdays;
+        hideWeeklyWorkdays();
+    }
 
     function hideWeeklyWorkdays() {
-        if (workoutTypeSelect.value != '0') {
+        if (workoutTypeSelect?.value != '0') {
             weeklyWorkdaysDiv.hidden = true;
             nthWorkdaysDiv.hidden = false;
             for (let el of cycleDays) {

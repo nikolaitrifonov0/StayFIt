@@ -30,7 +30,7 @@
     let maxScoresArray = JSON.parse('@Html.Raw(Json.Serialize(Model.UserMaxScores))');
     let maxWeightsGraph = null;
     let maxScoresGraph = null;
-    const exercisesComboboxItems = Object.keys(maxWeightsArray);
+    const exercisesComboboxItems = Object.keys(maxWeightsArray) || [];
     const exercisesCombobox = document.getElementById("exercisesCombobox");
     const exercisesDropdown = document.getElementById("exercisesDropdown");
 

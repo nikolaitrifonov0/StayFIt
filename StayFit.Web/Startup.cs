@@ -11,12 +11,14 @@ using StayFit.Data;
 using StayFit.Data.Models;
 using StayFit.Services.BodyParts;
 using StayFit.Services.Calendar;
+using StayFit.Services.ChatLogs;
 using StayFit.Services.Equipments;
 using StayFit.Services.Exercises;
 using StayFit.Services.Statistics;
 using StayFit.Services.Users;
 using StayFit.Services.Workouts;
 using StayFit.Web.Infrastructure;
+using StayFit.Web.Utilities;
 using System.IO;
 
 namespace StayFit.Web
@@ -48,6 +50,8 @@ namespace StayFit.Web
 
             services.AddControllersWithViews();
 
+            services.AddSignalR();
+
             services.AddMvc(options =>
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
@@ -61,6 +65,7 @@ namespace StayFit.Web
             services.AddTransient<ICalendarUpdater, CalendarUpdater>();
             services.AddTransient<ICalendarCreator, CalendarCreator>();
             services.AddTransient<ICalendarDeleter, CalendarDeleter>();
+            services.AddTransient<IChatService, ChatService>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -91,7 +96,8 @@ namespace StayFit.Web
                     endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapRazorPages();
+                    endpoints.MapRazorPages(); 
+                    endpoints.MapHub<ChatHub>("/chathub");
                 });
         }
     }

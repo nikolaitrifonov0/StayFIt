@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Log Workout";
+    var userName = User.Identity.Name;
 }
 
 <partial name="_CalendarDetailPopup" />
@@ -91,14 +92,11 @@ else
 </div>
 
 @section Scripts {
-    <script type="module" src="~/js/userLog.js"></script>
-    <script type="module" src="~/js/chatHandler.js"></script>
-
     <script>
-        const chatHandler = new ChatHandler({
-            userName: 'user'
-        });
+        var userName = '@userName';
     </script>
+    <script type="module" src="~/js/chatHandler.js"></script>
+    <script type="module" src="~/js/userLog.js"></script>
 
     <partial name="_ValidationScriptsPartial" />
 }

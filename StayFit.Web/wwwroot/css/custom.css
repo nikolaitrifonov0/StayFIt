@@ -102,6 +102,7 @@ input[type=number] {
     position: absolute;
     top: 500px;
     right: 15px;
+    flex-wrap: wrap;
 }
 
 #chatInput, #chatButton {
@@ -110,4 +111,28 @@ input[type=number] {
 
 #chatInput {
     margin-right: 5px;
+    width: 70%;
+}
+
+#chatButton {
+    width: 28%;
+}
+
+#chatLog {
+    width: 100%;
+    margin-bottom: 8px;
+    height: 330px;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+}
+
+#chatLog div span:nth-child(2) {
+    font-weight: bold;
+    color: blue;
+}
+
+#chatLog div span:nth-child(1) {
+    font-size: 8px;
+    color: grey;
 }

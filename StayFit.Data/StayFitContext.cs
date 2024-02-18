@@ -21,6 +21,7 @@ namespace StayFit.Data
         public DbSet<WorkDay> WorkDays { get; init; }
         public DbSet<Workout> Workouts { get; init; }
         public DbSet<UserExerciseLog> UserExerciseLogs { get; init; }
+        public DbSet<ChatLog> ChatLogs { get; init; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
