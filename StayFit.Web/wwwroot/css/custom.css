@@ -39,6 +39,8 @@ ul {
 
 .row {
     align-items: center;
+    background-color: #2f2f2f;
+    padding: 5px;
 }
 
 .add-set.btn {
@@ -100,7 +102,7 @@ input[type=number] {
     width: 350px;
     display: flex;
     position: absolute;
-    top: 500px;
+    top: 265px;
     right: 15px;
     flex-wrap: wrap;
 }
