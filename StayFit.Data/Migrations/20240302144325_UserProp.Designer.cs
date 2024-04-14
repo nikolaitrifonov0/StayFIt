@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StayFit.Data;
 
 namespace StayFit.Data.Migrations
 {
     [DbContext(typeof(StayFitContext))]
-    partial class StayFitContextModelSnapshot : ModelSnapshot
+    [Migration("20240302144325_UserProp")]
+    partial class UserProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,6 +384,9 @@ namespace StayFit.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("Weight")
                         .HasMaxLength(3000)
                         .HasColumnType("int");
@@ -394,6 +399,8 @@ namespace StayFit.Data.Migrations
                     b.HasIndex("ExerciseId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.HasIndex("WorkDayId");
 
@@ -572,11 +579,15 @@ namespace StayFit.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StayFit.Data.Models.ApplicationUser", "User")
+                    b.HasOne("StayFit.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("StayFit.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
                     b.HasOne("StayFit.Data.Models.WorkDay", "WorkDay")
                         .WithMany("UserExerciseLogs")

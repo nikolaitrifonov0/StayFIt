@@ -16,6 +16,7 @@ namespace StayFit.Data.Models
         public int? Weight { get; set; }
         [Required]
         public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         [Required]
         public string ExerciseId { get; set; }
         public Exercise Exercise { get; set; }

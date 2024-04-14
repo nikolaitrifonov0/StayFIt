@@ -24,10 +24,16 @@
     <div style="width: 800px;"><canvas id="maxScoresGraph"></canvas></div>
 </div>
 
+<div id="highscoreTable">
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     let maxWeightsArray = JSON.parse('@Html.Raw(Json.Serialize(Model.UserMaxWeights))');
     let maxScoresArray = JSON.parse('@Html.Raw(Json.Serialize(Model.UserMaxScores))');
+    let highScoresArray = JSON.parse('@Html.Raw(Json.Serialize(Model.UsersHighScores))');
+    console.log(highScoresArray)
     let maxWeightsGraph = null;
     let maxScoresGraph = null;
     const exercisesComboboxItems = Object.keys(maxWeightsArray) || [];
@@ -58,6 +64,7 @@
 
         maxWeightsGraph = createGraph('maxWeightsGraph', selectedExerWeight.map(e => { return { date: e.date, number: e.weight } }), 'Weight');
         maxScoresGraph = createGraph('maxScoresGraph', selectedExerScore.map(e => { return { date: e.date, number: e.score } }), 'Score');
+        createHighscoreTable(highScoresArray[item]);
     }
 
     function createGraph(id, data, label) {
@@ -76,5 +83,52 @@
                 }
             }
         );
+    }
+
+    function createHighscoreTable(data) {
+        const div = document.getElementById('highscoreTable');
+
+        if (div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
+
+        let table = document.createElement('table');
+        table.classList.add('table');
+
+        let thead = document.createElement('thead');
+        let headerRow = document.createElement('tr');
+        let headers = ['Username', 'Weight', 'Score'];
+
+        headers.forEach(function (headerText) {
+            let th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        let tbody = document.createElement('tbody');
+
+        data.forEach(function (item) {
+            let row = document.createElement('tr');
+
+            let cell = document.createElement('td');
+            cell.textContent = item.userName;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = item.weight;
+            row.appendChild(cell);
+
+            cell = document.createElement('td');
+            cell.textContent = item.score;
+            row.appendChild(cell);
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        div.appendChild(table);
     }
 </script>

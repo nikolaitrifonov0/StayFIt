@@ -138,3 +138,11 @@ input[type=number] {
     font-size: 8px;
     color: grey;
 }
+
+#highscoreTable {
+    height: 330px;
+    position: absolute;
+    width: 290px;
+    top: 200px;
+    right: 50px;
+}

@@ -49,7 +49,7 @@ namespace StayFit.Data
 
 
             modelBuilder.Entity<UserExerciseLog>()
-                .HasOne<ApplicationUser>()
+                .HasOne<ApplicationUser>(uel => uel.User)
                 .WithMany()
                 .HasForeignKey(uel => uel.UserId);
 

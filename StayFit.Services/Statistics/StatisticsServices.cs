@@ -1,4 +1,5 @@
-﻿using StayFit.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StayFit.Data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,8 +16,42 @@ namespace StayFit.Services.Statistics
             {
                 UserMaxScores = this.GetUserMaxScores(userId),
                 UserMaxWeights = this.GetUserMaxWeights(userId),
-                UserWorkoutProgress = this.GetUserWorkoutProgress(userId)
+                UserWorkoutProgress = this.GetUserWorkoutProgress(userId),
+                UsersHighScores = GetHighScores(userId)
             };
+
+        private Dictionary<string, List<UserStatisticsHighScoreModel>> GetHighScores(string userId)
+        {
+            var result = new Dictionary<string, List<UserStatisticsHighScoreModel>>();
+
+            var logs = this.data.UserExerciseLogs
+                .Include(e => e.User)
+                .Where(uel =>
+                this.data.UserExerciseLogs.Where(x => x.UserId == userId)
+                .Select(x => x.ExerciseId).Contains(uel.ExerciseId))
+                .Select(uel => new UserStatisticsHighScoreModel
+                {
+                    UserName = uel.User.UserName,
+                    Exercise = uel.Exercise.Name,
+                    Score = (uel.Weight != null ? uel.Weight * uel.Repetitions : uel.Repetitions) ?? 0,
+                    Weight = uel.Weight
+                }).OrderByDescending(u => u.Score).ToList();
+
+            foreach (var log in logs)
+            {
+                if (!result.ContainsKey(log.Exercise))
+                {
+                    result[log.Exercise] = new List<UserStatisticsHighScoreModel>();
+                }
+
+                if (result[log.Exercise].Count < 10)
+                {
+                    result[log.Exercise].Add(log);
+                }
+            }
+
+            return result;
+        }
 
         private Dictionary<string, List<ScoreProgressServiceModel>> GetUserMaxScores(string userId)
         {
