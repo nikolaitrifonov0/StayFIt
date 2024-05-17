@@ -146,3 +146,26 @@ input[type=number] {
     top: 200px;
     right: 50px;
 }
+
+@media (max-width: 767px) {
+    #chat {
+        display: none;
+    }
+
+    .navbar-nav {
+        display: block;
+    }
+
+    nav .container {
+        flex-direction: column;
+    }
+
+    .navbar-collapse {
+        flex-direction: column;
+    }
+
+    #highscoreTable {
+        top: 1565px;
+        right: 173px;
+    }
+}
