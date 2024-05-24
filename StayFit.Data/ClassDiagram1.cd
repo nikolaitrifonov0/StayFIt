@@ -27,7 +27,7 @@
   <Class Name="StayFit.Data.Models.Exercise">
     <Position X="4.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEACQAAAAgAgAAIAAAAAAAQAIGAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AEACQAAAAgAgAAIAAAAAAAQAIGAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Models\Exercise.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -40,7 +40,7 @@
   <Class Name="StayFit.Data.Models.UserExerciseLog">
     <Position X="7.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAFAAAgAECAAAAABQAAEAAAAACA=</HashCode>
+      <HashCode>AAADAAAAAAAAAAAAAAFAAAgAECAAAAABQAAEAAAAACA=</HashCode>
       <FileName>Models\UserExerciseLog.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -62,13 +62,20 @@
       <FileName>Models\Workout.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="WorkoutCycleType" />
       <Property Name="Creator" />
+      <Property Name="WorkoutCycleType" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Users" />
       <Property Name="WorkDays" />
+      <Property Name="Users" />
     </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="StayFit.Data.Models.ChatLog">
+    <Position X="13" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAQAAIAAAAAA=</HashCode>
+      <FileName>Models\ChatLog.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Enum Name="StayFit.Data.Models.Enums.Workout.WorkoutCycleType">
     <Position X="13.25" Y="8.5" Width="1.75" />

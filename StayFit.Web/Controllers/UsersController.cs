@@ -24,7 +24,7 @@ namespace StayFit.Web.Controllers
         public IActionResult MoveWorkoutToToday()
         {
             users.MoveWorkoutToToday(this.User.GetId());
-            return View("Log" ,this.users.PrepareForView(this.User.GetId()));
+            return RedirectToAction("Log");
         }
 
         [HttpPost]
