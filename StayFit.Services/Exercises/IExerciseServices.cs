@@ -26,6 +26,7 @@ namespace StayFit.Services.Exercises
         public IEnumerable<ExerciseSearchServiceModel> All(bool publicOnly = true);
         public void Hide(string Id);
         public void Show(string Id);
+        public void Delete(string Id);
 
     }
 }

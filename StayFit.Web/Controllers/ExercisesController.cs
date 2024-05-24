@@ -126,6 +126,14 @@ namespace StayFit.Web.Controllers
                 exercise.ImageUrl, exercise.VideoUrl, exercise.Equipment, exercise.Color, exercise.BodyParts);
 
             return Redirect($"/Exercises/{nameof(this.Details)}/{id}");
-        }        
+        }
+
+        [Authorize(Roles = AdministratorRoleName)]
+        public IActionResult Delete(string id)
+        {
+            exercises.Delete(id);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

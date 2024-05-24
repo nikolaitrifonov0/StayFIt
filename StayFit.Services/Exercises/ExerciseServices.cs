@@ -147,5 +147,12 @@ namespace StayFit.Services.Exercises
             this.data.Exercises.Find(Id).IsPublic = true;
             this.data.SaveChanges();
         }
+
+        public void Delete(string id)
+        {
+            var exer = this.data.Exercises.Find(id);
+            this.data.Exercises.Remove(exer);
+            this.data.SaveChanges();
+        }
     }
 }
