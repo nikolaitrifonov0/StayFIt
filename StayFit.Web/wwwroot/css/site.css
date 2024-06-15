@@ -261,3 +261,7 @@ div.login-btns {
     border: none !important;
     text-shadow: none !important;
 }
+
+#detailPopup th, #detailPopup td {
+    color: black;
+}
