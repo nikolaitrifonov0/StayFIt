@@ -23,6 +23,7 @@ namespace StayFit.Web.Models.Workouts
         [EnumDataType(typeof(WorkoutCycleTypeEnum),
             ErrorMessage = "Workout Type should be one of the given values.")]
         public int WorkoutCycleType { get; set; }
+        [Display(Name = "Cycle Days")]
         public int? CycleDays { get; set; }
         [Display(Name = "Thumbnail")]
         public string ImageUrl { get; set; }
