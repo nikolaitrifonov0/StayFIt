@@ -135,30 +135,3 @@ function handleWorkoutType() {
         }
     }
 }
-
-async function searchExercise(keyword) {
-    //const apiKey = 'YOUR_API_KEY'; // Replace with your Wger Workout Manager API key
-    const apiUrl = `https://wger.de/api/v2/exercise/search/?term=${encodeURIComponent(keyword)}`;
-
-    const response = await fetch(apiUrl, {
-        //headers: {
-        //    'Authorization': `Token ${apiKey}`,
-        //},
-    });        
-
-    const data = await response.json();
-    return data.results;
-}
-
-const keyword = 'push-up';
-searchExercise(keyword)
-    .then(result => {
-        if (result) {
-            console.log('Search Result:', result);
-            // Process the result here
-        } else {
-            console.log('No result or error occurred.');
-        }
-    });
-
-
